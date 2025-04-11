@@ -8,14 +8,20 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        node-version: [20]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install PNPM
-        run: curl -fsSL https://get.pnpm.io/install.sh | sh -
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
         run: pnpm install
