@@ -14,6 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install PNPM
+        uses: curl -fsSL https://get.pnpm.io/install.sh | sh -
+
       - name: Install dependencies
         run: pnpm install
 
