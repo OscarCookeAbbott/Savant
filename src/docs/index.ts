@@ -2,10 +2,8 @@ import Header from "./Header"
 import Navbar from "./Navbar"
 import { add, html } from ".."
 import { Router } from "../routing"
+import rootRoute from "./routes/index.ts"
 
-const introRoutes = import.meta.glob("./routes/introduction/**/index.ts", {
-    eager: true,
-})
 const reactivityRoutes = import.meta.glob("./routes/reactivity/**/index.ts", {
     eager: true,
 })
@@ -20,33 +18,39 @@ const examplesRoutes = import.meta.glob("./routes/examples/**/index.ts", {
 })
 
 const routeMaker = (dirRoutes: Record<string, unknown>) =>
-    Object.entries(dirRoutes).map(([path, route]) => ({
-        path: path.replace("./routes", "").split("/").slice(0, -1).join("/"),
-        dom: route.default,
-    }))
+    Object.entries(dirRoutes).map(([path, route]) => {
+        const pageName = path
+            .replace("./routes", "")
+            .split("/")[2]
+            .replace(/^\s*\d*\s*/, "")
 
-const routes = [
-    ...routeMaker(introRoutes),
-    ...routeMaker(reactivityRoutes),
-    ...routeMaker(routingRoutes),
-    ...routeMaker(componentsRoutes),
-    ...routeMaker(examplesRoutes),
+        return {
+            name: pageName,
+            path: path.replace("./routes", "").split("/").slice(0, -2).concat(pageName).join("/"),
+            dom: route.default,
+        }
+    })
+
+const pages = [
+    {
+        name: "Introduction",
+        children: [{ name: "Welcome", path: "/", dom: rootRoute }],
+    },
+    { name: "Reactivity", children: routeMaker(reactivityRoutes) },
+    { name: "Routing", children: routeMaker(routingRoutes) },
+    { name: "Components", children: routeMaker(componentsRoutes) },
+    { name: "Examples", children: routeMaker(examplesRoutes) },
 ]
 
-const tabs = routes.reduce((groups, route) => {
-    const groupName = route.path.split("/")[1]
-    const subPath = route.path.split("/").slice(2).join("/")
-
-    groups.set(groupName, (groups.get(groupName) ?? []).concat(subPath))
-
-    return groups
-}, new Map<string, string[]>())
+const routes = pages.flatMap((page) =>
+    page.children ? [page, ...page.children] : page,
+)
 
 function App() {
     return html.div(
         {
             name: "App",
-            class: "flex flex-col relative size-full overflow-y-auto overscroll-none",
+            class: "flex flex-col relative size-full",
         },
 
         Header(),
@@ -54,7 +58,7 @@ function App() {
         html.div(
             { class: "flex flex-1" },
 
-            Navbar({ options: tabs, class: "min-w-64" }),
+            Navbar({ options: pages, class: "min-w-64" }),
 
             html.div(
                 {
@@ -63,10 +67,10 @@ function App() {
 
                 html.div(
                     {
-                        class: "flex flex-col p-8 -mt-16 pt-24 gap-4 w-3xl",
+                        class: "flex flex-col px-8 pt-24 pb-16 gap-4 max-w-5xl",
                     },
 
-                    Router({ routes }),
+                    Router({ routes: routes }),
                 ),
             ),
         ),

@@ -73,7 +73,7 @@
     }
 
     :root {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground overflow-y-auto overscroll-none;
     }
 }
 
@@ -197,7 +197,7 @@
 }
 
 @utility lowered {
-    @apply not-disabled:scale-95 not-disabled:brightness-95 not-disabled:inset-shadow-sm not-disabled:shadow-none;
+    @apply not-disabled:scale-95 not-disabled:shadow-none not-disabled:inset-shadow-sm not-disabled:brightness-95;
 }
 
 @utility focus-ring {

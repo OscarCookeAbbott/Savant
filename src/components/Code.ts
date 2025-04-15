@@ -11,9 +11,7 @@ export default function Code(
 ): HTMLElement {
     const reactiveClass = forceReactive(propClass)
 
-    setTimeout(Prism.highlightAll)
-
-    return html.pre(
+    const baseDom = html.pre(
         {
             class: reactiveClass.val,
             ...restProps,
@@ -27,4 +25,9 @@ export default function Code(
             children,
         ),
     )
+
+    // Convert any code snippets
+    Prism.highlightAllUnder(baseDom)
+
+    return baseDom
 }

@@ -1,32 +1,15 @@
-import { Code, Label } from "../../../../components"
-import { html } from "../../../.."
-import SignIn from "./SignIn"
+import {
+    Button,
+    Checkbox,
+    Icon,
+    Label,
+    Popup,
+    Input,
+    Form,
+} from "../../../../components"
+import { html, state } from "../../../.."
 
-export default function Page() {
-    return html.div(
-        { class: "contents" },
-
-        html.span({ class: "text-3xl font-bold" }, "Sign In"),
-
-        html.p({ class: "text-foreground-weak" }, "Example Sign In component."),
-
-        Label(
-            { content: "Demo" },
-
-            html.div(
-                { class: "card vessel flex flex-col items-center gap-4" },
-
-                html.div({ class: "p-8 flex items-center" }, SignIn()),
-            ),
-        ),
-
-        Label(
-            { content: "Code" },
-
-            Code(
-                { language: "typescript" },
-
-                `function SignIn(): HTMLElement {
+export default function SignIn(): HTMLElement {
     const username = state("")
     const password = state("")
     const savePassword = state(false)
@@ -62,9 +45,10 @@ export default function Page() {
 
         Label(
             {
-                content: "Password",
-                trail: html.span(
-                    { class: "flex flex-1 justify-end items-center" },
+                content: html.span(
+                    { class: "flex flex-1 justify-between items-center" },
+
+                    "Password",
 
                     Button(
                         {
@@ -77,8 +61,7 @@ export default function Page() {
             },
 
             Input({
-                type: () =>
-                    passwordVisible.val ? "text" : "password",
+                type: () => (passwordVisible.val ? "text" : "password"),
                 value: password,
                 placeholder: "Enter password...",
                 required: true,
@@ -87,18 +70,17 @@ export default function Page() {
                 trail: Button(
                     {
                         onclick: () =>
-                            (passwordVisible.val =
-                                !passwordVisible.val),
+                            (passwordVisible.val = !passwordVisible.val),
                     },
 
                     Icon(
                         {
                             class: () =>
-                                \`transition \${
-                                    !passwordVisible.val
-                                        ? "text-foreground-weak"
-                                        : ""
-                                }\`,
+                                `transition ${
+                                    passwordVisible.val
+                                        ? ""
+                                        : "text-foreground-weak"
+                                }`,
                         },
 
                         () =>
@@ -108,8 +90,7 @@ export default function Page() {
                     ),
                 ),
 
-                onValidityChanged: (valid) =>
-                    (passwordValid.val = valid),
+                onValidityChanged: (valid) => (passwordValid.val = valid),
 
                 class: "variant-outline",
             }),
@@ -142,10 +123,6 @@ export default function Page() {
                     class: "variant-filled mood-accent",
                 },
                 "Sign In",
-            ),
-        ),
-    )
-}`,
             ),
         ),
     )

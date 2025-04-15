@@ -1,5 +1,6 @@
 import { html, svg } from ".."
-import { Badge, Icon, Tooltip } from "../components"
+import { Badge, Tooltip } from "../components"
+import logo from "../../logo.svg"
 
 export default function Header(): HTMLElement {
     const headerSectionClasses = "flex gap-4 items-center"
@@ -7,7 +8,7 @@ export default function Header(): HTMLElement {
     return html.header(
         {
             name: "Header",
-            class: "bg-background-translucent sticky top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-200 dark:border-surface-700 z-10",
+            class: "bg-background-translucent fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-200 dark:border-surface-700 z-10",
         },
 
         html.div(
@@ -16,9 +17,9 @@ export default function Header(): HTMLElement {
             html.div(
                 { class: "flex items-center gap-2" },
 
-                Icon({ class: "text-lg" }, "school"),
+                html.img({ src: logo, class: "size-12 -m-2 brightness-0" }),
 
-                html.span({ class: "text-lg font-bold" }, "Savant"),
+                html.span({ class: "text-xl font-bold" }, "Savant"),
 
                 Badge(
                     {
@@ -37,7 +38,7 @@ export default function Header(): HTMLElement {
                 {
                     name: "GitHub",
                     class: "variant-basic !rounded-full **:fill-current hover:variant-subtle text-lg !p-2",
-                    href: "https://github.com/OscarCookeAbbott/vanjs-testing",
+                    href: "https://github.com/OscarCookeAbbott/savant",
                     target: "_blank",
                 },
 

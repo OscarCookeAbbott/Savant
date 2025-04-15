@@ -1,98 +1,99 @@
-@import "tailwindcss";
 @import "./style.css";
 
 /* PrismJS 1.30.0
 https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+typescript */
 
-code[class*="language-"],
-pre[class*="language-"] {
-    @apply text-foreground text-left font-mono text-base break-normal hyphens-none whitespace-pre;
+@layer components {
+    code[class*="language-"],
+    pre[class*="language-"] {
+        @apply text-foreground text-left font-mono text-base break-normal hyphens-none whitespace-pre;
 
-    word-spacing: normal;
-    word-wrap: normal;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-}
-code[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection,
-pre[class*="language-"] ::-moz-selection,
-pre[class*="language-"]::-moz-selection {
-    @apply bg-surface/10;
-}
-code[class*="language-"] ::selection,
-code[class*="language-"]::selection,
-pre[class*="language-"] ::selection,
-pre[class*="language-"]::selection {
-    @apply bg-surface/10;
-}
-pre[class*="language-"] {
-    @apply overflow-auto p-4;
-}
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    @apply variant-outline bg-surface/10 p-4;
-}
-:not(pre) > code[class*="language-"] {
-    @apply rounded p-1 whitespace-normal;
-}
-.token.cdata,
-.token.comment,
-.token.doctype,
-.token.prolog {
-    @apply text-teal-500;
-}
-.token.punctuation {
-    @apply text-neutral-500;
-}
-.token.namespace {
-    @apply opacity-75;
-}
-.token.boolean,
-.token.constant,
-.token.deleted,
-.token.number,
-.token.property,
-.token.symbol,
-.token.tag {
-    @apply text-red-500;
-}
-.token.attr-name,
-.token.builtin,
-.token.char,
-.token.inserted,
-.token.selector,
-.token.string {
-    @apply text-green-500;
-}
-.language-css .token.string,
-.style .token.string,
-.token.entity,
-.token.operator,
-.token.url {
-    @apply text-rose-400;
-}
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-    @apply text-blue-500;
-}
-.token.class-name,
-.token.function {
-    @apply text-sky-600 dark:text-sky-300;
-}
-.token.important,
-.token.regex,
-.token.variable {
-    @apply text-orange-500;
-}
-.token.bold,
-.token.important {
-    @apply font-bold;
-}
-.token.italic {
-    @apply italic;
-}
-.token.entity {
-    @apply cursor-help;
+        word-spacing: normal;
+        word-wrap: normal;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+    }
+    code[class*="language-"] ::-moz-selection,
+    code[class*="language-"]::-moz-selection,
+    pre[class*="language-"] ::-moz-selection,
+    pre[class*="language-"]::-moz-selection {
+        @apply bg-surface/10;
+    }
+    code[class*="language-"] ::selection,
+    code[class*="language-"]::selection,
+    pre[class*="language-"] ::selection,
+    pre[class*="language-"]::selection {
+        @apply bg-surface/10;
+    }
+    pre[class*="language-"] {
+        @apply overflow-auto p-4;
+    }
+    :not(pre) > code[class*="language-"],
+    pre[class*="language-"] {
+        @apply variant-outline bg-surface/10 p-4;
+    }
+    :not(pre) > code[class*="language-"] {
+        @apply rounded p-1 whitespace-normal;
+    }
+    .token.cdata,
+    .token.comment,
+    .token.doctype,
+    .token.prolog {
+        @apply text-teal-500;
+    }
+    .token.punctuation {
+        @apply text-neutral-500;
+    }
+    .token.namespace {
+        @apply opacity-75;
+    }
+    .token.boolean,
+    .token.constant,
+    .token.deleted,
+    .token.number,
+    .token.property,
+    .token.symbol,
+    .token.tag {
+        @apply text-red-500;
+    }
+    .token.attr-name,
+    .token.builtin,
+    .token.char,
+    .token.inserted,
+    .token.selector,
+    .token.string {
+        @apply text-green-500;
+    }
+    .language-css .token.string,
+    .style .token.string,
+    .token.entity,
+    .token.operator,
+    .token.url {
+        @apply text-rose-400;
+    }
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        @apply text-blue-500;
+    }
+    .token.class-name,
+    .token.function {
+        @apply text-sky-600 dark:text-sky-300;
+    }
+    .token.important,
+    .token.regex,
+    .token.variable {
+        @apply text-orange-500;
+    }
+    .token.bold,
+    .token.important {
+        @apply font-bold;
+    }
+    .token.italic {
+        @apply italic;
+    }
+    .token.entity {
+        @apply cursor-help;
+    }
 }

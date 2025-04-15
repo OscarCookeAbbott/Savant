@@ -5,11 +5,13 @@ import { _routerPathname, _routerBasename } from "./state"
 
 interface LinkProps extends ElementProps<HTMLAnchorElement> {
     replace?: boolean
+    disabled?: boolean
 }
 
 export default function Link(
     {
         replace = false,
+        disabled = false,
         onclick,
         href,
         class: propClass,
@@ -24,6 +26,8 @@ export default function Link(
             href,
             onclick: (e: MouseEvent) => {
                 e.preventDefault()
+
+                if (disabled) return
 
                 navigate(href, { replace })
 

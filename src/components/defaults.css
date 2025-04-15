@@ -1,0 +1,41 @@
+@import "./style.css";
+
+@layer components {
+    .style-defaults {
+        h1 {
+            @apply mb-4 text-3xl font-bold not-first:mt-12;
+        }
+
+        h2 {
+            @apply mb-3 text-xl font-semibold not-first:mt-8;
+        }
+
+        h3 {
+            @apply mb-2 text-lg not-first:mt-4;
+        }
+
+        h4 {
+            @apply mb-2 not-first:mt-4;
+        }
+
+        h5 {
+            @apply mb-2 text-sm uppercase not-first:mt-4;
+        }
+
+        p {
+            @apply not-first:mt-4;
+        }
+
+        pre[class*="language-"] {
+            @apply not-first:mt-4;
+        }
+
+        a {
+            @apply text-accent visited:text-accent-800 dark:visited:text-accent-100 hover:underline not-disabled:hover:brightness-110 not-disabled:active:brightness-95;
+        }
+
+        hr {
+            @apply mt-4 border-current;
+        }
+    }
+}

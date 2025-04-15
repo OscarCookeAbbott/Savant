@@ -1,5 +1,5 @@
 import { html } from "../../../.."
 
 export default function Page() {
-    return html.div("State")
+    return html.div("Add")
 }

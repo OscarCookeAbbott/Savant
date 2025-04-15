@@ -1,6 +1,7 @@
 import "./style.css"
 import "./prism"
 import "./prism.css"
+import "./defaults.css"
 import Badge from "./Badge"
 import Button from "./Button"
 import Checkbox from "./Checkbox"
