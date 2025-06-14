@@ -12,7 +12,7 @@ import { forceReactive, arrayToggleItem, isOrArrayHas } from "../utils"
 import Button from "./Button"
 import Popup from "./Popup"
 
-interface SelectProps<T> extends ElementProps {
+type SelectProps<T> = ElementProps & {
     /** What potential values to present to the user. */
     options: CustomSelectOption<T>[]
 
@@ -31,7 +31,7 @@ interface SelectProps<T> extends ElementProps {
     trail?: ChildDom
 }
 
-export interface CustomSelectOption<T> {
+export type CustomSelectOption<T> = {
     value: T
 
     name?: string

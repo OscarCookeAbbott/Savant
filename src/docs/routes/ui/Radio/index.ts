@@ -113,7 +113,7 @@ Radio({
         ...HTMLElementProps
 }): HTMLElement
 
-interface RadioOption<T> {
+type RadioOption<T> = {
     value: T
     name?: string
     disabled?: boolean

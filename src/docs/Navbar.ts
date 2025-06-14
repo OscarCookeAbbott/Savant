@@ -2,7 +2,7 @@ import { ChildDom, derive, html, optionalAttribute, State } from ".."
 import { Link } from "../routing"
 import { getRouterPathname } from "../routing/helpers"
 
-interface NavOption {
+type NavOption = {
     name: string
     path?: string
     dom?: ChildDom

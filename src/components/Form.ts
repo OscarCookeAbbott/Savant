@@ -1,7 +1,7 @@
 import { ChildDom, ElementProps, html } from ".."
 import { forceReactive } from "../utils"
 
-interface FormProps extends ElementProps<HTMLFormElement> {}
+type FormProps = ElementProps<HTMLFormElement>
 
 export default function Form(
     { class: propClass, ...restProps }: FormProps,

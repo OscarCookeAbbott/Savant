@@ -1,7 +1,7 @@
 import { State, ChildDom, ElementProps, html, state } from ".."
 import { forceReactive } from "../utils"
 
-interface InputProps<T extends string | number> extends ElementProps {
+type InputProps<T extends string | number> = ElementProps & {
     value?: State<T | undefined>
 
     lead?: ChildDom

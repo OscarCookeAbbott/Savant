@@ -1,7 +1,7 @@
 import { ChildDom, ElementProps, html } from ".."
 import { forceReactive } from "../utils"
 
-interface ButtonProps extends ElementProps<HTMLButtonElement> {}
+type ButtonProps = ElementProps<HTMLButtonElement>
 
 export default function Button(
     { class: propClass, ...restProps }: ButtonProps,

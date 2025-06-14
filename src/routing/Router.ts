@@ -7,12 +7,12 @@ import {
 } from "./state"
 
 // TYPES
-export interface Route {
+export type Route = {
     path: string | "*"
     dom: ChildDom
 }
 
-interface RouterProps {
+type RouterProps = {
     routes: Route[]
     basename?: string
 }

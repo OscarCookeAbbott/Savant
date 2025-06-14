@@ -142,7 +142,7 @@ Select({
         ...HTMLElementProps
 }): HTMLElement
 
-interface SelectOption<T> {
+type SelectOption<T> = {
     value: T
     name?: string
     disabled?: boolean

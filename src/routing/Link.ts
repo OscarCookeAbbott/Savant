@@ -3,7 +3,7 @@ import { forceReactive } from "../utils"
 import { navigate } from "./helpers"
 import { _routerPathname, _routerBasename } from "./state"
 
-interface LinkProps extends ElementProps<HTMLAnchorElement> {
+type LinkProps = ElementProps<HTMLAnchorElement> & {
     replace?: boolean
     disabled?: boolean
 }

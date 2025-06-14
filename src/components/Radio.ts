@@ -9,7 +9,7 @@ import {
 import { forceReactive } from "../utils"
 import Button from "./Button"
 
-interface RadioProps<T> extends ElementProps {
+type RadioProps<T> = ElementProps & {
     options: RadioOption<T>[]
 
     value?: State<T | undefined>
@@ -17,7 +17,7 @@ interface RadioProps<T> extends ElementProps {
     required?: boolean
 }
 
-export interface RadioOption<T> {
+export type RadioOption<T> = {
     value: T
     name?: string
     disabled?: boolean
