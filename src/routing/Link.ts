@@ -1,5 +1,5 @@
 import { ChildDom, ElementProps, html } from ".."
-import { forceReactive } from "../utils"
+import { forceReactive, unwrapVal } from "../utils"
 import { navigate } from "./helpers"
 import { _routerPathname, _routerBasename } from "./state"
 
@@ -27,12 +27,13 @@ export default function Link(
             onclick: (e: MouseEvent) => {
                 e.preventDefault()
 
-                if (disabled) return
+                const hrefValue = unwrapVal(href)
 
-                navigate(href, { replace })
+                if (disabled || hrefValue === undefined) return
 
-                // Call original anchor onclick, if defined
-                onclick?.(e)
+                navigate(String(hrefValue), { replace })
+
+                if (typeof onclick === "function") onclick(e)
             },
             tabIndex: 0,
             class: () =>

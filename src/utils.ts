@@ -93,3 +93,14 @@ export function isOrArrayHas<T>(
 
     return false
 }
+
+/** Unwraps the given value, which can be a State, derivation function, or direct value.
+ * @returns The unwrapped value.
+ */
+export function unwrapVal<T>(value: Val<T>): T {
+    if (value instanceof State) return value.val
+
+    if (typeof value === "function") return value()
+
+    return value
+}
