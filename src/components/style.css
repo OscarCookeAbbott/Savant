@@ -168,6 +168,7 @@
     --color-mood-950: --value(--color- * -950);
 }
 
+/* VARIANTS */
 @utility variant-basic {
     @apply rounded-lg px-2 py-1 ring-inset;
 }
@@ -232,10 +233,11 @@
     @apply text-mood-600 dark:text-mood-300;
 }
 
+/* BACKGROUND */
 @utility bg-background {
-    @apply bg-white dark:bg-black;
+    @apply bg-white dark:bg-neutral-950;
 }
 
 @utility bg-background-translucent {
-    @apply bg-white/50 dark:bg-black/50;
+    @apply bg-white/50 dark:bg-neutral-950/50;
 }

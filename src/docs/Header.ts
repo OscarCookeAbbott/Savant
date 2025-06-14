@@ -17,7 +17,7 @@ export default function Header(): HTMLElement {
             html.div(
                 { class: "flex items-center gap-2" },
 
-                html.img({ src: logo, class: "size-12 -m-2 brightness-0" }),
+                html.img({ src: logo, class: "size-12 -m-2 not-dark:brightness-0" }),
 
                 html.span({ class: "text-xl font-bold" }, "Savant"),
 

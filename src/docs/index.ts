@@ -4,13 +4,13 @@ import { add, html } from ".."
 import { Router } from "../routing"
 import rootRoute from "./routes/index.ts"
 
-const reactivityRoutes = import.meta.glob("./routes/reactivity/**/index.ts", {
+const coreRoutes = import.meta.glob("./routes/core/**/index.ts", {
     eager: true,
 })
 const routingRoutes = import.meta.glob("./routes/routing/**/index.ts", {
     eager: true,
 })
-const componentsRoutes = import.meta.glob("./routes/components/**/index.ts", {
+const uiRoutes = import.meta.glob("./routes/ui/**/index.ts", {
     eager: true,
 })
 const examplesRoutes = import.meta.glob("./routes/examples/**/index.ts", {
@@ -36,9 +36,9 @@ const pages = [
         name: "Introduction",
         children: [{ name: "Welcome", path: "/", dom: rootRoute }],
     },
-    { name: "Reactivity", children: routeMaker(reactivityRoutes) },
+    { name: "Core", children: routeMaker(coreRoutes) },
     { name: "Routing", children: routeMaker(routingRoutes) },
-    { name: "Components", children: routeMaker(componentsRoutes) },
+    { name: "Savant UI", children: routeMaker(uiRoutes) },
     { name: "Examples", children: routeMaker(examplesRoutes) },
 ]
 
@@ -58,11 +58,11 @@ function App() {
         html.div(
             { class: "flex flex-1" },
 
-            Navbar({ options: pages, class: "min-w-64" }),
+            Navbar({ options: pages, class: "min-w-64 not-lg:hidden" }),
 
             html.div(
                 {
-                    class: "ml-64 flex flex-1 justify-center",
+                    class: "lg:ml-64 flex flex-1 justify-center",
                 },
 
                 html.div(
