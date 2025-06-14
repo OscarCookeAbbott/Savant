@@ -10,7 +10,7 @@ import {
 import { forceReactive } from "../utils"
 import Button from "./Button"
 
-interface CheckboxProps extends ElementProps {
+type CheckboxProps = ElementProps & {
     value?: State<boolean>
 
     required?: boolean

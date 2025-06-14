@@ -4,10 +4,10 @@ import { forceReactive } from "../utils"
 interface FormProps extends ElementProps<HTMLFormElement> {}
 
 export default function Form(
-    { class: propsClass, ...restProps }: FormProps,
+    { class: propClass, ...restProps }: FormProps,
     ...children: ChildDom[]
 ): HTMLFormElement {
-    const reactiveClass = forceReactive(propsClass)
+    const reactiveClass = forceReactive(propClass)
 
     return html.form(
         {

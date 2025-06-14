@@ -1,7 +1,7 @@
 import { ChildDom, ElementProps, html } from ".."
 import { forceReactive } from "../utils"
 
-interface CodeProps extends ElementProps {
+type CodeProps = ElementProps & {
     language: string
 }
 

@@ -2,13 +2,13 @@ import { ElementProps, html } from ".."
 import { forceReactive } from "../utils"
 import Showdown from "showdown"
 
-interface MarkdownProps extends ElementProps {}
+type MarkdownProps = ElementProps & {}
 
 export default function Markdown(
-    { class: propsClass, ...restProps }: MarkdownProps,
+    { class: propClass, ...restProps }: MarkdownProps,
     markdown: string,
 ): HTMLElement {
-    const reactiveClass = forceReactive(propsClass)
+    const reactiveClass = forceReactive(propClass)
 
     const mdConverter = new Showdown.Converter()
     const mdHtml = mdConverter.makeHtml(markdown)

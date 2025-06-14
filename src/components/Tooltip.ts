@@ -2,7 +2,7 @@ import { ChildDom, ElementProps } from ".."
 import { forceReactive } from "../utils"
 import Popup, { PopupDirection, PopupTrigger } from "./Popup"
 
-interface TooltipProps extends ElementProps {
+type TooltipProps = ElementProps & {
     direction?: PopupDirection
     trigger?: PopupTrigger | PopupTrigger[]
 }

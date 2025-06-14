@@ -3,7 +3,6 @@ import {
     Checkbox,
     Icon,
     Label,
-    Popup,
     Input,
     Form,
 } from "../../../../components"

@@ -1,7 +1,7 @@
 import { ChildDom, ElementProps, html } from ".."
 import { forceReactive } from "../utils"
 
-interface BadgeProps extends ElementProps {}
+type BadgeProps = ElementProps
 
 export default function Badge(
     { class: propClass, ...restProps }: BadgeProps,

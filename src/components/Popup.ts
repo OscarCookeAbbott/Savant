@@ -16,7 +16,7 @@ import {
 } from "../utils"
 
 // TYPES
-interface PopupProps extends ElementProps {
+type PopupProps = ElementProps & {
     visible?: State<boolean>
     direction?: PopupDirection
     trigger?: PopupTrigger | PopupTrigger[]

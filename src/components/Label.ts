@@ -1,7 +1,7 @@
 import { ChildDom, ElementProps, html } from ".."
 import { forceReactive } from "../utils"
 
-interface LabelProps extends ElementProps {
+type LabelProps = ElementProps & {
     content: ChildDom
 }
 

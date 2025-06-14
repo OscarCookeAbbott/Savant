@@ -2,10 +2,10 @@ import { ElementProps, html, optionalAttribute, state } from ".."
 import { forceReactive } from "../utils"
 
 export default function Contents(
-    { class: propsClass }: ElementProps,
+    { class: propClass }: ElementProps,
     content: HTMLElement,
 ): HTMLElement {
-    const reactiveClass = forceReactive(propsClass)
+    const reactiveClass = forceReactive(propClass)
 
     const headings = [...content.querySelectorAll("h1, h2, h3, h4, h5")]
 
