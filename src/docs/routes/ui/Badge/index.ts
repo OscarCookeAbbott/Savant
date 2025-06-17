@@ -80,7 +80,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Badge Demo
+                `\
 import { Badge } from "savant/components"
 
 Badge(
@@ -97,7 +97,8 @@ Badge(
             Code(
                 { language: "ts" },
 
-                `function Badge(
+                `\
+function Badge(
     props: HTMLElementProps,
     ...children: ChildDom[]
 ): HTMLElement`,

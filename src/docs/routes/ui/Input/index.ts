@@ -93,7 +93,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Input Demo
+                `\
 import { Input } from "savant/components"
 
 Input({
@@ -110,7 +110,8 @@ Input({
             Code(
                 { language: "ts" },
 
-                `function Input<T extends string | number>(
+                `\
+function Input<T extends string | number>(
     props: {
         value: State<T | undefined> = state(undefined),
         type: string = <typeof T>,

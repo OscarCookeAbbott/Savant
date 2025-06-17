@@ -80,7 +80,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Popup Demo
+                `\
 import { Button, Popup } from "savant/components"
 
 Button(
@@ -110,7 +110,8 @@ Button(
             Code(
                 { language: "ts" },
 
-                `function Popup(
+                `\
+function Popup(
     props: {
         visible: State<boolean> = state(false),
         direction: PopupDirection = PopupDirection.BOTTOM,

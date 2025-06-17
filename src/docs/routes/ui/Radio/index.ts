@@ -83,7 +83,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Radio Demo
+                `\
 import { Radio } from "savant/components"
 
 Radio({
@@ -105,7 +105,8 @@ Radio({
             Code(
                 { language: "ts" },
 
-                `function Radio<T>(
+                `\
+function Radio<T>(
     props: {
         options: RadioOption<T>[],
         value: State<RadioOption<T> | undefined> = state(undefined),

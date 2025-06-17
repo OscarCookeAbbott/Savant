@@ -81,7 +81,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Checkbox Demo
+                `\
 import { Checkbox } from "savant/components"
 
 Checkbox(
@@ -98,7 +98,8 @@ Checkbox(
             Code(
                 { language: "ts" },
 
-                `function Checkbox(
+                `\
+function Checkbox(
     props: {
         value: State<boolean> = state(false),
         required: boolean = false,

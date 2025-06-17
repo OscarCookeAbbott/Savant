@@ -115,14 +115,14 @@ export default function Select<T>({
                             },
 
                             html.span(
-                                { class: "group-hover:opacity-25 transition" },
+                                { class: "group-hover:opacity-25" },
 
                                 String(item),
                             ),
 
                             html.i(
                                 {
-                                    class: "opacity-0 group-hover:opacity-100 absolute right-1 transition",
+                                    class: "not-group-hover:hidden absolute right-1",
                                 },
 
                                 "cancel",

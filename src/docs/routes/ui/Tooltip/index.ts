@@ -53,7 +53,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Tooltip Demo
+                `\
 import { Button, Tooltip } from "savant/components"
 
 Button(
@@ -82,7 +82,8 @@ Button(
             Code(
                 { language: "ts" },
 
-                `function Tooltip(
+                `\
+function Tooltip(
     props: {
         direction: PopupDirection = PopupDirection.BOTTOM,
         trigger: PopupTrigger = PopupTrigger.CLICK,

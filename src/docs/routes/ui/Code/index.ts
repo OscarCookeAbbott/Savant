@@ -26,7 +26,7 @@ export default function Page() {
                         language: "ts",
                     },
 
-                    `// Code Demo
+                    `\
 import { Code } from "savant/components"
 
 Code(
@@ -50,7 +50,8 @@ Code(
                 Code(
                     { language: "ts" },
 
-                    `function Code(
+                    `\
+function Code(
     props: { language: string, ...HTMLElementProps },
     ...children: ChildDom[]
 ): HTMLElement`,

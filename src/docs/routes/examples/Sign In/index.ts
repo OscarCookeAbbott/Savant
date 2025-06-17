@@ -33,7 +33,8 @@ export default function Page() {
             Code(
                 { language: "typescript" },
 
-                `function SignIn(): HTMLElement {
+                `\
+function SignIn() {
     const username = state("")
     const password = state("")
     const savePassword = state(false)

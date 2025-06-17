@@ -95,7 +95,7 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Button Demo
+                `\
 import { Button } from "savant/components"
 
 Button(
@@ -112,7 +112,8 @@ Button(
             Code(
                 { language: "ts" },
 
-                `function Button(
+                `\
+function Button(
     props: HTMLButtonProps,
     ...children: ChildDom[]
 ): HTMLButtonElement`,

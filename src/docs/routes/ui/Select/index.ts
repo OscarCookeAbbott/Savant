@@ -1,9 +1,15 @@
 import { Code, Label, Select } from "../../../../components"
 import { html, State, state } from "../../../.."
 
+const DemoSelectType = {
+    SINGLE: "single",
+    MULTI: "multi",
+    MULTICHIPS: "multichips",
+} as const
+type DemoSelectType = (typeof DemoSelectType)[keyof typeof DemoSelectType]
+
 export default function Page() {
-    const exampleType: State<"single" | "multi" | "multichips"> =
-        state("single")
+    const exampleType: State<DemoSelectType> = state(DemoSelectType.SINGLE)
     const exampleVariant = state("variant-outline")
     const exampleMood = state("mood-none")
 
@@ -38,7 +44,7 @@ export default function Page() {
                     () =>
                         Select({
                             value:
-                                exampleType.val === "single"
+                                exampleType.val === DemoSelectType.SINGLE
                                     ? state("Option 1")
                                     : state(["Option 1", "Option 2"]),
                             options: [
@@ -47,7 +53,8 @@ export default function Page() {
                                 { value: "Option 3" },
                                 { value: "Option 4" },
                             ],
-                            useChips: exampleType.val === "multichips",
+                            useChips:
+                                exampleType.val === DemoSelectType.MULTICHIPS,
                             class: () =>
                                 `${exampleVariant.val} ${exampleMood.val}`,
                         }),
@@ -107,18 +114,18 @@ export default function Page() {
             Code(
                 { language: "ts" },
 
-                `// Select Demo
+                `\
 import { Select } from "savant/components"
 
 Select({
-    value: state(${exampleType.val === "single" ? `"Option 1"` : `["Option 1", "Option 2"])`}),
+    value: state(${exampleType.val === DemoSelectType.SINGLE ? `"Option 1"` : `["Option 1", "Option 2"])`}),
     options: [
         { value: "Option 1" },
         { value: "Option 2", disabled: true },
         { value: "Option 3" },
         { value: "Option 4" },
     ],${
-        exampleType.val === "multichips"
+        exampleType.val === DemoSelectType.MULTICHIPS
             ? `
     useChips: true,`
             : ""
@@ -135,7 +142,8 @@ Select({
             Code(
                 { language: "ts" },
 
-                `function Select<T>(
+                `\
+function Select<T>(
     props: {
         options: SelectOption<T>[],
         value: State<SelectOption<T> | undefined> = state(undefined),
