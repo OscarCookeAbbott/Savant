@@ -22,7 +22,7 @@ type SelectProps<T> = ElementProps & {
     value?: State<T> | State<T[]>
 
     /** Whether to display selected values as small buttons that can be quickly deselected. */
-    usePips?: boolean
+    useChips?: boolean
 
     /** Optional to display to the left of the selected value(s). */
     lead?: ChildDom
@@ -46,7 +46,7 @@ export type CustomSelectOption<T> = {
 export default function Select<T>({
     options,
     value = state(options[0].value),
-    usePips = false,
+    useChips = false,
     lead,
     trail,
     class: propClass,
@@ -92,7 +92,7 @@ export default function Select<T>({
                 {
                     name: "Value Display",
                     class: () =>
-                        `text-nowrap text-ellipsis overflow-hidden ${isNull.val ? "text-foreground-weak" : ""} ${usePips ? "flex flex-wrap gap-1" : ""}`,
+                        `text-nowrap text-ellipsis overflow-hidden ${isNull.val ? "text-foreground-weak" : ""} ${useChips ? "flex flex-wrap gap-1" : ""} ${isOpen.val ? "invisible" : ""}`,
                 },
 
                 (() => {
@@ -100,13 +100,13 @@ export default function Select<T>({
 
                     if (!Array.isArray(value.val)) return String(value.val)
 
-                    if (!usePips)
+                    if (!useChips)
                         return value.val.map((item) => String(item)).join(", ")
 
                     return value.val.map((item) =>
                         Button(
                             {
-                                class: "mood-accent text-xs variant-subtle rounded hover:mood-error",
+                                class: "group mood-accent text-xs variant-subtle rounded relative",
                                 onclick: (e: MouseEvent) => {
                                     e.stopPropagation()
 
@@ -114,7 +114,19 @@ export default function Select<T>({
                                 },
                             },
 
-                            String(item),
+                            html.span(
+                                { class: "group-hover:opacity-25 transition" },
+
+                                String(item),
+                            ),
+
+                            html.i(
+                                {
+                                    class: "opacity-0 group-hover:opacity-100 absolute right-1 transition",
+                                },
+
+                                "cancel",
+                            ),
                         ),
                     )
                 })(),
@@ -169,46 +181,11 @@ export default function Select<T>({
                             isOrArrayHas(value.val, option.value),
                         )
 
-                        return html.button(
-                            {
-                                class: "flex gap-2 not-disabled:hover:bg-surface-400/15 not-disabled:focus-visible:bg-surface-400/15 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed group items-center",
-                                disabled: optionalAttribute(
-                                    () => option.disabled || undefined,
-                                ),
-                                "data-selected": optionalAttribute(
-                                    () => isSelected.val || undefined,
-                                ),
-                                tabIndex: 0,
-                                onclick: () => selectOption(option.value),
-                            },
-
-                            html.span(
-                                { class: "text-nowrap" },
-                                option.name ?? String(option.value),
-                            ),
-
-                            svg.svg(
-                                {
-                                    viewBox: "0 0 100 100",
-                                    class: "size-4 not-group-data-selected:invisible",
-                                    style: "stroke-linecap:round; stroke-linejoin:round;",
-                                    hidden: optionalAttribute(
-                                        () => !isMulti.val || undefined,
-                                    ),
-                                },
-
-                                svg.path({
-                                    d: "M20,60L40,80L80,20",
-                                    class: "stroke-current stroke-[10] fill-none",
-                                }),
-                            ),
-
-                            html.div({
-                                class: "bg-current rounded-full size-2.5 m-0.75 aspect-square not-group-data-selected:invisible",
-                                hidden: optionalAttribute(
-                                    () => isMulti.val || undefined,
-                                ),
-                            }),
+                        return SelectOptionItem(
+                            option,
+                            isMulti,
+                            isSelected,
+                            selectOption,
                         )
                     }),
                 ),
@@ -216,4 +193,58 @@ export default function Select<T>({
     )
 
     return container
+}
+
+function SelectOptionItem<T>(
+    option: CustomSelectOption<T>,
+    isMulti: State<boolean>,
+    isSelected: State<boolean>,
+    onClick: (value: T) => void,
+) {
+    return html.div(
+        {
+            "data-selected": optionalAttribute(
+                () => isSelected.val || undefined,
+            ),
+            class: "contents group",
+        },
+
+        html.span({
+            name: "Magic divider",
+            class: "h-[1px] mx-1 pointer-events-none bg-surface-500/15 group-first:hidden group-hover:invisible group-data-selected:invisible [*:hover_+_*_>_&]:invisible [*[data-selected]_+_*_>_&]:invisible ",
+        }),
+
+        html.button(
+            {
+                class: "flex gap-2 not-disabled:hover:bg-surface-500/20 not-disabled:focus-visible:bg-surface-500/20 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed items-center group-data-selected:mood-accent group-data-selected:!bg-mood/25",
+                disabled: optionalAttribute(() => option.disabled || undefined),
+                tabIndex: 0,
+                onclick: () => onClick?.(option.value),
+            },
+
+            html.span(
+                { class: "text-nowrap" },
+                option.name ?? String(option.value),
+            ),
+
+            svg.svg(
+                {
+                    viewBox: "0 0 100 100",
+                    class: "size-4 not-group-data-selected:invisible",
+                    style: "stroke-linecap:round; stroke-linejoin:round;",
+                    hidden: optionalAttribute(() => !isMulti.val || undefined),
+                },
+
+                svg.path({
+                    d: "M20,60L40,80L80,20",
+                    class: "stroke-current stroke-[10] fill-none",
+                }),
+            ),
+
+            html.div({
+                class: "bg-current rounded-full size-2 m-0.75 aspect-square not-group-data-selected:invisible",
+                hidden: optionalAttribute(() => isMulti.val || undefined),
+            }),
+        ),
+    )
 }

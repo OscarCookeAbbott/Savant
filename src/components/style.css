@@ -178,7 +178,7 @@
 }
 
 @utility variant-subtle {
-    @apply bg-mood-400/25 variant-basic;
+    @apply bg-mood-500/25 variant-basic;
 }
 
 @utility variant-ghost {
@@ -259,7 +259,7 @@
 
     background: repeating-linear-gradient(
         var(--zebra-angle),
-        var(--zebra-color-from) 0,
+        var(--zebra-color-from),
         var(--zebra-color-from) var(--zebra-width-from),
         var(--zebra-color-to) var(--zebra-width-from),
         var(--zebra-color-to)

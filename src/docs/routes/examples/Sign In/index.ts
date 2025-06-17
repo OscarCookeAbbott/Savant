@@ -11,7 +11,7 @@ export default function Page() {
         html.p({ class: "text-foreground-weak" }, "Example Sign In component."),
 
         Label(
-            { content: "Demo" },
+            { content: "Demo", class: "mt-4" },
 
             html.div(
                 {

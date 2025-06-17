@@ -2,7 +2,8 @@ import { Code, Label, Select } from "../../../../components"
 import { html, State, state } from "../../../.."
 
 export default function Page() {
-    const exampleType: State<"single" | "multi" | "multipips"> = state("single")
+    const exampleType: State<"single" | "multi" | "multichips"> =
+        state("single")
     const exampleVariant = state("variant-outline")
     const exampleMood = state("mood-none")
 
@@ -46,7 +47,7 @@ export default function Page() {
                                 { value: "Option 3" },
                                 { value: "Option 4" },
                             ],
-                            usePips: exampleType.val === "multipips",
+                            useChips: exampleType.val === "multichips",
                             class: () =>
                                 `${exampleVariant.val} ${exampleMood.val}`,
                         }),
@@ -62,7 +63,7 @@ export default function Page() {
                             options: [
                                 { value: "single" },
                                 { value: "multi" },
-                                { value: "multipips" },
+                                { value: "multichips" },
                             ],
                             value: exampleType,
                             class: "variant-outline w-48",
@@ -117,9 +118,9 @@ Select({
         { value: "Option 3" },
         { value: "Option 4" },
     ],${
-        exampleType.val === "multipips"
+        exampleType.val === "multichips"
             ? `
-    usePips: true,`
+    useChips: true,`
             : ""
     }
     class: "${exampleVariant.val} ${exampleMood.val}",
