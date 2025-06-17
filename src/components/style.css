@@ -244,6 +244,14 @@
 
 /* ZEBRA */
 @utility bg-zebra {
+    @apply zebra;
+
+    background-image: var(--zebra);
+
+    background-attachment: fixed;
+}
+
+@utility zebra {
     --zebra-color-from: color-mix(
         in oklab,
         var(--color-surface-500) var(--zebra-opacity),
@@ -254,10 +262,12 @@
     --zebra-width-from: 0.5rem;
     --zebra-width-to: 0.5rem;
 
-    --zebra-angle: 135deg;
+    --zebra-angle: -45deg;
     --zebra-opacity: 100%;
 
-    background: repeating-linear-gradient(
+    --zebra-speed: 0;
+
+    --zebra: repeating-linear-gradient(
         var(--zebra-angle),
         var(--zebra-color-from),
         var(--zebra-color-from) var(--zebra-width-from),
@@ -265,6 +275,21 @@
         var(--zebra-color-to)
             calc(var(--zebra-width-from) + var(--zebra-width-to))
     );
+
+    animation: ZebraSlide calc(1s / var(--zebra-speed)) linear infinite;
+}
+
+@keyframes ZebraSlide {
+    100% {
+        background-position: calc(
+                (var(--zebra-width-from) + var(--zebra-width-from)) *
+                    cos(calc(var(--zebra-angle) + 90deg))
+            )
+            calc(
+                (var(--zebra-width-from) + var(--zebra-width-from)) *
+                    sin(calc(var(--zebra-angle) + 90deg))
+            );
+    }
 }
 
 @utility zebra-from-* {
@@ -310,4 +335,8 @@
 @utility zebra-opacity-* {
     /* prettier-ignore */
     --zebra-opacity: --value(integer)%;
+}
+
+@utility zebra-speed-* {
+    --zebra-speed: --value(number);
 }
