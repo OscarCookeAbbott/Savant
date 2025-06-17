@@ -8,7 +8,7 @@ export default function Header(): HTMLElement {
     return html.header(
         {
             name: "Header",
-            class: "bg-background-translucent fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-200 dark:border-surface-700 z-10",
+            class: "bg-background-translucent fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-500/50 z-10",
         },
 
         html.div(

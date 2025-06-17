@@ -47,6 +47,7 @@ export default function Checkbox(
         Button(
             {
                 role: "checkbox",
+                type: "button",
                 tabIndex: 0,
                 class: () =>
                     `button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-error ${reactiveClass.val

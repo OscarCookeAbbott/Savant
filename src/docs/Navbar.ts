@@ -21,7 +21,7 @@ export default function Navbar({
     return html.div(
         {
             name: "Navbar",
-            class: `p-6 flex flex-col overflow-y-auto fixed top-12 h-[calc(100%-3rem)] left-0 bg-background border-r border-surface-200 dark:border-surface-700 ${propClass}`,
+            class: `p-6 flex flex-col overflow-y-auto fixed top-12 h-[calc(100%-3rem)] left-0 bg-background border-r border-surface-500/50 ${propClass}`,
         },
 
         options.map((option) => NavOption(option, 0, path)),

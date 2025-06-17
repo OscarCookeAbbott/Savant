@@ -16,7 +16,7 @@ console.warn(num.val) // Output: 43
 console.warn(doubleNum.val) // Output: 86
 ```
 
-Value-less _effects_ can also inherently be defined via `derive()` by just not returning a value:
+Value-less _effects_ can also inherently be defined via `derive()` by omitting a return value:
 
 ```typescript
 derive(() => console.log(num.val))

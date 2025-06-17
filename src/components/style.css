@@ -241,3 +241,73 @@
 @utility bg-background-translucent {
     @apply bg-white/50 dark:bg-neutral-950/50;
 }
+
+/* ZEBRA */
+@utility bg-zebra {
+    --zebra-color-from: color-mix(
+        in oklab,
+        var(--color-surface-500) var(--zebra-opacity),
+        transparent
+    );
+    --zebra-color-to: transparent;
+
+    --zebra-width-from: 0.5rem;
+    --zebra-width-to: 0.5rem;
+
+    --zebra-angle: 135deg;
+    --zebra-opacity: 100%;
+
+    background: repeating-linear-gradient(
+        var(--zebra-angle),
+        var(--zebra-color-from) 0,
+        var(--zebra-color-from) var(--zebra-width-from),
+        var(--zebra-color-to) var(--zebra-width-from),
+        var(--zebra-color-to)
+            calc(var(--zebra-width-from) + var(--zebra-width-to))
+    );
+}
+
+@utility zebra-from-* {
+    --zebra-color-from: color-mix(
+        in oklab,
+        --value(--color- *) var(--zebra-opacity),
+        transparent
+    );
+}
+
+@utility zebra-to-* {
+    --zebra-color-to: color-mix(
+        in oklab,
+        --value(--color- *) var(--zebra-opacity),
+        transparent
+    );
+}
+
+@utility zebra-width-* {
+    --zebra-width-from: --value([ *]);
+    --zebra-width-to: --value([ *]);
+
+    --zebra-width-from: calc(var(--spacing) * --value(integer));
+    --zebra-width-to: calc(var(--spacing) * --value(integer));
+}
+
+@utility zebra-from-width-* {
+    --zebra-width-from: --value([ *]);
+
+    --zebra-width-from: calc(var(--spacing) * --value(integer));
+}
+
+@utility zebra-to-width-* {
+    --zebra-width-to: --value([ *]);
+
+    --zebra-width-to: calc(var(--spacing) * --value(integer));
+}
+
+@utility zebra-angle-* {
+    --zebra-angle: --value([ *]);
+}
+
+@utility zebra-opacity-* {
+    /* prettier-ignore */
+    --zebra-opacity: --value(integer)%;
+}

@@ -26,7 +26,12 @@ const routeMaker = (dirRoutes: Record<string, unknown>) =>
 
         return {
             name: pageName,
-            path: path.replace("./routes", "").split("/").slice(0, -2).concat(pageName).join("/"),
+            path: path
+                .replace("./routes", "")
+                .split("/")
+                .slice(0, -2)
+                .concat(pageName)
+                .join("/"),
             dom: route.default,
         }
     })
@@ -62,12 +67,12 @@ function App() {
 
             html.div(
                 {
-                    class: "lg:ml-64 flex flex-1 justify-center",
+                    class: "lg:ml-64 overflow-clip flex flex-1 justify-center",
                 },
 
                 html.div(
                     {
-                        class: "flex flex-col px-8 pt-24 pb-16 gap-4 max-w-5xl",
+                        class: "flex flex-col px-8 pt-24 pb-16 gap-4 w-3xl",
                     },
 
                     Router({ routes: routes }),

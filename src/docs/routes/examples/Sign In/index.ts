@@ -14,9 +14,16 @@ export default function Page() {
             { content: "Demo" },
 
             html.div(
-                { class: "card vessel flex flex-col items-center gap-4" },
+                {
+                    class: "card vessel bg-zebra zebra-opacity-20 flex flex-col items-center gap-4",
+                },
 
-                html.div({ class: "p-8 flex items-center" }, SignIn()),
+                html.div(
+                    {
+                        class: "p-8 card vessel bg-background flex items-center",
+                    },
+                    SignIn(),
+                ),
             ),
         ),
 

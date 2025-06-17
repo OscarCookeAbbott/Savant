@@ -27,20 +27,20 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
         @apply bg-surface/10;
     }
     pre[class*="language-"] {
-        @apply overflow-auto p-4;
+        @apply overflow-auto p-2;
     }
     :not(pre) > code[class*="language-"],
     pre[class*="language-"] {
-        @apply variant-outline bg-surface/10 p-4;
+        @apply variant-outline bg-surface/10 p-2;
     }
     :not(pre) > code[class*="language-"] {
-        @apply rounded p-1 whitespace-normal;
+        @apply rounded px-1 py-0.5 whitespace-normal;
     }
     .token.cdata,
     .token.comment,
     .token.doctype,
     .token.prolog {
-        @apply text-teal-500;
+        @apply text-emerald-500;
     }
     .token.punctuation {
         @apply text-neutral-500;
@@ -63,14 +63,14 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
     .token.inserted,
     .token.selector,
     .token.string {
-        @apply text-green-500;
+        @apply text-teal-500;
     }
     .language-css .token.string,
     .style .token.string,
     .token.entity,
     .token.operator,
     .token.url {
-        @apply text-rose-400;
+        @apply text-orange-500;
     }
     .token.atrule,
     .token.attr-value,
@@ -79,12 +79,12 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
     }
     .token.class-name,
     .token.function {
-        @apply text-sky-600 dark:text-sky-300;
+        @apply text-sky-500;
     }
     .token.important,
     .token.regex,
     .token.variable {
-        @apply text-orange-500;
+        @apply text-red-500;
     }
     .token.bold,
     .token.important {
