@@ -1,14 +1,15 @@
 import { Button, Code, Label, Popup, Select } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { PopupTrigger } from "../../../../components/Popup"
 import { html, state } from "../../../.."
 
 export default function Page() {
-    const exampleTriggers = state([PopupTrigger.CLICK])
+    const exampleTriggers = state<PopupTrigger[]>([PopupTrigger.CLICK])
 
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Popup"),
+        html.h1("Popup"),
 
         html.p(
             { class: "text-foreground-weak" },
@@ -16,62 +17,57 @@ export default function Page() {
             "Versatile dynamic content floating near its parent.",
         ),
 
-        Label(
+        html.h2("Demo"),
+
+        html.div(
             {
-                content: "Demo",
-                class: "mt-4",
+                name: "Demo",
+                class: "card vessel flex flex-col items-center gap-4",
             },
 
             html.div(
                 {
-                    name: "Demo",
-                    class: "card vessel flex flex-col items-center gap-4",
+                    class: "p-8 h-48 flex justify-center flex-col gap-8 w-3xs",
                 },
 
-                html.div(
+                Button(
                     {
-                        class: "p-8 h-48 flex justify-center flex-col gap-8 w-3xs",
+                        class: "variant-filled",
                     },
 
-                    Button(
-                        {
-                            class: "variant-filled",
-                        },
+                    "Popup Trigger",
 
-                        "Popup Trigger",
+                    () =>
+                        Popup(
+                            {
+                                trigger: exampleTriggers.val,
+                                class: "card glass vessel flex flex-col shadow",
+                            },
 
-                        () =>
-                            Popup(
-                                {
-                                    trigger: exampleTriggers.val,
-                                    class: "card glass vessel flex flex-col shadow",
-                                },
-
-                                "Hello! Click outside me to close.",
-                            ),
-                    ),
+                            "Hello! Click outside me to close.",
+                        ),
                 ),
+            ),
 
-                html.div(
-                    { class: "flex flex-wrap gap-4 justify-center" },
+            html.div(
+                { class: "flex flex-wrap gap-4 justify-center" },
 
-                    Label(
-                        { content: "Trigger", class: "items-center" },
+                Label(
+                    { content: "Trigger", class: "items-center" },
 
-                        Select({
-                            options: [
-                                { value: PopupTrigger.CLICK },
-                                { value: PopupTrigger.HOVER },
-                                { value: PopupTrigger.HOVER_IN },
-                                { value: PopupTrigger.HOVER_OUT },
-                                { value: PopupTrigger.FOCUS },
-                                { value: PopupTrigger.FOCUS_IN },
-                                { value: PopupTrigger.FOCUS_OUT },
-                            ],
-                            value: exampleTriggers,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                    Select({
+                        options: [
+                            { value: PopupTrigger.CLICK },
+                            { value: PopupTrigger.HOVER },
+                            { value: PopupTrigger.HOVER_IN },
+                            { value: PopupTrigger.HOVER_OUT },
+                            { value: PopupTrigger.FOCUS },
+                            { value: PopupTrigger.FOCUS_IN },
+                            { value: PopupTrigger.FOCUS_OUT },
+                        ],
+                        value: exampleTriggers,
+                        class: "variant-outline w-48",
+                    }),
                 ),
             ),
         ),
@@ -102,15 +98,12 @@ Button(
 ),`,
             ),
 
-        Label(
-            {
-                content: "Signature",
-                class: "mt-4",
-            },
-            Code(
-                { language: "ts" },
+        html.h2("Signature"),
 
-                `\
+        Code(
+            { language: "ts" },
+
+            `\
 function Popup(
     props: {
         visible: State<boolean> = state(false),
@@ -120,7 +113,13 @@ function Popup(
     },
     ...children: ChildDom[]
 ): HTMLElement`,
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

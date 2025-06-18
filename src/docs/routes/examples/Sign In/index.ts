@@ -1,39 +1,37 @@
-import { Code, Label } from "../../../../components"
+import { Code } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { html } from "../../../.."
 import SignIn from "./SignIn"
 
 export default function Page() {
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Sign In"),
+        html.h1("Sign In"),
 
         html.p({ class: "text-foreground-weak" }, "Example Sign In component."),
 
-        Label(
-            { content: "Demo", class: "mt-4" },
+        html.h2("Demo"),
+
+        html.div(
+            {
+                class: "card vessel bg-zebra zebra-opacity-20 flex flex-col items-center gap-4",
+            },
 
             html.div(
                 {
-                    class: "card vessel bg-zebra zebra-opacity-20 flex flex-col items-center gap-4",
+                    class: "p-8 card vessel bg-background flex items-center",
                 },
-
-                html.div(
-                    {
-                        class: "p-8 card vessel bg-background flex items-center",
-                    },
-                    SignIn(),
-                ),
+                SignIn(),
             ),
         ),
 
-        Label(
-            { content: "Code" },
+        html.h2("Code"),
 
-            Code(
-                { language: "typescript" },
+        Code(
+            { language: "typescript" },
 
-                `\
+            `\
 function SignIn() {
     const username = state("")
     const password = state("")
@@ -154,7 +152,13 @@ function SignIn() {
         ),
     )
 }`,
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

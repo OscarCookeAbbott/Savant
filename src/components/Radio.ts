@@ -51,7 +51,7 @@ export default function Radio<T>({
                         () => isOptionSelected.val || undefined,
                     ),
                     class: () =>
-                        `group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-error ${reactiveClass.val
+                        `group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-critical ${reactiveClass.val
                             ?.split(" ")
                             .filter(
                                 (className) => !className.includes("variant"),

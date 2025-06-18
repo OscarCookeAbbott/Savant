@@ -125,7 +125,7 @@ export default function Select<T>({
                                     class: "not-group-hover:hidden absolute right-1",
                                 },
 
-                                "cancel",
+                                "close",
                             ),
                         ),
                     )

@@ -1,11 +1,14 @@
 import { Label, Code } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { html } from "../../../.."
+import Callout from "../../../../components/Callout"
+import Markdown from "../../../../components/Markdown"
 
 export default function Page() {
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Code"),
+        html.h1("Code"),
 
         html.p(
             { class: "text-foreground-weak" },
@@ -14,25 +17,33 @@ export default function Page() {
             ".",
         ),
 
-        Label(
+        Callout(
             {
-                content: "Demo",
-                class: "mt-4",
+                class: "mood-info p",
+                icon: "info",
             },
 
-            () =>
-                Code(
-                    {
-                        language: "ts",
-                    },
+            Markdown(
+                { class: "language-typescript" },
+                "Every code snippet in these docs uses the `Code` component.",
+            ),
+        ),
 
-                    `\
+        html.h2("Demo"),
+
+        () =>
+            Code(
+                {
+                    language: "ts",
+                },
+
+                `\
 import { Code } from "savant/components"
 
 Code(
     { language: "ts" },
 
-    \`// Code Demo
+    \`\\
 import { Code } from "savant/components"
 
 Code(
@@ -40,23 +51,25 @@ Code(
     ...
 )\`,
 )`,
-                ),
+            ),
 
-            Label(
-                {
-                    content: "Signature",
-                    class: "mt-4",
-                },
-                Code(
-                    { language: "ts" },
+        html.h2("Signature"),
 
-                    `\
+        Code(
+            { language: "ts" },
+
+            `\
 function Code(
     props: { language: string, ...HTMLElementProps },
     ...children: ChildDom[]
 ): HTMLElement`,
-                ),
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

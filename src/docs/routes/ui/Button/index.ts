@@ -1,92 +1,94 @@
 import { Button, Code, Label, Select } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { html, state } from "../../../.."
 
 export default function Page() {
     const exampleVariant = state("variant-filled")
     const exampleMood = state("mood-accent")
-    const extraClasses = state(["transition"])
+    const extraClasses = state([])
 
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Button"),
+        html.h1("Button"),
 
         html.p(
             { class: "text-foreground-weak" },
-            "Performs some functionality on click.",
+            "Performs some action on user click.",
         ),
 
-        Label(
+        html.h2("Design"),
+
+        html.p("Button components are used when a specific, clear and manual action needs to be performed by the user.."),
+
+        html.h2("Demo"),
+
+        html.div(
             {
-                content: "Demo",
-                class: "mt-4",
+                name: "Demo",
+                class: "card vessel flex flex-col items-center gap-4",
             },
 
             html.div(
-                {
-                    name: "Demo",
-                    class: "card vessel flex flex-col items-center gap-4",
-                },
+                { class: "p-8 h-48 flex items-center" },
 
-                html.div(
-                    { class: "p-8 h-48 flex items-center" },
+                Button(
+                    {
+                        class: () =>
+                            `${[exampleVariant.val, exampleMood.val, ...extraClasses.val].join(" ")}`,
+                    },
 
-                    Button(
-                        {
-                            class: () =>
-                                `${[exampleVariant.val, exampleMood.val, ...extraClasses.val].join(" ")}`,
-                        },
+                    "Demo Button",
+                ),
+            ),
 
-                        "Demo Button",
-                    ),
+            html.div(
+                { class: "flex flex-wrap gap-4 justify-center" },
+
+                Label(
+                    { content: "Variant", class: "items-center" },
+
+                    Select({
+                        options: [
+                            { value: "variant-outline" },
+                            { value: "variant-subtle" },
+                            { value: "variant-ghost" },
+                            { value: "variant-filled" },
+                        ],
+                        value: exampleVariant,
+                        class: "variant-outline w-48",
+                    }),
                 ),
 
-                html.div(
-                    { class: "flex flex-wrap gap-4 justify-center" },
+                Label(
+                    { content: "Mood", class: "items-center" },
 
-                    Label(
-                        { content: "Variant", class: "items-center" },
+                    Select({
+                        options: [
+                            { value: "mood-none" },
+                            { value: "mood-accent" },
+                            { value: "mood-info" },
+                            { value: "mood-success" },
+                            { value: "mood-warning" },
+                            { value: "mood-critical" },
+                        ],
+                        value: exampleMood,
+                        class: "variant-outline w-48",
+                    }),
+                ),
 
-                        Select({
-                            options: [
-                                { value: "variant-outline" },
-                                { value: "variant-subtle" },
-                                { value: "variant-ghost" },
-                                { value: "variant-filled" },
-                            ],
-                            value: exampleVariant,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                Label(
+                    { content: "Extras", class: "items-center" },
 
-                    Label(
-                        { content: "Mood", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "mood-none" },
-                                { value: "mood-accent" },
-                                { value: "mood-warning" },
-                                { value: "mood-error" },
-                            ],
-                            value: exampleMood,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
-
-                    Label(
-                        { content: "Extras", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "transition" },
-                                { value: "hover:raised" },
-                                { value: "active:lowered" },
-                            ],
-                            value: extraClasses,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                    Select({
+                        options: [
+                            { value: "transition" },
+                            { value: "hover:raised" },
+                            { value: "active:lowered" },
+                        ],
+                        value: extraClasses,
+                        class: "variant-outline w-48",
+                    }),
                 ),
             ),
         ),
@@ -104,20 +106,23 @@ Button(
 )`,
             ),
 
-        Label(
-            {
-                content: "Signature",
-                class: "mt-4",
-            },
-            Code(
-                { language: "ts" },
+        html.h2("Signature"),
 
-                `\
+        Code(
+            { language: "ts" },
+
+            `\
 function Button(
     props: HTMLButtonProps,
     ...children: ChildDom[]
 ): HTMLButtonElement`,
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

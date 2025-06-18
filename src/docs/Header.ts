@@ -23,7 +23,7 @@ export default function Header(): HTMLElement {
 
                 Badge(
                     {
-                        class: "variant-subtle mood-accent font-bold",
+                        class: "variant-ghost mood-info font-bold",
                     },
 
                     "WIP",

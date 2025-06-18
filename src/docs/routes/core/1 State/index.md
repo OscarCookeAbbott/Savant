@@ -11,18 +11,27 @@ Once created, the value of a State can be directly read or written via its `.val
 ```typescript
 num.val++
 
-console.log(num.val) // Output: 43
+console.log(num.val)
+```
+
+```console
+43
 ```
 
 Assigning a _new_ value to a state's `.raw` property will update reactive dependencies.
 
-To prevent triggering reactive updates, such as during a complex operation etc, assignments can be made to `.rawVal` instead:
+To prevent triggering [reactive updates](http://localhost:5173/core/Derive), such as during a complex operation etc, assignments can be made to `.rawVal` instead.
 
 ```typescript
 num.rawVal++
 
-console.log(num.val) // Output: 44
-console.log(num.rawVal) // Output: 44
+console.log(num.val)
+console.log(num.rawVal)
+```
+
+```console
+43
+43
 ```
 
 ## Signature

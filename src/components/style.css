@@ -27,6 +27,32 @@
     --color-accent-900: var(--color-blue-900);
     --color-accent-950: var(--color-blue-950);
 
+    --color-info: var(--color-sky-500);
+    --color-info-50: var(--color-sky-50);
+    --color-info-100: var(--color-sky-100);
+    --color-info-200: var(--color-sky-200);
+    --color-info-300: var(--color-sky-300);
+    --color-info-400: var(--color-sky-400);
+    --color-info-500: var(--color-sky-500);
+    --color-info-600: var(--color-sky-600);
+    --color-info-700: var(--color-sky-700);
+    --color-info-800: var(--color-sky-800);
+    --color-info-900: var(--color-sky-900);
+    --color-info-950: var(--color-sky-950);
+
+    --color-success: var(--color-green-500);
+    --color-success-50: var(--color-green-50);
+    --color-success-100: var(--color-green-100);
+    --color-success-200: var(--color-green-200);
+    --color-success-300: var(--color-green-300);
+    --color-success-400: var(--color-green-400);
+    --color-success-500: var(--color-green-500);
+    --color-success-600: var(--color-green-600);
+    --color-success-700: var(--color-green-700);
+    --color-success-800: var(--color-green-800);
+    --color-success-900: var(--color-green-900);
+    --color-success-950: var(--color-green-950);
+
     --color-warning: var(--color-orange-500);
     --color-warning-50: var(--color-orange-50);
     --color-warning-100: var(--color-orange-100);
@@ -40,18 +66,18 @@
     --color-warning-900: var(--color-orange-900);
     --color-warning-950: var(--color-orange-950);
 
-    --color-error: var(--color-red-500);
-    --color-error-50: var(--color-red-50);
-    --color-error-100: var(--color-red-100);
-    --color-error-200: var(--color-red-200);
-    --color-error-300: var(--color-red-300);
-    --color-error-400: var(--color-red-400);
-    --color-error-500: var(--color-red-500);
-    --color-error-600: var(--color-red-600);
-    --color-error-700: var(--color-red-700);
-    --color-error-800: var(--color-red-800);
-    --color-error-900: var(--color-red-900);
-    --color-error-950: var(--color-red-950);
+    --color-critical: var(--color-red-500);
+    --color-critical-50: var(--color-red-50);
+    --color-critical-100: var(--color-red-100);
+    --color-critical-200: var(--color-red-200);
+    --color-critical-300: var(--color-red-300);
+    --color-critical-400: var(--color-red-400);
+    --color-critical-500: var(--color-red-500);
+    --color-critical-600: var(--color-red-600);
+    --color-critical-700: var(--color-red-700);
+    --color-critical-800: var(--color-red-800);
+    --color-critical-900: var(--color-red-900);
+    --color-critical-950: var(--color-red-950);
 
     --color-mood: var(--color-surface-500);
     --color-mood-50: var(--color-surface-50);
@@ -112,6 +138,40 @@
         -moz-osx-font-smoothing: neutralscale;
     }
 
+    h1,
+    .h1 {
+        @apply mb-4 text-3xl font-bold not-first:mt-12;
+    }
+
+    h2,
+    .h2 {
+        @apply mb-2 text-xl font-semibold not-first:mt-8;
+    }
+
+    h3,
+    .h3 {
+        @apply text-lg font-semibold not-first:mt-8;
+    }
+
+    h4,
+    .h4 {
+        @apply not-first:mt-8;
+    }
+
+    h5,
+    .h5 {
+        @apply text-sm uppercase not-first:mt-8;
+    }
+
+    p,
+    .p {
+        @apply not-first:mt-4;
+    }
+
+    pre[class*="language-"] {
+        @apply not-first:mt-4;
+    }
+
     .button {
         @apply focus-visible:focus-ring disabled:text-foreground-weak flex cursor-pointer items-center justify-center gap-1 outline-0 not-disabled:hover:brightness-110 not-disabled:active:brightness-95 disabled:cursor-not-allowed;
 
@@ -137,7 +197,7 @@
     }
 
     .anchor {
-        @apply text-accent visited:text-accent-800 dark:visited:text-accent-100 hover:underline not-disabled:hover:brightness-110 not-disabled:active:brightness-95;
+        @apply text-accent visited:text-purple-500 hover:underline not-disabled:hover:brightness-110 not-disabled:active:brightness-95;
     }
 
     .badge {

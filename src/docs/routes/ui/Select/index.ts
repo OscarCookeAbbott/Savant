@@ -1,4 +1,5 @@
 import { Code, Label, Select } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { html, State, state } from "../../../.."
 
 const DemoSelectType = {
@@ -13,10 +14,10 @@ export default function Page() {
     const exampleVariant = state("variant-outline")
     const exampleMood = state("mood-none")
 
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Select"),
+        html.h1("Select"),
 
         html.p(
             { class: "text-foreground-weak" },
@@ -24,88 +25,83 @@ export default function Page() {
             "Enables compact selection of one or more options.",
         ),
 
-        Label(
+        html.h2("Demo"),
+
+        html.div(
             {
-                content: "Demo",
-                class: "mt-4",
+                name: "Demo",
+                class: "card vessel flex flex-col items-center gap-4",
             },
 
             html.div(
                 {
-                    name: "Demo",
-                    class: "card vessel flex flex-col items-center gap-4",
+                    class: "p-8 flex flex-col justify-center gap-8 w-3xs h-48",
                 },
 
-                html.div(
-                    {
-                        class: "p-8 flex flex-col justify-center gap-8 w-3xs h-48",
-                    },
+                () =>
+                    Select({
+                        value:
+                            exampleType.val === DemoSelectType.SINGLE
+                                ? state("Option 1")
+                                : state(["Option 1", "Option 2"]),
+                        options: [
+                            { value: "Option 1" },
+                            { value: "Option 2", disabled: true },
+                            { value: "Option 3" },
+                            { value: "Option 4" },
+                        ],
+                        useChips: exampleType.val === DemoSelectType.MULTICHIPS,
+                        class: () => `${exampleVariant.val} ${exampleMood.val}`,
+                    }),
+            ),
 
-                    () =>
-                        Select({
-                            value:
-                                exampleType.val === DemoSelectType.SINGLE
-                                    ? state("Option 1")
-                                    : state(["Option 1", "Option 2"]),
-                            options: [
-                                { value: "Option 1" },
-                                { value: "Option 2", disabled: true },
-                                { value: "Option 3" },
-                                { value: "Option 4" },
-                            ],
-                            useChips:
-                                exampleType.val === DemoSelectType.MULTICHIPS,
-                            class: () =>
-                                `${exampleVariant.val} ${exampleMood.val}`,
-                        }),
+            html.div(
+                { class: "flex flex-wrap gap-4 justify-center" },
+
+                Label(
+                    { content: "Type", class: "items-center" },
+
+                    Select({
+                        options: [
+                            { value: "single" },
+                            { value: "multi" },
+                            { value: "multichips" },
+                        ],
+                        value: exampleType,
+                        class: "variant-outline w-48",
+                    }),
                 ),
 
-                html.div(
-                    { class: "flex flex-wrap gap-4 justify-center" },
+                Label(
+                    { content: "Variant", class: "items-center" },
 
-                    Label(
-                        { content: "Type", class: "items-center" },
+                    Select({
+                        options: [
+                            { value: "variant-outline" },
+                            { value: "variant-subtle" },
+                            { value: "variant-ghost" },
+                            { value: "variant-filled" },
+                        ],
+                        value: exampleVariant,
+                        class: "variant-outline w-48",
+                    }),
+                ),
 
-                        Select({
-                            options: [
-                                { value: "single" },
-                                { value: "multi" },
-                                { value: "multichips" },
-                            ],
-                            value: exampleType,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                Label(
+                    { content: "Mood", class: "items-center" },
 
-                    Label(
-                        { content: "Variant", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "variant-outline" },
-                                { value: "variant-subtle" },
-                                { value: "variant-ghost" },
-                                { value: "variant-filled" },
-                            ],
-                            value: exampleVariant,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
-
-                    Label(
-                        { content: "Mood", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "mood-none" },
-                                { value: "mood-accent" },
-                                { value: "mood-warning" },
-                                { value: "mood-error" },
-                            ],
-                            value: exampleMood,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                    Select({
+                        options: [
+                            { value: "mood-none" },
+                            { value: "mood-accent" },
+                            { value: "mood-info" },
+                            { value: "mood-success" },
+                            { value: "mood-warning" },
+                            { value: "mood-critical" },
+                        ],
+                        value: exampleMood,
+                        class: "variant-outline w-48",
+                    }),
                 ),
             ),
         ),
@@ -134,15 +130,12 @@ Select({
 })`,
             ),
 
-        Label(
-            {
-                content: "Signature",
-                class: "mt-4",
-            },
-            Code(
-                { language: "ts" },
+        html.h2("Signature"),
 
-                `\
+        Code(
+            { language: "ts" },
+
+            `\
 function Select<T>(
     props: {
         options: SelectOption<T>[],
@@ -156,7 +149,13 @@ type SelectOption<T> = {
     name?: string
     disabled?: boolean
 }`,
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

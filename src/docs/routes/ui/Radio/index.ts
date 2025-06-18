@@ -1,80 +1,78 @@
 import { Code, Label, Radio, Select } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { html, state } from "../../../.."
 
 export default function Page() {
     const exampleVariant = state("variant-outline")
     const exampleMood = state("mood-none")
 
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Radio"),
+        html.h1("Radio"),
 
         html.p(
             { class: "text-foreground-weak" },
 
-            "Simple singular selection from a set of options.",
+            "Offers a clear and direct set of exclusive options.",
         ),
 
-        Label(
+        html.h2("Demo"),
+
+        html.div(
             {
-                content: "Demo",
-                class: "mt-4",
+                name: "Demo",
+                class: "card vessel flex flex-col items-center gap-4",
             },
 
             html.div(
-                {
-                    name: "Demo",
-                    class: "card vessel flex flex-col items-center gap-4",
-                },
+                { class: "p-8 h-48 flex items-center" },
 
-                html.div(
-                    { class: "p-8 h-48 flex items-center" },
+                Radio({
+                    value: state("Option 1"),
+                    options: [
+                        { value: "Option 1" },
+                        { value: "Option 2" },
+                        { value: "Option 3" },
+                    ],
+                    class: () =>
+                        `w-48 ${exampleVariant.val} ${exampleMood.val}`,
+                }),
+            ),
 
-                    Radio({
-                        value: state("Option 1"),
+            html.div(
+                { class: "flex flex-wrap gap-4 justify-center" },
+
+                Label(
+                    { content: "Variant", class: "items-center" },
+
+                    Select({
                         options: [
-                            { value: "Option 1" },
-                            { value: "Option 2" },
-                            { value: "Option 3" },
+                            { value: "variant-outline" },
+                            { value: "variant-subtle" },
+                            { value: "variant-ghost" },
+                            { value: "variant-filled" },
                         ],
-                        class: () =>
-                            `w-48 ${exampleVariant.val} ${exampleMood.val}`,
+                        value: exampleVariant,
+                        class: "variant-outline w-48",
                     }),
                 ),
 
-                html.div(
-                    { class: "flex flex-wrap gap-4 justify-center" },
+                Label(
+                    { content: "Mood", class: "items-center" },
 
-                    Label(
-                        { content: "Variant", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "variant-outline" },
-                                { value: "variant-subtle" },
-                                { value: "variant-ghost" },
-                                { value: "variant-filled" },
-                            ],
-                            value: exampleVariant,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
-
-                    Label(
-                        { content: "Mood", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "mood-none" },
-                                { value: "mood-accent" },
-                                { value: "mood-warning" },
-                                { value: "mood-error" },
-                            ],
-                            value: exampleMood,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                    Select({
+                        options: [
+                            { value: "mood-none" },
+                            { value: "mood-accent" },
+                            { value: "mood-info" },
+                            { value: "mood-success" },
+                            { value: "mood-warning" },
+                            { value: "mood-critical" },
+                        ],
+                        value: exampleMood,
+                        class: "variant-outline w-48",
+                    }),
                 ),
             ),
         ),
@@ -97,15 +95,12 @@ Radio({
 })`,
             ),
 
-        Label(
-            {
-                content: "Signature",
-                class: "mt-4",
-            },
-            Code(
-                { language: "ts" },
+        html.h2("Signature"),
 
-                `\
+        Code(
+            { language: "ts" },
+
+            `\
 function Radio<T>(
     props: {
         options: RadioOption<T>[],
@@ -119,7 +114,13 @@ type RadioOption<T> = {
     name?: string
     disabled?: boolean
 }`,
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

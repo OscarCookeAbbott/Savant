@@ -24,7 +24,7 @@ export default function Contents(
 
     return html.ul(
         {
-            class: () => `sticky top-24 flex flex-col ${reactiveClass.val}`,
+            class: () => `flex flex-col ${reactiveClass.val}`,
         },
 
         [...headings].map((heading) => {
@@ -39,7 +39,7 @@ export default function Contents(
                         () => firstVisibleHeading.val === heading,
                     ),
                     style: `--indent: ${1 + (indent - 1) * 0.5}rem;`,
-                    class: "group relative flex gap-4 cursor-pointer text-mood-weak not-data-selected:hover:text-foreground data-selected:mood-accent",
+                    class: "group relative flex gap-4 cursor-pointer text-mood-weak not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:text-mood",
                 },
 
                 html.span({

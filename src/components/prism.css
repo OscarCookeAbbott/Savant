@@ -14,6 +14,10 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
         -o-tab-size: 4;
         tab-size: 4;
     }
+    code[class*="language-console"],
+    pre[class*="language-console"] {
+        @apply text-foreground-weak;
+    }
     code[class*="language-"] ::-moz-selection,
     code[class*="language-"]::-moz-selection,
     pre[class*="language-"] ::-moz-selection,

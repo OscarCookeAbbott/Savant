@@ -50,7 +50,7 @@ export default function Checkbox(
                 type: "button",
                 tabIndex: 0,
                 class: () =>
-                    `button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-error ${reactiveClass.val
+                    `button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-critical ${reactiveClass.val
                         ?.split(" ")
                         .filter((className) => className.includes("variant"))
                         .join(" ")}`,

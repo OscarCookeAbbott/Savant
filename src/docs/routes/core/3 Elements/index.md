@@ -61,11 +61,11 @@ const dom = html.div(
 )
 ```
 
-The general rule is to always place the reactivity at the lowest enclosing level possible, which typically involves placing a preceding arrow function `() =>`.
+Similarly, if you encounter random inexplicable behaviour with elements disappearing for no reason etc, it is likely you have an unbound reaction causing reactivity to misbehave.
 
-Similarly, if you encounter random inexplicable behaviour with elements disappearing for no reason etc, it is likely you have an unbound reaction causing reactivity to behave incorrectly.
+This may sound like a hassle, but most of the time you won't even need to consider it! Once you do encounter a scoping issue you will very quickly learn to intuit when you do need to consider your scoping and how easy it is to do.
 
-This may sound like a hassle, but most of the time you won't even need to consider it, and you'll very quickly learn when you do and exactly how (easy it is) to fix it!
+Generally reactivity should be scoped at the lowest level possible, which typically involves placing a preceding arrow function `() =>`.
 
 ## Signature
 

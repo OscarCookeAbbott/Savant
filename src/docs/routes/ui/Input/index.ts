@@ -1,4 +1,5 @@
 import { Code, Label, Select, Input } from "../../../../components"
+import TableOfContents from "../../../../components/Contents"
 import { html, State, state } from "../../../.."
 
 export default function Page() {
@@ -6,85 +7,79 @@ export default function Page() {
     const exampleVariant = state("variant-outline")
     const exampleMood = state("mood-none")
 
-    return html.div(
-        { class: "contents" },
+    const content = html.div(
+        { class: "w-2xl *:scroll-m-21" },
 
-        html.span({ class: "text-3xl font-bold" }, "Input"),
+        html.h1("Input"),
 
         html.p(
             { class: "text-foreground-weak" },
-            "Inputs allow entry of text or numbers.",
+            "Direct entry of text or numbers.",
         ),
 
-        Label(
+        html.h2("Demo"),
+
+        html.div(
             {
-                content: "Demo",
-                class: "mt-4",
+                name: "Demo",
+                class: "card vessel flex flex-col items-center gap-4",
             },
 
             html.div(
-                {
-                    name: "Demo",
-                    class: "card vessel flex flex-col items-center gap-4",
-                },
+                { class: "p-8 h-48 flex flex-col justify-center gap-8" },
 
-                html.div(
-                    { class: "p-8 h-48 flex flex-col justify-center gap-8" },
+                () =>
+                    Input({
+                        value: state(
+                            exampleType.val === "text" ? "Example text" : 42,
+                        ),
+                        class: () => `${exampleVariant.val} ${exampleMood.val}`,
+                    }),
+            ),
 
-                    () =>
-                        Input({
-                            value: state(
-                                exampleType.val === "text"
-                                    ? "Example text"
-                                    : 42,
-                            ),
-                            class: () =>
-                                `${exampleVariant.val} ${exampleMood.val}`,
-                        }),
+            html.div(
+                { class: "flex flex-wrap gap-4 justify-center" },
+
+                Label(
+                    { content: "Type", class: "items-center" },
+
+                    Select({
+                        options: [{ value: "text" }, { value: "number" }],
+                        value: exampleType,
+                        class: "variant-outline w-48",
+                    }),
                 ),
 
-                html.div(
-                    { class: "flex flex-wrap gap-4 justify-center" },
+                Label(
+                    { content: "Variant", class: "items-center" },
 
-                    Label(
-                        { content: "Type", class: "items-center" },
+                    Select({
+                        options: [
+                            { value: "variant-outline" },
+                            { value: "variant-subtle" },
+                            { value: "variant-ghost" },
+                            { value: "variant-filled" },
+                        ],
+                        value: exampleVariant,
+                        class: "variant-outline w-48",
+                    }),
+                ),
 
-                        Select({
-                            options: [{ value: "text" }, { value: "number" }],
-                            value: exampleType,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                Label(
+                    { content: "Mood", class: "items-center" },
 
-                    Label(
-                        { content: "Variant", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "variant-outline" },
-                                { value: "variant-subtle" },
-                                { value: "variant-ghost" },
-                                { value: "variant-filled" },
-                            ],
-                            value: exampleVariant,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
-
-                    Label(
-                        { content: "Mood", class: "items-center" },
-
-                        Select({
-                            options: [
-                                { value: "mood-none" },
-                                { value: "mood-accent" },
-                                { value: "mood-warning" },
-                                { value: "mood-error" },
-                            ],
-                            value: exampleMood,
-                            class: "variant-outline w-48",
-                        }),
-                    ),
+                    Select({
+                        options: [
+                            { value: "mood-none" },
+                            { value: "mood-accent" },
+                            { value: "mood-info" },
+                            { value: "mood-success" },
+                            { value: "mood-warning" },
+                            { value: "mood-critical" },
+                        ],
+                        value: exampleMood,
+                        class: "variant-outline w-48",
+                    }),
                 ),
             ),
         ),
@@ -102,15 +97,12 @@ Input({
 })`,
             ),
 
-        Label(
-            {
-                content: "Signature",
-                class: "mt-4",
-            },
-            Code(
-                { language: "ts" },
+        html.h2("Signature"),
 
-                `\
+        Code(
+            { language: "ts" },
+
+            `\
 function Input<T extends string | number>(
     props: {
         value: State<T | undefined> = state(undefined),
@@ -128,7 +120,13 @@ function Input<T extends string | number>(
     },
     ...children: ChildDom[]
 ): HTMLElement`,
-            ),
         ),
     )
+
+    const toc = TableOfContents(
+        { class: "sticky top-24 w-sm not-xl:hidden" },
+        content,
+    )
+
+    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

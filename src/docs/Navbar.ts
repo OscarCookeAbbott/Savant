@@ -38,6 +38,9 @@ function NavOption(
             {
                 href: option.path,
                 disabled: option.path === undefined,
+                onclick: () => {
+                    window.scrollTo({ top: 0, left: 0 })
+                },
                 "data-selected": optionalAttribute(
                     () => currentPath.val === option.path || undefined,
                 ),

@@ -72,7 +72,7 @@ function App() {
 
                 html.div(
                     {
-                        class: "flex flex-col px-8 pt-24 pb-16 gap-4 w-3xl",
+                        class: "flex flex-col px-8 pt-24 pb-16 gap-4",
                     },
 
                     Router({ routes: routes }),

@@ -12,8 +12,13 @@ Then whenever a dependency is altered, the derived state will re-evaluate:
 ```typescript
 num.val++
 
-console.warn(num.val) // Output: 43
-console.warn(doubleNum.val) // Output: 86
+console.warn(num.val)
+console.warn(doubleNum.val)
+```
+
+```console
+43
+86
 ```
 
 Value-less _effects_ can also inherently be defined via `derive()` by omitting a return value:
@@ -22,8 +27,10 @@ Value-less _effects_ can also inherently be defined via `derive()` by omitting a
 derive(() => console.log(num.val))
 
 num.val++
+```
 
-// Output: 43
+```console
+43
 ```
 
 In derived definitions where you want to _exclude_ some accessed states from reactive dependence you can utilise the state's `.rawVal` property.
@@ -37,9 +44,10 @@ const doubleNum = derive(() => num.val * 2)
 derive(() => console.log(num.val, doubleNum.rawVal))
 
 num.val++
+```
 
-// Output
-// 43 -- 84
+```console
+43 84
 ```
 
 In Savant _all_ dependent state is invariably marked by the arrow syntax `() => ...`, so whenever you see arrow functions outside of normal logic flow, think 'reactive'.
@@ -56,7 +64,7 @@ _Creates a reactive object with the given_ `initVal` _initial value._
 
 ### Reactivity is deferred
 
-All states wait until the next browser tick (via `setTimeout(() => ..., 0)`) to update any derivations.
+All states wait until the next browser tick (via `setTimeout(..., 0)`) to update any derivations.
 
 This provides a major automatic performance benefit because it means that simultaneous updates to multiple states which are collectively depended upon by some derived state will only update that derivation _once_:
 
@@ -68,9 +76,10 @@ derive(() => console.log(num, otherNum))
 
 num++
 otherNum++
+```
 
-// Output
-// 43 -- 25
+```console
+43 25
 ```
 
 ### Why arrow functions are required
