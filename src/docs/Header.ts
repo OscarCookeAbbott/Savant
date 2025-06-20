@@ -43,7 +43,7 @@ export default function Header(): HTMLElement {
                 {
                     name: "GitHub",
                     class: "variant-basic !rounded-full **:fill-current hover:variant-soft text-lg !p-2",
-                    href: "https://github.com/OscarCookeAbbott/savant",
+                    href: "https://github.com/OscarCookeAbbott/Savant",
                     target: "_blank",
                 },
 
