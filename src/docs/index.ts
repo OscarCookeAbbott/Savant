@@ -3,6 +3,9 @@ import Navbar from "./Navbar"
 import { add, html } from ".."
 import { Router } from "../routing"
 import rootRoute from "./routes/index.ts"
+import coreRoute from "./routes/1 core/index"
+import routingRoute from "./routes/2 routing/index"
+import uiRoute from "./routes/3 ui/index"
 
 type RouteFile = { default: () => HTMLElement }
 
@@ -52,19 +55,19 @@ const pages = [
     {
         name: "Core",
         path: "/#/core",
-        dom: (await import("./routes/1 core/index.ts")).default,
+        dom: coreRoute,
         children: routeMaker(coreRoutes),
     },
     {
         name: "Routing",
         path: "/#/routing",
-        dom: (await import("./routes/2 routing/index.ts")).default,
+        dom: routingRoute,
         children: routeMaker(routingRoutes),
     },
     {
         name: "Savant UI",
         path: "/#/ui",
-        dom: (await import("./routes/3 ui/index.ts")).default,
+        dom: uiRoute,
         children: routeMaker(uiRoutes),
     },
     { name: "Examples", children: routeMaker(examplesRoutes) },
