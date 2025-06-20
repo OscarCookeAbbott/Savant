@@ -1,6 +1,7 @@
 import { html, derive, ChildDom, add } from ".."
 import {
     _routerBasename,
+    _routerHash,
     _routerParams,
     _routerPathname,
     _routerQuery,
@@ -143,7 +144,7 @@ export default function Router({ routes, basename }: RouterProps) {
     window.onpopstate = handleWindowPopState
 
     derive(() => {
-        if (_routerPathname.val) {
+        if (_routerPathname.val || _routerHash.val) {
             setTimeout(() => {
                 handleWindowPopState()
             })
