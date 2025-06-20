@@ -1,6 +1,6 @@
 import { ChildDom, derive, html, optionalAttribute, State } from ".."
 import { Link } from "../routing"
-import { getRouterPathname } from "../routing/helpers"
+import { getRouterPath } from "../routing/helpers"
 
 type NavOption = {
     name: string
@@ -16,7 +16,7 @@ export default function Navbar({
     options: NavOption[]
     class?: string
 }): HTMLElement {
-    const path = derive(() => decodeURI(getRouterPathname()))
+    const path = derive(() => decodeURI(getRouterPath()))
 
     return html.div(
         {
