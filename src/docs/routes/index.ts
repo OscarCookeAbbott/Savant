@@ -1,6 +1,6 @@
 import { html } from "../.."
 import md from "../../../readme.md?raw"
-import TableOfContents from "../../components/Contents"
+import TableOfContents from "../../components/TableOfContents"
 import Markdown from "../../components/Markdown"
 
 export default function Page() {

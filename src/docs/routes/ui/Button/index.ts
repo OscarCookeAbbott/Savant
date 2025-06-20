@@ -1,15 +1,13 @@
 import { Button, Code, Label, Select } from "../../../../components"
-import TableOfContents from "../../../../components/Contents"
 import { html, state } from "../../../.."
+import DocPage from "../../../components/DocPage"
 
 export default function Page() {
     const exampleVariant = state("variant-filled")
     const exampleMood = state("mood-accent")
     const extraClasses = state([])
 
-    const content = html.div(
-        { class: "w-2xl *:scroll-m-21" },
-
+    return DocPage(
         html.h1("Button"),
 
         html.p(
@@ -19,7 +17,9 @@ export default function Page() {
 
         html.h2("Design"),
 
-        html.p("Button components are used when a specific, clear and manual action needs to be performed by the user.."),
+        html.p(
+            "Button components are used when a specific, clear and manual action needs to be performed by the user..",
+        ),
 
         html.h2("Demo"),
 
@@ -118,11 +118,4 @@ function Button(
 ): HTMLButtonElement`,
         ),
     )
-
-    const toc = TableOfContents(
-        { class: "sticky top-24 w-sm not-xl:hidden" },
-        content,
-    )
-
-    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

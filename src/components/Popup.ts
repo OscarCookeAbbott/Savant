@@ -47,7 +47,7 @@ export type PopupTrigger = (typeof PopupTrigger)[keyof typeof PopupTrigger]
 /** Root container for all popups which will render them above all other content. */
 const container = html.div({
     name: "Popups",
-    class: "absolute inset-0 z-[100] pointer-events-none",
+    class: "fixed inset-0 z-[100] pointer-events-none",
 })
 add(document.documentElement, container)
 

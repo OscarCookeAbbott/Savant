@@ -220,9 +220,9 @@ function deleteStates<T>(dependency: State<T>) {
 
 ///////// Core Reactivity API ////////
 
-/** Creates a piece of reactive data. */
-export function state<T>(initVal: T, onDestroy?: () => void): State<T> {
-    return new State(initVal, onDestroy)
+/** Creates a piece of reactive data with the given initial value. */
+export function state<T>(value: T, onDestroy?: () => void): State<T> {
+    return new State(value, onDestroy)
 }
 
 /** Applies an attribute as normal except will reactively remove the attribute whenever the given function returns a nullish value. */
@@ -300,7 +300,7 @@ function deriveDom<T extends ChildNode>(
     return resultState as State<T>
 }
 
-/** Create a functional association which automatically reacts to any stateful data it accesses. */
+/** Create a derived state or effect which reacts to changes to any states it depends on. */
 export function derive<T>(func: () => T, onDestroy?: () => void): State<T> {
     const dependencies: DependencyBundle = {
         _getters: new Set<State<any>>(),

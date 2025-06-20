@@ -37,7 +37,8 @@ console.log(num.rawVal)
 ## Signature
 
 ```typescript
-function state<T>(initVal: T): State<T>
+/** Creates a piece of reactive data with the given initial value. */
+function state<T>(value: T): State<T>
 
 class State<T> {
     /** The current value. Assigning will trigger reactivity. */
@@ -47,8 +48,6 @@ class State<T> {
     rawVal: T
 }
 ```
-
-_Creates a reactive object with the given_ `initVal` _initial value._
 
 ## Details
 

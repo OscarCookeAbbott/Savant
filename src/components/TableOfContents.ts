@@ -1,7 +1,7 @@
 import { ElementProps, html, optionalAttribute, state } from ".."
 import { forceReactive } from "../utils"
 
-export default function Contents(
+export default function TableOfContents(
     { class: propClass }: ElementProps,
     content: HTMLElement,
 ): HTMLElement {

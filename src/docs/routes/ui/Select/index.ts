@@ -1,6 +1,6 @@
 import { Code, Label, Select } from "../../../../components"
-import TableOfContents from "../../../../components/Contents"
 import { html, State, state } from "../../../.."
+import DocPage from "../../../components/DocPage"
 
 const DemoSelectType = {
     SINGLE: "single",
@@ -14,9 +14,7 @@ export default function Page() {
     const exampleVariant = state("variant-outline")
     const exampleMood = state("mood-none")
 
-    const content = html.div(
-        { class: "w-2xl *:scroll-m-21" },
-
+    return DocPage(
         html.h1("Select"),
 
         html.p(
@@ -151,11 +149,4 @@ type SelectOption<T> = {
 }`,
         ),
     )
-
-    const toc = TableOfContents(
-        { class: "sticky top-24 w-sm not-xl:hidden" },
-        content,
-    )
-
-    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

@@ -14,10 +14,10 @@ export default function Markdown(
     const mdHtml = mdConverter.makeHtml(markdown)
 
     const mdDom = html.div({
-        class: `style-defaults ${reactiveClass.val}`,
+        class: `style-markup ${reactiveClass.val}`,
+        innerHTML: mdHtml,
         ...restProps,
     })
-    mdDom.innerHTML = mdHtml
 
     // Convert any internal code snippets
     Prism.highlightAllUnder(mdDom)

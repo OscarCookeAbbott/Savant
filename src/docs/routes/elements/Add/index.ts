@@ -1,5 +1,5 @@
-import { html } from "../../../.."
+import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-    return html.div("Add")
+    return DocPage("Add")
 }

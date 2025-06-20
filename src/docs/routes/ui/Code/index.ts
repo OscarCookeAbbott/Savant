@@ -1,13 +1,11 @@
-import { Label, Code } from "../../../../components"
-import TableOfContents from "../../../../components/Contents"
+import { Code } from "../../../../components"
 import { html } from "../../../.."
 import Callout from "../../../../components/Callout"
 import Markdown from "../../../../components/Markdown"
+import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-    const content = html.div(
-        { class: "w-2xl *:scroll-m-21" },
-
+    return DocPage(
         html.h1("Code"),
 
         html.p(
@@ -65,11 +63,4 @@ function Code(
 ): HTMLElement`,
         ),
     )
-
-    const toc = TableOfContents(
-        { class: "sticky top-24 w-sm not-xl:hidden" },
-        content,
-    )
-
-    return html.div({ class: "flex gap-12 items-start" }, content, toc)
 }

@@ -55,10 +55,9 @@ In Savant _all_ dependent state is invariably marked by the arrow syntax `() => 
 ## Signature
 
 ```typescript
+/** Create a derived state or effect which reacts to changes to any states it depends on. */
 function derive<T>(func: () => T): State<T>
 ```
-
-_Creates a reactive object with the given_ `initVal` _initial value._
 
 ## Details
 
@@ -81,6 +80,10 @@ otherNum++
 ```console
 43 25
 ```
+
+### Derived states are states
+
+The `derive()` function itself creates a new `State` which reacts to any dependency changes, it is just a state that should not be manually assigned to.
 
 ### Why arrow functions are required
 

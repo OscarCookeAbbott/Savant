@@ -22,20 +22,20 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
     code[class*="language-"]::-moz-selection,
     pre[class*="language-"] ::-moz-selection,
     pre[class*="language-"]::-moz-selection {
-        @apply bg-surface/10;
+        @apply bg-surface-500/10;
     }
     code[class*="language-"] ::selection,
     code[class*="language-"]::selection,
     pre[class*="language-"] ::selection,
     pre[class*="language-"]::selection {
-        @apply bg-surface/10;
+        @apply bg-surface-500/10;
     }
     pre[class*="language-"] {
         @apply overflow-auto p-2;
     }
     :not(pre) > code[class*="language-"],
     pre[class*="language-"] {
-        @apply variant-outline bg-surface/10 p-2;
+        @apply variant-outline bg-surface-500/10 p-2;
     }
     :not(pre) > code[class*="language-"] {
         @apply rounded px-1 py-0.5 whitespace-normal;

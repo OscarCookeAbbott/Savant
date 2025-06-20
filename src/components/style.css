@@ -234,11 +234,11 @@
 }
 
 @utility variant-outline {
-    @apply ring-mood-500/50 variant-basic ring;
+    @apply ring-mood/50 variant-basic ring;
 }
 
 @utility variant-subtle {
-    @apply bg-mood-500/25 variant-basic;
+    @apply bg-mood-500/10 variant-basic;
 }
 
 @utility variant-ghost {
