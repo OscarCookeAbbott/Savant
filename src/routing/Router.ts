@@ -144,7 +144,11 @@ export default function Router({ routes, basename }: RouterProps) {
     window.onpopstate = handleWindowPopState
 
     derive(() => {
-        if (_routerPathname.val || _routerHash.val) {
+        const pathChanged = _routerPathname.val
+        const hashChanged = _routerHash.val
+
+        if (pathChanged || hashChanged) {
+            console.log("ASD")
             setTimeout(() => {
                 handleWindowPopState()
             })
