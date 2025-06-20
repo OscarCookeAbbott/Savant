@@ -4,20 +4,25 @@ import { add, html } from ".."
 import { Router } from "../routing"
 import rootRoute from "./routes/index.ts"
 
+type RouteFile = { default: () => HTMLElement }
+
 const coreRoutes = import.meta.glob("./routes/core/**/index.ts", {
     eager: true,
-})
+}) as Record<string, RouteFile>
+
 const routingRoutes = import.meta.glob("./routes/routing/**/index.ts", {
     eager: true,
-})
+}) as Record<string, RouteFile>
+
 const uiRoutes = import.meta.glob("./routes/ui/**/index.ts", {
     eager: true,
-})
+}) as Record<string, RouteFile>
+
 const examplesRoutes = import.meta.glob("./routes/examples/**/index.ts", {
     eager: true,
-})
+}) as Record<string, RouteFile>
 
-const routeMaker = (dirRoutes: Record<string, unknown>) =>
+const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
     Object.entries(dirRoutes).map(([path, route]) => {
         const pageName = path
             .replace("./routes", "")
@@ -26,7 +31,7 @@ const routeMaker = (dirRoutes: Record<string, unknown>) =>
 
         return {
             name: pageName,
-            path: path
+            path: "/#" + path
                 .replace("./routes", "")
                 .split("/")
                 .slice(0, -2)
@@ -47,9 +52,7 @@ const pages = [
     { name: "Examples", children: routeMaker(examplesRoutes) },
 ]
 
-const routes = pages.flatMap((page) =>
-    page.children ? [page, ...page.children] : page,
-)
+const routes = pages.flatMap((page) => page.children)
 
 function App() {
     return html.div(

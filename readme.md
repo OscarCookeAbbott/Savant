@@ -1,4 +1,6 @@
-# Savant - Simple, Smart Reactivity
+# Savant
+
+> The simple, smart framework
 
 Savant is a tiny, zero-dependency, pure-TypeScript and pure-DOM framework for reactive web development.
 

@@ -12,10 +12,7 @@ export default function Page() {
     return DocPage(
         html.h1("Circular Progress Bar"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-            "Displays the progress state of a lengthy process.",
-        ),
+        html.blockquote("Displays the progress state of a lengthy process."),
 
         html.h2("Design"),
 

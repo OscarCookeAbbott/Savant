@@ -9,11 +9,7 @@ export default function Page() {
     return DocPage(
         html.h1("Checkbox"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-
-            "Offers clear binary choices.",
-        ),
+        html.blockquote("Offers clear binary choices."),
 
         html.h2("Demo"),
 

@@ -110,7 +110,7 @@ export default function Router({ routes, basename }: RouterProps) {
 
     const handleWindowPopState = () => {
         const { route, params } = routeMatcher(
-            window.location.pathname,
+            window.location.pathname + window.location.hash,
             basename || "",
         )
 

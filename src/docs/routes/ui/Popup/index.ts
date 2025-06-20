@@ -9,11 +9,7 @@ export default function Page() {
     return DocPage(
         html.h1("Popup"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-
-            "Versatile dynamic content floating near its parent.",
-        ),
+        html.blockquote("Versatile dynamic content floating near its parent."),
 
         html.h2("Demo"),
 

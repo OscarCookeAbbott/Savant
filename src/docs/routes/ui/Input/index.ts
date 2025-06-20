@@ -7,13 +7,10 @@ export default function Page() {
     const exampleVariant = state("variant-soft-outline")
     const exampleMood = state("mood-none")
 
-   return DocPage(
+    return DocPage(
         html.h1("Input"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-            "Direct entry of text or numbers.",
-        ),
+        html.blockquote("Direct entry of text or numbers."),
 
         html.h2("Demo"),
 

@@ -8,8 +8,7 @@ export default function Page() {
     return DocPage(
         html.h1("Code"),
 
-        html.p(
-            { class: "text-foreground-weak" },
+        html.blockquote(
             "Simple code syntax highlighting via ",
             html.a({ href: "https://prismjs.com", class: "anchor" }, "PrismJS"),
             ".",

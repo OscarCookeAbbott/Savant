@@ -7,7 +7,7 @@ export default function Page() {
     return DocPage(
         html.h1("Sign In"),
 
-        html.p({ class: "text-foreground-weak" }, "Example Sign In component."),
+        html.blockquote("Example Sign In component."),
 
         html.h2("Demo"),
 
@@ -136,7 +136,7 @@ function SignIn() {
 
             Button(
                 {
-                    class: "variant-basic hover:variant-soft",
+                    class: "variant-base hover:variant-soft",
                 },
                 "Cancel",
             ),

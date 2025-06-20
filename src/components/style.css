@@ -95,7 +95,7 @@
 
 @layer base {
     * {
-        @apply appearance-none outline-transparent;
+        @apply selection:!bg-surface-500/50 appearance-none outline-transparent;
     }
 
     :root {
@@ -238,16 +238,16 @@
 }
 
 /* VARIANTS */
-@utility variant-basic {
+@utility variant-base {
     @apply rounded-lg px-2 py-1 ring-inset;
 }
 
 @utility variant-outline {
-    @apply ring-mood/50 variant-basic ring;
+    @apply ring-mood/50 variant-base ring;
 }
 
 @utility variant-soft {
-    @apply bg-mood-500/10 variant-basic;
+    @apply bg-mood-500/10 variant-base;
 }
 
 @utility variant-soft-outline {
@@ -255,7 +255,7 @@
 }
 
 @utility variant-filled {
-    @apply bg-mood-500 text-foreground-invert variant-basic;
+    @apply bg-mood-500 text-foreground-invert variant-base;
 }
 
 @utility glass {
@@ -313,6 +313,14 @@
 
 @utility bg-background-translucent {
     @apply bg-white/50 dark:bg-neutral-950/50;
+}
+
+@utility bg-foreground {
+    @apply bg-neutral-950 dark:bg-white;
+}
+
+@utility bg-foreground-translucent {
+    @apply bg-neutral-950/50 dark:bg-white/50;
 }
 
 @utility bg-mood-weak {

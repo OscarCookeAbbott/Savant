@@ -6,14 +6,10 @@ export default function Page() {
     const exampleVariant = state("variant-soft-outline")
     const exampleMood = state("mood-none")
 
-   return DocPage(
+    return DocPage(
         html.h1("Radio"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-
-            "Offers a clear and direct set of exclusive options.",
-        ),
+        html.blockquote("Offers a clear and direct set of exclusive options."),
 
         html.h2("Demo"),
 

@@ -17,11 +17,7 @@ export default function Page() {
     return DocPage(
         html.h1("Select"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-
-            "Enables compact selection of one or more options.",
-        ),
+        html.blockquote("Enables compact selection of one or more options."),
 
         html.h2("Demo"),
 

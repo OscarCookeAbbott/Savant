@@ -10,10 +10,7 @@ export default function Page() {
     return DocPage(
         html.h1("Button"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-            "Performs some action on user click.",
-        ),
+        html.blockquote("Performs some action on user click."),
 
         html.h2("Design"),
 

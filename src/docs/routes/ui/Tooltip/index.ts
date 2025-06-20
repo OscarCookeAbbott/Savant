@@ -4,14 +4,9 @@ import DocPage from "../../../components/DocPage"
 
 export default function Page() {
     return DocPage(
-
         html.h1("Tooltip"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-
-            "Provides concise contextual extra information.",
-        ),
+        html.blockquote("Provides concise contextual extra information."),
 
         html.h2("Demo"),
 
@@ -27,7 +22,7 @@ export default function Page() {
 
                 Button(
                     {
-                        class: "variant-basic text-accent font-bold",
+                        class: "variant-base text-accent font-bold",
                     },
 
                     "Tooltip (Hover Me)",
@@ -52,7 +47,7 @@ import { Button, Tooltip } from "savant/components"
 
 Button(
     {
-        class: "variant-basic text-accent font-bold",
+        class: "variant-base text-accent font-bold",
     },
 
     "Tooltip (Hover Me)",

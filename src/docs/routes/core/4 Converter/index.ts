@@ -28,7 +28,7 @@ export default function Page() {
     const input = html.textarea({
         value: inputHtml,
         oninput: (e) => (inputHtml.val = e.target.value),
-        class: "variant-soft-outline w-full",
+        class: "variant-soft-outline w-full h-64",
     })
 
     const conversionResult = derive(() =>

@@ -9,10 +9,7 @@ export default function Page() {
     return DocPage(
         html.h1("Badge"),
 
-        html.p(
-            { class: "text-foreground-weak" },
-            "Delivers small but important pieces of information.",
-        ),
+        html.blockquote("Delivers small but important pieces of information."),
 
         html.h2("Design"),
 

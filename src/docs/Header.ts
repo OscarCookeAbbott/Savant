@@ -11,38 +11,37 @@ export default function Header(): HTMLElement {
             class: "bg-background-translucent fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-500/50 z-10",
         },
 
-        html.div(
-            { name: "Left Content", class: headerSectionClasses },
+        html["left-content"](
+            { class: headerSectionClasses },
 
-            html.div(
-                { class: "flex items-center gap-2" },
+            html.img({
+                src: logo,
+                class: "size-12 -m-2 not-dark:brightness-0",
+            }),
 
-                html.img({
-                    src: logo,
-                    class: "size-12 -m-2 not-dark:brightness-0",
-                }),
+            html.span({ class: "text-xl font-bold" }, "Savant"),
 
-                html.span({ class: "text-xl font-bold" }, "Savant"),
+            Badge(
+                {
+                    class: "cursor-help variant-filled mood-info rounded-full px-1 py-0.5",
+                },
 
-                Badge(
-                    {
-                        class: "cursor-help variant-filled mood-info rounded-full px-1 py-0.5",
-                    },
+                html.i("construction"),
 
-                    html.i("construction"),
-
-                    Tooltip({class: "mood-info"}, "Savant is still under construction"),
+                Tooltip(
+                    { class: "mood-info" },
+                    "Savant is still under construction",
                 ),
             ),
         ),
 
-        html.div(
-            { name: "Right Content", class: headerSectionClasses },
+        html["right-content"](
+            { class: headerSectionClasses },
 
             html.a(
                 {
                     name: "GitHub",
-                    class: "variant-basic !rounded-full **:fill-current hover:variant-soft text-lg !p-2",
+                    class: "variant-base !rounded-full **:fill-current hover:variant-soft text-lg !p-2",
                     href: "https://github.com/OscarCookeAbbott/Savant",
                     target: "_blank",
                 },
