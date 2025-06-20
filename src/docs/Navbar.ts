@@ -47,13 +47,16 @@ function NavOption(
                 "data-group": optionalAttribute(
                     () => (depth === 0 && option.children) || undefined,
                 ),
+                "data-indented": optionalAttribute(
+                    () => depth !== 0 || undefined,
+                ),
                 style: `--indent: ${depth}rem;`,
                 class: "relative flex gap-4 group text-mood-weak data-selected:text-mood data-group:font-semibold data-group:not-first:mt-6 data-group:mb-1 not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:z-10",
             },
 
             html.span({
                 name: "Divider",
-                class: "absolute h-full w-px left-0 bg-current/50 group-data-selected:bg-current group-data-group:hidden group-hover:w-1 group-data-selected:w-1 transition-all",
+                class: "absolute h-full w-px left-0 bg-current/50 group-data-selected:bg-current not-group-data-indented:hidden group-hover:w-1 group-data-selected:w-1 transition-all",
             }),
 
             html.span(

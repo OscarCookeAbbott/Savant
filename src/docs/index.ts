@@ -6,19 +6,19 @@ import rootRoute from "./routes/index.ts"
 
 type RouteFile = { default: () => HTMLElement }
 
-const coreRoutes = import.meta.glob("./routes/core/**/index.ts", {
+const coreRoutes = import.meta.glob("./routes/1 core/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
-const routingRoutes = import.meta.glob("./routes/routing/**/index.ts", {
+const routingRoutes = import.meta.glob("./routes/2 routing/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
-const uiRoutes = import.meta.glob("./routes/ui/**/index.ts", {
+const uiRoutes = import.meta.glob("./routes/3 ui/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
-const examplesRoutes = import.meta.glob("./routes/examples/**/index.ts", {
+const examplesRoutes = import.meta.glob("./routes/examples/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
@@ -31,12 +31,14 @@ const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
 
         return {
             name: pageName,
-            path: "/#" + path
-                .replace("./routes", "")
-                .split("/")
-                .slice(0, -2)
-                .concat(pageName)
-                .join("/"),
+            path:
+                "/#" +
+                path
+                    .replace("./routes", "")
+                    .split("/")
+                    .slice(0, -2)
+                    .concat(pageName)
+                    .join("/"),
             dom: route.default,
         }
     })
@@ -44,15 +46,34 @@ const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
 const pages = [
     {
         name: "Introduction",
-        children: [{ name: "Welcome", path: "/", dom: rootRoute }],
+        path: "/",
+        dom: rootRoute,
     },
-    { name: "Core", children: routeMaker(coreRoutes) },
-    { name: "Routing", children: routeMaker(routingRoutes) },
-    { name: "Savant UI", children: routeMaker(uiRoutes) },
+    {
+        name: "Core",
+        path: "/#/core",
+        dom: (await import("./routes/1 core/index.ts")).default,
+        children: routeMaker(coreRoutes),
+    },
+    {
+        name: "Routing",
+        path: "/#/routing",
+        dom: (await import("./routes/2 routing/index.ts")).default,
+        children: routeMaker(routingRoutes),
+    },
+    {
+        name: "Savant UI",
+        path: "/#/ui",
+        dom: (await import("./routes/3 ui/index.ts")).default,
+        children: routeMaker(uiRoutes),
+    },
     { name: "Examples", children: routeMaker(examplesRoutes) },
 ]
 
-const routes = pages.flatMap((page) => page.children)
+const routes = pages.flatMap((page) => [
+    ...(page.path ? [page] : []),
+    ...(page.children ?? []),
+])
 
 function App() {
     return html.div(
