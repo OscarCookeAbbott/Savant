@@ -10,9 +10,7 @@ const BASE_URL = import.meta.env.BASE_URL
 export const getRouterPathname = () => _routerPathname.val
 
 export const getRouterPath = () =>
-    _routerPathname.val.startsWith(BASE_URL)
-        ? _routerPathname.val.slice(BASE_URL.length - 1)
-        : _routerPathname.val
+    _routerPathname.val.slice(BASE_URL.length - 1)
 
 export const getRouterParams = () => _routerParams.val
 
