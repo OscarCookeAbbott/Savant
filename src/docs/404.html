@@ -1,9 +1,10 @@
 <!doctype html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
 
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
 
         <link
             rel="stylesheet"
@@ -16,6 +17,9 @@
     </head>
 
     <body>
-        <script type="module" src="./index.ts"></script>
+        <script>
+            // Redirect to the root page. Workaround for GitHub Pages forced static rendering.
+            window.location.href = import.meta.env.BASE_URL;
+        </script>
     </body>
 </html>
