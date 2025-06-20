@@ -1,7 +1,6 @@
 import { ChildDom, ElementProps, html } from ".."
 import { forceReactive, unwrapVal } from "../utils"
 import { navigate } from "./helpers"
-import { _routerPathname, _routerBasename } from "./state"
 
 type LinkProps = ElementProps<HTMLAnchorElement> & {
     replace?: boolean

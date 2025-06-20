@@ -75,7 +75,7 @@ function App() {
                         class: "flex flex-col px-8 pt-24 pb-16 gap-4",
                     },
 
-                    Router({ routes: routes }),
+                    Router({ basename: import.meta.env.VITE_BASE_URL, routes: routes }),
                 ),
             ),
         ),
