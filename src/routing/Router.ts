@@ -50,11 +50,14 @@ export default function Router({ routes, basename }: RouterProps) {
         path = sanitizePath(path)
         basename = sanitizePath(basename)
 
+        console.log("Path: " + path, "Basename: " + basename)
+
         const pathParts = path.split("/")
         const params: Record<string, string> = {}
         let matchedRoute: Route | null = null
 
         for (const route of routes) {
+            console.log("Route: " + basename + route.path)
             const routePathParts = sanitizePath(basename + route.path).split(
                 "/",
             )

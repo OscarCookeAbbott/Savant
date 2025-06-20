@@ -33,8 +33,6 @@ function NavOption(
     depth: number,
     currentPath: State<string>,
 ): ChildDom {
-    derive(() => console.log(currentPath.val, option.path))
-
     return [
         Link(
             {
