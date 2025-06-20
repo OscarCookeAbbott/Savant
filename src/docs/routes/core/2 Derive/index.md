@@ -1,5 +1,9 @@
 # Derive
 
+> Create reactive effects.
+
+## Overview
+
 While independent reactive data itself is created via `state()`, data which is _dependent_ upon other reactive data can be created via `derive()`:
 
 ```typescript
@@ -17,8 +21,8 @@ console.warn(doubleNum.val)
 ```
 
 ```console
-43
-86
+> 43
+> 86
 ```
 
 Value-less _effects_ can also inherently be defined via `derive()` by omitting a return value:
@@ -30,7 +34,7 @@ num.val++
 ```
 
 ```console
-43
+> 43
 ```
 
 In derived definitions where you want to _exclude_ some accessed states from reactive dependence you can utilise the state's `.rawVal` property.
@@ -47,7 +51,7 @@ num.val++
 ```
 
 ```console
-43 84
+> 43 84
 ```
 
 In Savant _all_ dependent state is invariably marked by the arrow syntax `() => ...`, so whenever you see arrow functions outside of normal logic flow, think 'reactive'.
@@ -59,7 +63,7 @@ In Savant _all_ dependent state is invariably marked by the arrow syntax `() => 
 function derive<T>(func: () => T): State<T>
 ```
 
-## Details
+## Notes
 
 ### Reactivity is deferred
 
@@ -78,14 +82,14 @@ otherNum++
 ```
 
 ```console
-43 25
+> 43 25
 ```
 
 ### Derived states are states
 
 The `derive()` function itself creates a new `State` which reacts to any dependency changes, it is just a state that should not be manually assigned to.
 
-### Why arrow functions are required
+### Why arrow functions are necessary
 
 Arrow functions `() => ...` are used for _all_ reactive dependence in Savant because it is the only way to defer and/or repeat execution of a clause beyond the scope of its definition.
 

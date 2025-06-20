@@ -1,5 +1,9 @@
 # Elements
 
+> Create your interface.
+
+## Overview
+
 In Savant all HTML elements are created with their respective tag functions which create and return the pure DOM node:
 
 ```typescript
@@ -75,7 +79,7 @@ function [element](propsOrChild: ElementProps<Element> | ChildDom, ...restChildr
 
 _Creates a DOM element of the type called with the given props and/or children_.
 
-## Details
+## Notes
 
 ### Leniency in element props
 

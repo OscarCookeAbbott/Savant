@@ -168,6 +168,11 @@
         @apply not-first:mt-4;
     }
 
+    blockquote,
+    .blockquote {
+        @apply border-mood-500 bg-mood-500/10 border-l pl-2 italic not-first:mt-4;
+    }
+
     pre[class*="language-"] {
         @apply not-first:mt-4;
     }
@@ -295,6 +300,10 @@
 
 @utility text-mood-weak {
     @apply text-mood-600 dark:text-mood-300;
+}
+
+@utility text-mood-strong {
+    @apply text-mood-300 dark:text-mood-600;
 }
 
 /* BACKGROUND */

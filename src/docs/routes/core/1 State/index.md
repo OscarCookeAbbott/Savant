@@ -1,5 +1,9 @@
 # State
 
+> Create reactive data.
+
+## Overview
+
 Reactivity in Savant is primarily achieved via `state` objects which contain a value and manage any dependencies with other states:
 
 ```typescript
@@ -15,12 +19,12 @@ console.log(num.val)
 ```
 
 ```console
-43
+> 43
 ```
 
 Assigning a _new_ value to a state's `.raw` property will update reactive dependencies.
 
-To prevent triggering [reactive updates](http://localhost:5173/core/Derive), such as during a complex operation etc, assignments can be made to `.rawVal` instead.
+To prevent triggering [reactive updates](http://localhost:5173/core/Derive), such as during a complex operation etc, assignments can be made to `.rawVal` instead. Effects can similarly refer to `.rawVal` to avoid creating a dependency.
 
 ```typescript
 num.rawVal++
@@ -30,8 +34,8 @@ console.log(num.rawVal)
 ```
 
 ```console
-43
-43
+> 43
+> 43
 ```
 
 ## Signature
@@ -49,7 +53,7 @@ class State<T> {
 }
 ```
 
-## Details
+## Notes
 
 ### State variables should not be reassigned
 

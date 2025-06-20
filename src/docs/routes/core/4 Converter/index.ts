@@ -28,7 +28,7 @@ export default function Page() {
     const input = html.textarea({
         value: inputHtml,
         oninput: (e) => (inputHtml.val = e.target.value),
-        class: "variant-soft-outline",
+        class: "variant-soft-outline w-full",
     })
 
     const conversionResult = derive(() =>
@@ -40,7 +40,9 @@ export default function Page() {
     return DocPage(
         html.h1("Converter"),
 
-        html.p("Converts standard HTML to Savant code."),
+        html.blockquote(html.p("Create Savant code from HTML.")),
+
+        html.h2("Overview"),
 
         input,
 

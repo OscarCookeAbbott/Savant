@@ -48,7 +48,7 @@ function NavOption(
                     () => (depth === 0 && option.children) || undefined,
                 ),
                 style: `--indent: ${depth}rem;`,
-                class: "relative flex gap-4 group text-mood-weak data-selected:text-mood data-group:text-mini data-group:uppercase data-group:not-first:mt-6 data-group:mb-1 not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:z-10",
+                class: "relative flex gap-4 group text-mood-weak data-selected:text-mood data-group:font-semibold data-group:not-first:mt-6 data-group:mb-1 not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:z-10",
             },
 
             html.span({

@@ -75,7 +75,7 @@ function [element](propsOrChild: ElementProps<Element> | ChildDom, ...restChildr
 
 _Creates a DOM element of the type called with the given props and/or children_.
 
-## Details
+## Notes
 
 ### Leniency in element props
 
