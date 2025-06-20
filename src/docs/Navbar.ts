@@ -52,11 +52,13 @@ function NavOption(
             },
 
             html.span({
-                class: "absolute h-full w-px left-0 bg-current not-group-data-selected:opacity-50 group-data-group:hidden group-hover:w-[4px] group-data-selected:w-[4px] transition-all",
+                name: "Divider",
+                class: "absolute h-full w-px left-0 bg-current/50 group-data-selected:bg-current group-data-group:hidden group-hover:w-1 group-data-selected:w-1 transition-all",
             }),
 
             html.span(
                 {
+                    name: "Title",
                     class: "not-group-data-group:ml-(--indent) justify-start group-data-selected:font-semibold flex-1 py-0.5 z-1 transition-all",
                 },
 

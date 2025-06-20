@@ -26,7 +26,7 @@ export default function CircularProgressBar(
             name: "Circular Progress Bar",
             style: "--progress-bar-stroke-width: 2px",
             class: () =>
-                `group inline-block relative min-w-[1em] min-h-[1em] rounded-full [.variant-outline]:ring-[length:var(--progress-bar-stroke-width)] [.variant-ghost]:ring-[length:var(--progress-bar-stroke-width)] !p-0 ${reactiveClass.val}`,
+                `group inline-block relative min-w-[1em] min-h-[1em] rounded-full [.variant-outline]:ring-[length:var(--progress-bar-stroke-width)] [.variant-soft-outline]:ring-[length:var(--progress-bar-stroke-width)] !p-0 ${reactiveClass.val}`,
             ...restProps,
         },
 

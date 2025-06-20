@@ -24,7 +24,7 @@ export default function Tooltip(
             trigger: trigger,
             direction: direction,
             class: () =>
-                `card rounded-sm glass px-2 py-1 max-w-xs text-xs flex ${reactiveClass.val}`,
+                `variant-soft-outline badge glass px-2 py-1 max-w-xs text-xs flex ${reactiveClass.val}`,
             ...restProps,
         },
 

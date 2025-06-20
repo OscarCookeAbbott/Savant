@@ -4,7 +4,7 @@ import DocPage from "../../../components/DocPage"
 
 export default function Page() {
     const exampleType: State<"text" | "number"> = state("text")
-    const exampleVariant = state("variant-outline")
+    const exampleVariant = state("variant-soft-outline")
     const exampleMood = state("mood-none")
 
    return DocPage(
@@ -54,8 +54,8 @@ export default function Page() {
                     Select({
                         options: [
                             { value: "variant-outline" },
-                            { value: "variant-subtle" },
-                            { value: "variant-ghost" },
+                            { value: "variant-soft" },
+                            { value: "variant-soft-outline" },
                             { value: "variant-filled" },
                         ],
                         value: exampleVariant,

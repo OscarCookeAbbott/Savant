@@ -14,7 +14,7 @@ export default function Callout(
     return html.div(
         {
             class: () =>
-                `flex items-center variant-ghost text-mood-weak gap-2 ${reactiveClass.val}`,
+                `flex items-center variant-soft-outline text-mood-weak gap-2 ${reactiveClass.val}`,
             ...restProps,
         },
 

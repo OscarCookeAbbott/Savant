@@ -114,7 +114,7 @@ export default function SignIn(): HTMLElement {
             Button(
                 {
                     type: "button",
-                    class: "variant-basic hover:variant-subtle",
+                    class: "variant-basic hover:variant-soft",
                 },
                 "Cancel",
             ),

@@ -57,8 +57,8 @@ export default function Page() {
                     Select({
                         options: [
                             { value: "variant-outline" },
-                            { value: "variant-subtle" },
-                            { value: "variant-ghost" },
+                            { value: "variant-soft" },
+                            { value: "variant-soft-outline" },
                             { value: "variant-filled" },
                         ],
                         value: exampleVariant,

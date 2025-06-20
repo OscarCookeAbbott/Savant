@@ -136,7 +136,7 @@ function SignIn() {
 
             Button(
                 {
-                    class: "variant-basic hover:variant-subtle",
+                    class: "variant-basic hover:variant-soft",
                 },
                 "Cancel",
             ),
