@@ -1,4 +1,4 @@
-import { ChildDom, html } from "@savant/core"
+import { html, type ChildDom } from "@savant/core"
 import { TableOfContents } from "@savant/components"
 
 export default function DocPage(...children: ChildDom[]): HTMLElement {

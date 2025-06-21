@@ -24,7 +24,9 @@
 
         "baseUrl": ".",
         "paths": {
-            "@savant/core": ["packages/core/src"]
+            "@savant/core": ["packages/core/dist"],
+            "@savant/routing": ["packages/routing/dist"],
+            "@savant/components": ["packages/components/dist"]
         },
         "types": ["vite/client"]
     },
@@ -34,7 +36,7 @@
         "packages/components/src/scripts/prism.d.ts",
         "packages/core/src/converter.ts",
         "packages/core/src/index.ts",
-        "packages/core/src/utils.ts"
-    ],
-    "exclude": ["src/docs", "src/docs/**/*"]
+        "packages/core/src/utils.ts",
+        "packages/docs"
+    ]
 }

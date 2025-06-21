@@ -1,4 +1,4 @@
-import md from "../../../readme.md?raw"
+import md from "./index.md?raw"
 import { Markdown } from "@savant/components"
 import DocPage from "../components/DocPage"
 
