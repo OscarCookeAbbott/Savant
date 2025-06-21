@@ -1,5 +1,5 @@
 import TableOfContents from "../../components/TableOfContents"
-import { ChildDom, html } from "../../core"
+import { ChildDom, html } from "../../../packages/core/src"
 
 export default function DocPage(...children: ChildDom[]): HTMLElement {
     const content = html.div(

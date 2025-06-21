@@ -1,4 +1,4 @@
-import { html, svg } from ".."
+import { html, svg } from "@savant/core"
 import { Badge, Tooltip } from "../components"
 import logo from "../../logo.svg"
 

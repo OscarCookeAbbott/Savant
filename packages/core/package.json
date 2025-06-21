@@ -1,0 +1,15 @@
+{
+  "name": "@savant/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build --config vite.config.ts && tsc --emitDeclarationOnly --declaration --declarationDir dist --project tsconfig.json"
+  }
+}

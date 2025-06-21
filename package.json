@@ -1,54 +1,24 @@
 {
-    "name": "savant",
-    "description": "The simple, smart web framework.",
-    "version": "0.1.0",
+    "private": true,
+    "name": "savant-monorepo",
     "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "build:lib": "vite build --config vite.config.lib.ts && tsc --emitDeclarationOnly --declaration --declarationDir dist --project tsconfig.json",
-        "preview": "vite preview"
-    },
+    "version": "0.1.0",
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.10",
-        "@types/domhandler": "^2.4.2",
-        "@types/marked": "^5.0.1",
-        "@types/showdown": "^2.0.6",
+        "typescript": "~5.8.3",
+        "vite": "^6.3.5",
         "ava": "^5.3.1",
         "prettier": "^3.5.3",
         "prettier-plugin-tailwindcss": "^0.6.12",
-        "tailwindcss": "^4.1.10",
-        "typescript": "~5.8.3",
-        "vite": "^6.3.5"
+        "tailwindcss": "^4.1.10"
+    },
+    "scripts": {
+        "build": "pnpm -r run build",
+        "build:docs": "vite build --config vite.config.ts --outDir dist/docs"
     },
     "dependencies": {
-        "html-dom-parser": "^4.0.0",
-        "marked": "^9.0.0",
-        "showdown": "^2.1.0"
-    },
-    "author": "Oscar Cooke-Abbott",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/OscarCookeAbbott/Savant.git"
-    },
-    "bugs": {
-        "url": "git+https://github.com/OscarCookeAbbott/Savant/issues"
-    },
-    "homepage": "https://oscarcookeabbott.github.io/Savant/",
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        "import": "./dist/savant.es.js",
-        "require": "./dist/savant.umd.js"
-    },
-    "files": [
-        "dist",
-        "README.md",
-        "LICENSE.txt"
-    ],
-    "publishConfig": {
-        "access": "public"
+        "@savant/core": "workspace:*",
+        "@savant/routing": "workspace:*",
+        "@savant/components": "workspace:*"
     }
 }

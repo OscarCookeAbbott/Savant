@@ -1,6 +1,6 @@
-import { ChildDom, derive, html, optionalAttribute, State } from ".."
-import { Link } from "../routing"
-import { getRouterPath } from "../routing/helpers"
+import { ChildDom, derive, html, optionalAttribute, State } from "@savant/core"
+import { Link } from "@savant/routing"
+import { getRouterPath } from "@savant/routing"
 
 type NavOption = {
     name: string

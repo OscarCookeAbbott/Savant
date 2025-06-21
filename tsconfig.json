@@ -20,8 +20,20 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": true
+        "noUncheckedSideEffectImports": true,
+
+        "baseUrl": ".",
+        "paths": {
+            "@savant/core": ["packages/core/src"]
+        }
     },
-    "include": ["src/**/*"],
+    "include": [
+        "src/**/*",
+        "packages/components/src/scripts/prism.js",
+        "packages/components/src/scripts/prism.d.ts",
+        "packages/core/src/converter.ts",
+        "packages/core/src/index.ts",
+        "packages/core/src/utils.ts"
+    ],
     "exclude": ["src/docs", "src/docs/**/*"]
 }

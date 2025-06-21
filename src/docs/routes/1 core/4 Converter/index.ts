@@ -1,5 +1,5 @@
 import { derive, html, state } from "../../../.."
-import { htmlToSavantCode } from "../../../../core/converter"
+import { htmlToSavantCode } from "../../../../../packages/core/src/converter"
 import { Code, Label } from "../../../../components"
 import DocPage from "../../../components/DocPage"
 
