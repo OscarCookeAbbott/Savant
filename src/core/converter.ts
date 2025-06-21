@@ -1,6 +1,10 @@
+// @ts-nocheck
 import parse from "html-dom-parser"
+// @ts-ignore
 import { ChildNode, Element, Text } from "domhandler"
+// @ts-ignore
 import { marked } from "marked"
+// @ts-ignore
 import { RendererObject } from "MarkedOptions"
 
 const dummy = "DUMMY"

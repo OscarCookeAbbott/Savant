@@ -27,7 +27,7 @@ export default function Page() {
 
     const input = html.textarea({
         value: inputHtml,
-        oninput: (e) => (inputHtml.val = e.target.value),
+        oninput: (e: Event) => (inputHtml.val = (e.target as HTMLTextAreaElement).value),
         class: "variant-soft-outline w-full h-64",
     })
 

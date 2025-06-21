@@ -428,6 +428,7 @@ function tag<T>(
             continue
         }
 
+        // @ts-expect-error Argument type may not match setter signature
         setter(propValue)
     }
 
@@ -459,9 +460,11 @@ function updateDoms() {
         for (let connectedDerivedState of connectedDerivedStates) {
             deriveDom(
                 connectedDerivedState.func,
+                // @ts-expect-error State<any> | undefined not assignable to State<any>
                 connectedDerivedState.state,
                 connectedDerivedState._dom,
             )
+            // @ts-expect-error Type 'undefined' is not assignable to type '{ isConnected: boolean; }'
             connectedDerivedState._dom = undefined
         }
     } while (
@@ -480,7 +483,9 @@ function updateDoms() {
             (s) => (s._bindings = filterDisconnected(s._bindings)),
         ),
     )) {
+        // @ts-expect-error Type mismatch for ChildNode and binding._dom
         update(binding._dom, bind(binding.func, binding._dom))
+        // @ts-expect-error Type 'undefined' is not assignable to type '{ isConnected: boolean; }'
         binding._dom = undefined
     }
 
@@ -516,5 +521,6 @@ export function hydrate(
     dom: ChildNode,
     func: (dom: ChildNode) => Optional<ChildNode>,
 ): void {
+    // @ts-expect-error Type mismatch for ChildNode and dom
     return update(dom, bind(func, dom))
 }

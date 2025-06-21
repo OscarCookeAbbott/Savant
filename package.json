@@ -1,11 +1,12 @@
 {
     "name": "savant",
-    "private": true,
-    "version": "0.0.0",
+    "description": "The simple, smart web framework.",
+    "version": "0.1.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "build:lib": "vite build --config vite.config.lib.ts && tsc --emitDeclarationOnly --declaration --declarationDir dist --project tsconfig.json",
         "preview": "vite preview"
     },
     "devDependencies": {
@@ -24,5 +25,30 @@
         "html-dom-parser": "^4.0.0",
         "marked": "^9.0.0",
         "showdown": "^2.1.0"
+    },
+    "author": "Oscar Cooke-Abbott",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/OscarCookeAbbott/Savant.git"
+    },
+    "bugs": {
+        "url": "git+https://github.com/OscarCookeAbbott/Savant/issues"
+    },
+    "homepage": "https://oscarcookeabbott.github.io/Savant/",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        "import": "./dist/savant.es.js",
+        "require": "./dist/savant.umd.js"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE.txt"
+    ],
+    "publishConfig": {
+        "access": "public"
     }
 }

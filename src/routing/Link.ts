@@ -23,7 +23,7 @@ export default function Link(
     return html.a(
         {
             href,
-            onclick: (e: MouseEvent) => {
+            onclick(this: GlobalEventHandlers, e: MouseEvent) {
                 e.preventDefault()
 
                 const hrefValue = unwrapVal(href)
@@ -32,7 +32,7 @@ export default function Link(
 
                 navigate(String(hrefValue), { replace })
 
-                if (typeof onclick === "function") onclick(e)
+                if (typeof onclick === "function") onclick.call(this, e)
             },
             tabIndex: 0,
             class: () =>
