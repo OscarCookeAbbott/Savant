@@ -25,7 +25,8 @@
         "baseUrl": ".",
         "paths": {
             "@savant/core": ["packages/core/src"]
-        }
+        },
+        "types": ["vite/client"]
     },
     "include": [
         "src/**/*",

@@ -1,3 +1,4 @@
+import "./style.css"
 import Header from "./Header"
 import Navbar from "./Navbar"
 import { add, html } from "@savant/core"

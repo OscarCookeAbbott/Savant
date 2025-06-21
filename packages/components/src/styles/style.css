@@ -1,4 +1,4 @@
-@import "tailwindcss" source("../../");
+@import "tailwindcss";
 
 @theme {
     --color-surface: var(--color-zinc-500);

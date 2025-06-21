@@ -15,14 +15,17 @@
         "tailwindcss": ">=4.0.0"
     },
     "exports": {
-        ".": "./dist/index.es.js"
+        ".": "./dist/index.es.js",
+        "./style.css": "./dist/style.css",
+        "./markup.css": "./dist/markup.css",
+        "./prism.css": "./dist/prism.css"
     },
     "files": [
         "dist"
     ],
     "license": "MIT",
     "scripts": {
-        "build": "vite build --config vite.config.ts && tsc --emitDeclarationOnly --declaration --declarationDir dist --project tsconfig.json"
+        "build": "vite build --config vite.config.ts && tsc --emitDeclarationOnly --declaration --declarationDir dist --project tsconfig.json && node build.js"
     },
     "dependencies": {
         "@savant/core": "workspace:*"
