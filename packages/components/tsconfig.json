@@ -3,13 +3,8 @@
     "compilerOptions": {
         "outDir": "dist",
         "rootDir": "src",
-        "composite": true,
         "declaration": true,
-        "emitDeclarationOnly": true,
-        "declarationDir": "dist"
+        "emitDeclarationOnly": true
     },
-    "include": ["src"],
-    "references": [
-        { "path": "../core" }
-    ]
+    "include": ["src"]
 }

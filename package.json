@@ -3,19 +3,10 @@
     "name": "savant-monorepo",
     "type": "module",
     "version": "0.1.0",
-    "devDependencies": {
-        "@tailwindcss/vite": "^4.1.10",
-        "typescript": "~5.8.3",
-        "vite": "^6.3.5",
-        "ava": "^5.3.1",
-        "prettier": "^3.5.3",
-        "prettier-plugin-tailwindcss": "^0.6.12",
-        "tailwindcss": "^4.1.10"
-    },
     "scripts": {
-        "dev": "vite",
+        "dev": "cd packages/docs && vite",
         "build": "pnpm -r run build",
-        "build:docs": "vite build --config vite.config.ts --outDir dist/docs"
+        "build:docs": "vite build --config packages/docs/vite.config.ts --outDir dist/docs"
     },
     "dependencies": {
         "@savant/core": "workspace:*",

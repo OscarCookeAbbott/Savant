@@ -61,7 +61,7 @@ function NavOption(
             html.span(
                 {
                     name: "Title",
-                    class: "not-group-data-group:ml-(--indent) justify-start group-data-selected:font-semibold flex-1 py-0.5 z-1 transition-all",
+                    class: "group-data-indented:ml-(--indent) justify-start group-data-selected:font-semibold flex-1 py-0.5 z-1 transition-all",
                 },
 
                 option.name,

@@ -24,19 +24,10 @@
 
         "baseUrl": ".",
         "paths": {
-            "@savant/core": ["packages/core/dist"],
-            "@savant/routing": ["packages/routing/dist"],
-            "@savant/components": ["packages/components/dist"]
+            "@savant/core": ["packages/core/src"],
+            "@savant/routing": ["packages/routing/src"],
+            "@savant/components": ["packages/components/src"]
         },
         "types": ["vite/client"]
     },
-    "include": [
-        "src/**/*",
-        "packages/components/src/scripts/prism.js",
-        "packages/components/src/scripts/prism.d.ts",
-        "packages/core/src/converter.ts",
-        "packages/core/src/index.ts",
-        "packages/core/src/utils.ts",
-        "packages/docs"
-    ]
 }

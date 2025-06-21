@@ -5,14 +5,15 @@
     "main": "dist/index.es.js",
     "types": "dist/index.d.ts",
     "exports": {
-        ".": "./dist/index.es.js"
+        ".": "./dist/index.es.js",
+        "./index.d.ts": "./dist/index.d.ts"
     },
     "files": [
         "dist"
     ],
     "license": "MIT",
     "scripts": {
-        "build": "vite build --config vite.config.ts && tsc --emitDeclarationOnly --declaration --declarationDir dist --project tsconfig.json"
+        "build": "vite build --config vite.config.ts && tsc --project tsconfig.json"
     },
     "devDependencies": {
         "@types/domhandler": "^2.4.2",

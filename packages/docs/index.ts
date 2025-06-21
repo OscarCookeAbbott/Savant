@@ -1,28 +1,28 @@
 import "./style.css"
-import Header from "./Header"
-import Navbar from "./Navbar"
+import Header from "./src/Header"
+import Navbar from "./src/Navbar"
 import { add, html } from "@savant/core"
 import { Router } from "@savant/routing"
-import rootRoute from "./routes/index"
-import coreRoute from "./routes/1 core/index"
-import routingRoute from "./routes/2 routing/index"
-import uiRoute from "./routes/3 ui/index"
+import rootRoute from "./src/routes/index"
+import coreRoute from "./src/routes/1 core/index"
+import routingRoute from "./src/routes/2 routing/index"
+import uiRoute from "./src/routes/3 ui/index"
 
 type RouteFile = { default: () => HTMLElement }
 
-const coreRoutes = import.meta.glob("./routes/1 core/*/**/index.ts", {
+const coreRoutes = import.meta.glob("./src/routes/1 core/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
-const routingRoutes = import.meta.glob("./routes/2 routing/*/**/index.ts", {
+const routingRoutes = import.meta.glob("./src/routes/2 routing/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
-const uiRoutes = import.meta.glob("./routes/3 ui/*/**/index.ts", {
+const uiRoutes = import.meta.glob("./src/routes/3 ui/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
-const examplesRoutes = import.meta.glob("./routes/examples/*/**/index.ts", {
+const examplesRoutes = import.meta.glob("./src/routes/examples/*/**/index.ts", {
     eager: true,
 }) as Record<string, RouteFile>
 
@@ -30,7 +30,7 @@ const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
     Object.entries(dirRoutes).map(([path, route]) => {
         const pageName = path
             .replace("./routes", "")
-            .split("/")[2]
+            .split("/")[4]
             .replace(/^\s*\d*\s*/, "")
 
         return {
@@ -40,7 +40,7 @@ const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
                 path
                     .replace("./routes", "")
                     .split("/")
-                    .slice(0, -2)
+                    .slice(1, -2)
                     .concat(pageName)
                     .join("/"),
             dom: route.default,

@@ -9,5 +9,5 @@
     "include": [
         "**/*.ts",
         "**/*.tsx"
-    ]
+, "tailwind.config.ts"    ]
 }

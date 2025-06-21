@@ -1,6 +1,3 @@
-import "./styles/style.css"
-import "./styles/prism.css"
-import "./styles/markup.css"
 import "./scripts/prism"
 import Badge from "./components/Badge"
 import Button from "./components/Button"

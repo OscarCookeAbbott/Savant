@@ -1,4 +1,4 @@
-import { derive, html, state, htmlToSavantCode } from "@savant/core"
+import { html, state } from "@savant/core"
 import { Code, Label } from "@savant/components"
 import DocPage from "../../../components/DocPage"
 
@@ -31,11 +31,12 @@ export default function Page() {
         class: "variant-soft-outline w-full h-64",
     })
 
-    const conversionResult = derive(() =>
-        htmlToSavantCode(
-            inputHtml.val.replace(/\>\s+/g, ">").replace(/\s+\</g, "<"),
-        ),
-    )
+    // const conversionResult = derive(
+    //     () => "Placeholder",
+    //     // htmlToSavantCode(
+    //     //     inputHtml.val.replace(/\>\s+/g, ">").replace(/\s+\</g, "<"),
+    //     // ),
+    // )
 
     return DocPage(
         html.h1("Converter"),
@@ -52,7 +53,7 @@ export default function Page() {
             () =>
                 Code(
                     { language: "typescript" },
-                    conversionResult.val.tags.join(", "),
+                    // conversionResult.val.tags.join(", "),
                 ),
         ),
 
@@ -60,12 +61,13 @@ export default function Page() {
             { content: "Components" },
 
             () =>
-                conversionResult.val.components.length
-                    ? Code(
-                          { language: "typescript" },
-                          conversionResult.val.components.join(", "),
-                      )
-                    : "None",
+                // conversionResult.val.components.length
+                //     ? Code(
+                //           { language: "typescript" },
+                //           conversionResult.val.components.join(", "),
+                //       )
+            //     : "None",
+                "None",
         ),
 
         Label(
@@ -74,7 +76,7 @@ export default function Page() {
             () =>
                 Code(
                     { language: "typescript" },
-                    conversionResult.val.code.join("\n"),
+                    // conversionResult.val.code.join("\n"),
                 ),
         ),
     )
