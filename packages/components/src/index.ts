@@ -19,6 +19,8 @@ import TableOfContents from "./TableOfContents"
 import Input from "./Input"
 import Tooltip from "./Tooltip"
 
+export * from "./Popup"
+
 export {
     Badge,
     Button,

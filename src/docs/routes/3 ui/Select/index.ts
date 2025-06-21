@@ -1,5 +1,5 @@
-import { Code, Label, Select } from "../../../../components"
-import { html, State, state } from "../../../.."
+import { Code, Label, Select } from "@savant/components"
+import { html, State, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
 const DemoSelectType = {

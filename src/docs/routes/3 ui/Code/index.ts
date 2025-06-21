@@ -1,7 +1,6 @@
-import { Code } from "../../../../components"
-import { html } from "../../../.."
-import Callout from "../../../../components/Callout"
-import Markdown from "../../../../components/Markdown"
+import { Code, Callout } from "@savant/components"
+import { html } from "@savant/core"
+import { Markdown } from "@savant/components"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {

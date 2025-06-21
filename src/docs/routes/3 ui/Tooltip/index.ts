@@ -1,5 +1,5 @@
-import { Button, Code, Tooltip } from "../../../../components"
-import { html } from "../../../.."
+import { Button, Code, Tooltip } from "@savant/components"
+import { html } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {

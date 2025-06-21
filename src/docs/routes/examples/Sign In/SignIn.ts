@@ -5,8 +5,8 @@ import {
     Label,
     Input,
     Form,
-} from "../../../../components"
-import { html, state } from "../../../.."
+} from "@savant/components"
+import { html, state } from "@savant/core"
 
 export default function SignIn(): HTMLElement {
     const username = state("")

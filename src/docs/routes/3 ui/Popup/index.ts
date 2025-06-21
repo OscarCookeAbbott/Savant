@@ -1,6 +1,12 @@
-import { Button, Code, Label, Popup, Select } from "../../../../components"
-import { PopupTrigger } from "../../../../components/Popup"
-import { html, state } from "../../../.."
+import {
+    Button,
+    Code,
+    Label,
+    Popup,
+    Select,
+    PopupTrigger,
+} from "@savant/components"
+import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {

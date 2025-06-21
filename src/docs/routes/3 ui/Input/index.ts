@@ -1,5 +1,5 @@
-import { Code, Label, Select, Input } from "../../../../components"
-import { html, State, state } from "../../../.."
+import { Code, Label, Select, Input } from "@savant/components"
+import { html, State, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {

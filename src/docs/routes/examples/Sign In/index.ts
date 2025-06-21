@@ -1,5 +1,5 @@
-import { Code } from "../../../../components"
-import { html } from "../../../.."
+import { Code } from "@savant/components"
+import { html } from "@savant/core"
 import SignIn from "./SignIn"
 import DocPage from "../../../components/DocPage"
 

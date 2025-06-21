@@ -1,6 +1,12 @@
-import { Label, Select, Code, Input, Checkbox } from "../../../../components"
-import { html, state } from "../../../.."
-import CircularProgressBar from "../../../../components/CircularProgressBar"
+import {
+    Label,
+    Select,
+    Code,
+    Input,
+    Checkbox,
+    CircularProgressBar,
+} from "@savant/components"
+import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {

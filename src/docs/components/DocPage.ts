@@ -1,5 +1,5 @@
-import TableOfContents from "../../components/TableOfContents"
-import { ChildDom, html } from "../../../packages/core/src"
+import { ChildDom, html } from "@savant/core"
+import { TableOfContents } from "@savant/components"
 
 export default function DocPage(...children: ChildDom[]): HTMLElement {
     const content = html.div(

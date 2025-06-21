@@ -1,6 +1,6 @@
-import { derive, html, state } from "../../../.."
+import { derive, html, state } from "@savant/core"
 import { htmlToSavantCode } from "../../../../../packages/core/src/converter"
-import { Code, Label } from "../../../../components"
+import { Code, Label } from "@savant/components"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
@@ -27,7 +27,8 @@ export default function Page() {
 
     const input = html.textarea({
         value: inputHtml,
-        oninput: (e: Event) => (inputHtml.val = (e.target as HTMLTextAreaElement).value),
+        oninput: (e: Event) =>
+            (inputHtml.val = (e.target as HTMLTextAreaElement).value),
         class: "variant-soft-outline w-full h-64",
     })
 
