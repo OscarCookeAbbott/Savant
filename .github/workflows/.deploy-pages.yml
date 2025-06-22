@@ -32,4 +32,4 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./packages/docs/dist
+          folder: ./packages/sites/dist

@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => {
     const base = mode === "production" ? "/Savant/" : "/"
 
     return {
-        root: "./src/docs",
+        root: "./src/site",
         base: base,
         plugins: [tailwindcss()],
     }

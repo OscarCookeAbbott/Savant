@@ -5,7 +5,11 @@
     "main": "dist/index.es.js",
     "types": "dist/index.d.ts",
     "exports": {
-        ".": "./dist/index.es.js"
+        ".": {
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js",
+            "types": "./dist/index.d.ts"
+        }
     },
     "files": [
         "dist"

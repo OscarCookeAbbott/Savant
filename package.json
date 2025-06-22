@@ -4,12 +4,12 @@
     "type": "module",
     "version": "0.1.0",
     "scripts": {
-        "dev": "cd packages/docs && vite",
+        "dev": "cd packages/site && vite",
         "build": "pnpm -r run build",
         "build:core": "pnpm --filter @savant/core... build",
         "build:routing": "pnpm --filter @savant/routing... build",
         "build:ui": "pnpm --filter @savant/ui... build",
-        "build:docs": "pnpm --filter @savant/docs... build"
+        "build:site": "pnpm --filter @savant/site... build"
     },
     "devDependencies": {
         "vite": "^6.3.5"
