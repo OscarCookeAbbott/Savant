@@ -1,3 +1,6 @@
+export * from "./utils"
+export * from "./context"
+
 //////// Types & Interfaces ////////
 
 export type Optional<T> = T | null | undefined
@@ -524,5 +527,3 @@ export function hydrate(
     // @ts-expect-error Type mismatch for ChildNode and dom
     return update(dom, bind(func, dom))
 }
-
-export * from "./utils"
