@@ -28,21 +28,23 @@ const examplesRoutes = import.meta.glob("./src/routes/examples/*/**/index.ts", {
 
 const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
     Object.entries(dirRoutes).map(([path, route]) => {
-        const pageName = path
-            .replace("./routes", "")
-            .split("/")[4]
-            .replace(/^\s*\d*\s*/, "")
+        const localPath = path
+            .replace("./src/routes/", "")
+            .replace("/index.ts", "")
+
+        const pageName = localPath
+            .split("/")
+            .slice(-1)[0]
+            .replace(/^\d+\s/, "")
+        const pagePath = localPath
+            .split("/")
+            .slice(0, -1)
+            .map((part) => part.replace(/^\d+\s/, "").replace(" ", "-"))
+            .join("/")
 
         return {
             name: pageName,
-            path:
-                "/#" +
-                path
-                    .replace("./routes", "")
-                    .split("/")
-                    .slice(1, -2)
-                    .concat(pageName)
-                    .join("/"),
+            path: `/#!/${pagePath}/${pageName}`,
             dom: route.default,
         }
     })
@@ -55,19 +57,19 @@ const pages = [
     },
     {
         name: "Core",
-        path: "/#/core",
+        path: "#!/core",
         dom: coreRoute,
         children: routeMaker(coreRoutes),
     },
     {
         name: "Routing",
-        path: "/#/routing",
+        path: "#!/routing",
         dom: routingRoute,
         children: routeMaker(routingRoutes),
     },
     {
         name: "Savant UI",
-        path: "/#/ui",
+        path: "#!/ui",
         dom: uiRoute,
         children: routeMaker(uiRoutes),
     },
