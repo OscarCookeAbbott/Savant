@@ -43,7 +43,9 @@ console.log(num.rawVal)
 ```typescript
 /** Creates a piece of reactive data with the given initial value. */
 function state<T>(value: T): State<T>
+```
 
+```typescript
 class State<T> {
     /** The current value. Assigning will trigger reactivity. */
     val: T

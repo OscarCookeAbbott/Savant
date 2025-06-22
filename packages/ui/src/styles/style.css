@@ -165,7 +165,7 @@
 
     p,
     .p {
-        @apply not-first:mt-4;
+        @apply not-first:mt-4 text-foreground-weak;
     }
 
     blockquote,

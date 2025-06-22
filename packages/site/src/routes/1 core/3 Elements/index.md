@@ -74,10 +74,19 @@ Generally reactivity should be scoped at the lowest level possible, which typica
 ## Signature
 
 ```typescript
+/** Create a new DOM element of the used tag, given props and/or children. */
 function [element](propsOrChild: ElementProps<Element> | ChildDom, ...restChildren: ChildDom[]): [element]
 ```
 
-_Creates a DOM element of the type called with the given props and/or children_.
+```typescript
+type ChildDom =
+    | ValidChildDomValue
+    | Readonly<State<Optional<Primitive>>>
+    | BindingFunc
+    | readonly ChildDom[]
+type ValidChildDomValue = Optional<Primitive | ChildNode>
+type BindingFunc = (dom?: ChildDom) => ChildDom
+```
 
 ## Notes
 
