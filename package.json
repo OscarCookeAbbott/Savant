@@ -11,6 +11,9 @@
         "build:ui": "pnpm --filter @savant/ui... build",
         "build:docs": "pnpm --filter @savant/docs... build"
     },
+    "devDependencies": {
+        "vite": "^6.3.5"
+    },
     "dependencies": {
         "@savant/core": "workspace:*",
         "@savant/routing": "workspace:*",

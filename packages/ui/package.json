@@ -5,15 +5,10 @@
     "main": "dist/index.es.js",
     "types": "dist/index.d.ts",
     "exports": {
-        ".": "./dist/index.es.js",
-        "./index.d.ts": "./dist/index.d.ts",
-        "./markup.css": "./dist/markup.css",
-        "./prism.css": "./dist/prism.css",
-        "./style.css": "./dist/style.css"
+        ".": "./dist/index.es.js"
     },
     "files": [
-        "dist",
-        "src/components"
+        "dist"
     ],
     "license": "MIT",
     "scripts": {

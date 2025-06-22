@@ -2,6 +2,6 @@
 
 @import "tailwindcss";
 
-@import "@savant/ui/style.css";
-@import "@savant/ui/prism.css";
-@import "@savant/ui/markup.css";
+@import "@savant/ui/styles/style.css";
+@import "@savant/ui/styles/prism.css";
+@import "@savant/ui/styles/markup.css";
