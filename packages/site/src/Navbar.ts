@@ -43,7 +43,7 @@ function NavOption(
                 "data-selected": optionalAttribute(
                     () =>
                         currentPath.val ===
-                            `${import.meta.env.BASE_URL.slice(1)}${option.path}` ||
+                            `${import.meta.env.BASE_URL.slice(0, -1)}${option.path}` ||
                         undefined,
                 ),
                 "data-group": optionalAttribute(

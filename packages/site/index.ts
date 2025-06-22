@@ -57,19 +57,19 @@ const pages = [
     },
     {
         name: "Core",
-        path: "#!/core",
+        path: "/#!/core",
         dom: coreRoute,
         children: routeMaker(coreRoutes),
     },
     {
         name: "Routing",
-        path: "#!/routing",
+        path: "/#!/routing",
         dom: routingRoute,
         children: routeMaker(routingRoutes),
     },
     {
         name: "Savant UI",
-        path: "#!/ui",
+        path: "/#!/ui",
         dom: uiRoute,
         children: routeMaker(uiRoutes),
     },
