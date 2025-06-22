@@ -41,7 +41,10 @@ function NavOption(
                     window.scrollTo({ top: 0, left: 0 })
                 },
                 "data-selected": optionalAttribute(
-                    () => currentPath.val === option.path || undefined,
+                    () =>
+                        currentPath.val ===
+                            `${import.meta.env.BASE_URL.slice(1)}${option.path}` ||
+                        undefined,
                 ),
                 "data-group": optionalAttribute(
                     () => (depth === 0 && option.children) || undefined,
