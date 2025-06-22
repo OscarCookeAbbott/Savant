@@ -8,28 +8,73 @@ importers:
 
   .:
     dependencies:
-      html-dom-parser:
-        specifier: ^4.0.0
-        version: 4.0.1
-      marked:
-        specifier: ^9.0.0
-        version: 9.1.6
-      showdown:
-        specifier: ^2.1.0
-        version: 2.1.0
+      '@savant/core':
+        specifier: workspace:*
+        version: link:packages/core
+      '@savant/routing':
+        specifier: workspace:*
+        version: link:packages/routing
+      '@savant/ui':
+        specifier: workspace:*
+        version: link:packages/ui
     devDependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.1.10
-        version: 4.1.10(vite@6.3.5(jiti@2.4.2)(lightningcss@1.30.1))
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(jiti@2.4.2)(lightningcss@1.30.1)
+
+  packages/core:
+    dependencies:
+      domhandler:
+        specifier: ^4.0.0
+        version: 4.3.1
+      html-dom-parser:
+        specifier: ^1.0.0
+        version: 1.2.0
+      marked:
+        specifier: ^5.0.2
+        version: 5.1.2
+    devDependencies:
       '@types/domhandler':
         specifier: ^2.4.2
         version: 2.4.5
       '@types/marked':
         specifier: ^5.0.1
         version: 5.0.2
-      '@types/showdown':
-        specifier: ^2.0.6
-        version: 2.0.6
+      typescript:
+        specifier: ^5.0.0
+        version: 5.8.3
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(jiti@2.4.2)(lightningcss@1.30.1)
+
+  packages/routing:
+    dependencies:
+      '@savant/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.8.3
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(jiti@2.4.2)(lightningcss@1.30.1)
+
+  packages/site:
+    dependencies:
+      '@savant/core':
+        specifier: workspace:*
+        version: link:../core
+      '@savant/routing':
+        specifier: workspace:*
+        version: link:../routing
+      '@savant/ui':
+        specifier: workspace:*
+        version: link:../ui
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.1.10
+        version: 4.1.10(vite@6.3.5(jiti@2.4.2)(lightningcss@1.30.1))
       ava:
         specifier: ^5.3.1
         version: 5.3.1
@@ -43,7 +88,29 @@ importers:
         specifier: ^4.1.10
         version: 4.1.10
       typescript:
-        specifier: ~5.8.3
+        specifier: ^5.0.0
+        version: 5.8.3
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(jiti@2.4.2)(lightningcss@1.30.1)
+
+  packages/ui:
+    dependencies:
+      '@savant/core':
+        specifier: workspace:*
+        version: link:../core
+      tailwindcss:
+        specifier: '>=4.0.0'
+        version: 4.1.10
+    devDependencies:
+      '@types/showdown':
+        specifier: ^2.0.6
+        version: 2.0.6
+      showdown:
+        specifier: ^2.0.0
+        version: 2.1.0
+      typescript:
+        specifier: ^5.0.0
         version: 5.8.3
       vite:
         specifier: ^6.3.5
@@ -607,18 +674,18 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  dom-serializer@2.0.0:
-    resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
+  dom-serializer@1.4.1:
+    resolution: {integrity: sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==}
 
   domelementtype@2.3.0:
     resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
 
-  domhandler@5.0.3:
-    resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
+  domhandler@4.3.1:
+    resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
     engines: {node: '>= 4'}
 
-  domutils@3.2.2:
-    resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
+  domutils@2.8.0:
+    resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -637,8 +704,11 @@ packages:
     resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
     engines: {node: '>=10.13.0'}
 
-  entities@4.5.0:
-    resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
+  entities@2.2.0:
+    resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
+
+  entities@3.0.1:
+    resolution: {integrity: sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==}
     engines: {node: '>=0.12'}
 
   esbuild@0.25.5:
@@ -717,11 +787,11 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  html-dom-parser@4.0.1:
-    resolution: {integrity: sha512-YADpM4AxP/W4Kyea3Aonmwz64pwlijbXpKHaNwd0ipK/OzCOamI0a24L6nh60uwHmcpD7wC3xvL9unWCPk7tiQ==}
+  html-dom-parser@1.2.0:
+    resolution: {integrity: sha512-2HIpFMvvffsXHFUFjso0M9LqM+1Lm22BF+Df2ba+7QHJXjk63pWChEnI6YG27eaWqUdfnh5/Vy+OXrNTtepRsg==}
 
-  htmlparser2@9.0.0:
-    resolution: {integrity: sha512-uxbSI98wmFT/G4P2zXx4OVx04qWUmyFPrD2/CNepa2Zo3GPNaCaaxElDgwUrwYWkK1nr9fft0Ya8dws8coDLLQ==}
+  htmlparser2@7.2.0:
+    resolution: {integrity: sha512-H7MImA4MS6cw7nbyURtLPO1Tms7C5H602LRETv95z1MxO/7CP7rDVROehUYeYBUYEON94NXXDEPmZuq+hX4sog==}
 
   ignore-by-default@2.1.0:
     resolution: {integrity: sha512-yiWd4GVmJp0Q6ghmM2B/V3oZGRmjrKLXvHR3TE1nfoXsmoggllfZUQe74EN0fJdPFZu2NIvNdrMMLm3OsV7Ohw==}
@@ -875,8 +945,8 @@ packages:
     resolution: {integrity: sha512-bJzx6nMoP6PDLPBFmg7+xRKeFZvFboMrGlxmNj9ClvX53KrmvM5bXFXEWjbz4cz1AFn+jWJ9z/DJSz7hrs0w3w==}
     engines: {node: '>=6'}
 
-  marked@9.1.6:
-    resolution: {integrity: sha512-jcByLnIFkd5gSXZmjNvS1TlmRhCXZjIzHYlaGkPlLIekG55JDR2Z4va9tZwCiP+/RDERiNhMOFu01xd6O5ct1Q==}
+  marked@5.1.2:
+    resolution: {integrity: sha512-ahRPGXJpjMjwSOlBoTMZAK7ATXkli5qCPxZ21TG44rx1KEo44bii4ekgTDQPNRQ4Kh7JMb9Ub1PVk1NxRSsorg==}
     engines: {node: '>= 16'}
     hasBin: true
 
@@ -1687,23 +1757,23 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  dom-serializer@2.0.0:
+  dom-serializer@1.4.1:
     dependencies:
       domelementtype: 2.3.0
-      domhandler: 5.0.3
-      entities: 4.5.0
+      domhandler: 4.3.1
+      entities: 2.2.0
 
   domelementtype@2.3.0: {}
 
-  domhandler@5.0.3:
+  domhandler@4.3.1:
     dependencies:
       domelementtype: 2.3.0
 
-  domutils@3.2.2:
+  domutils@2.8.0:
     dependencies:
-      dom-serializer: 2.0.0
+      dom-serializer: 1.4.1
       domelementtype: 2.3.0
-      domhandler: 5.0.3
+      domhandler: 4.3.1
 
   eastasianwidth@0.2.0: {}
 
@@ -1718,7 +1788,9 @@ snapshots:
       graceful-fs: 4.2.11
       tapable: 2.2.2
 
-  entities@4.5.0: {}
+  entities@2.2.0: {}
+
+  entities@3.0.1: {}
 
   esbuild@0.25.5:
     optionalDependencies:
@@ -1809,17 +1881,17 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  html-dom-parser@4.0.1:
+  html-dom-parser@1.2.0:
     dependencies:
-      domhandler: 5.0.3
-      htmlparser2: 9.0.0
+      domhandler: 4.3.1
+      htmlparser2: 7.2.0
 
-  htmlparser2@9.0.0:
+  htmlparser2@7.2.0:
     dependencies:
       domelementtype: 2.3.0
-      domhandler: 5.0.3
-      domutils: 3.2.2
-      entities: 4.5.0
+      domhandler: 4.3.1
+      domutils: 2.8.0
+      entities: 3.0.1
 
   ignore-by-default@2.1.0: {}
 
@@ -1925,7 +1997,7 @@ snapshots:
     dependencies:
       p-defer: 1.0.0
 
-  marked@9.1.6: {}
+  marked@5.1.2: {}
 
   matcher@5.0.0:
     dependencies:

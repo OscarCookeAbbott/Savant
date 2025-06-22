@@ -1,28 +1,22 @@
 {
-    "name": "savant",
     "private": true,
-    "version": "0.0.0",
+    "name": "savant-monorepo",
     "type": "module",
+    "version": "0.1.0",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview"
+        "dev": "cd packages/site && vite",
+        "build": "pnpm -r run build",
+        "build:core": "pnpm --filter @savant/core... build",
+        "build:routing": "pnpm --filter @savant/routing... build",
+        "build:ui": "pnpm --filter @savant/ui... build",
+        "build:site": "pnpm --filter @savant/site... build"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.1.10",
-        "@types/domhandler": "^2.4.2",
-        "@types/marked": "^5.0.1",
-        "@types/showdown": "^2.0.6",
-        "ava": "^5.3.1",
-        "prettier": "^3.5.3",
-        "prettier-plugin-tailwindcss": "^0.6.12",
-        "tailwindcss": "^4.1.10",
-        "typescript": "~5.8.3",
         "vite": "^6.3.5"
     },
     "dependencies": {
-        "html-dom-parser": "^4.0.0",
-        "marked": "^9.0.0",
-        "showdown": "^2.1.0"
+        "@savant/core": "workspace:*",
+        "@savant/routing": "workspace:*",
+        "@savant/ui": "workspace:*"
     }
 }
