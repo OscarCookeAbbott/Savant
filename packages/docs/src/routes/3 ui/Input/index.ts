@@ -1,4 +1,4 @@
-import { Code, Label, Select, Input } from "@savant/components"
+import { Code, Label, Select, Input } from "@savant/ui"
 import { html, State, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -84,7 +84,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Input } from "savant/components"
+import { Input } from "savant/ui"
 
 Input({
     value: state(${exampleType.val === "text" ? '"Example text"' : 42}),

@@ -1,6 +1,7 @@
 @config "./tailwind.config.ts";
 
 @import "tailwindcss";
-@import "@savant/components/style.css";
-@import "@savant/components/prism.css";
-@import "@savant/components/markup.css";
+
+@import "@savant/ui/style.css";
+@import "@savant/ui/prism.css";
+@import "@savant/ui/markup.css";

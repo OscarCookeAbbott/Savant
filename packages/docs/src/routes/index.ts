@@ -1,5 +1,5 @@
 import md from "./index.md?raw"
-import { Markdown } from "@savant/components"
+import { Markdown } from "@savant/ui"
 import DocPage from "../components/DocPage"
 
 export default function Page() {

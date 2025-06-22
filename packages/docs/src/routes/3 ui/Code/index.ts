@@ -1,6 +1,6 @@
-import { Code, Callout } from "@savant/components"
+import { Code, Callout } from "@savant/ui"
 import { html } from "@savant/core"
-import { Markdown } from "@savant/components"
+import { Markdown } from "@savant/ui"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
@@ -34,13 +34,13 @@ export default function Page() {
                 },
 
                 `\
-import { Code } from "savant/components"
+import { Code } from "savant/ui"
 
 Code(
     { language: "ts" },
 
     \`\\
-import { Code } from "savant/components"
+import { Code } from "savant/ui"
 
 Code(
     { language: "ts" },

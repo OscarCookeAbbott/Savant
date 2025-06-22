@@ -5,7 +5,7 @@ import {
     Label,
     Input,
     Form,
-} from "@savant/components"
+} from "@savant/ui"
 import { html, state } from "@savant/core"
 
 export default function SignIn(): HTMLElement {

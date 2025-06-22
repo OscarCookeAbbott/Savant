@@ -5,7 +5,7 @@ import {
     Popup,
     Select,
     PopupTrigger,
-} from "@savant/components"
+} from "@savant/ui"
 import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -77,7 +77,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Button, Popup } from "savant/components"
+import { Button, Popup } from "savant/ui"
 
 Button(
     {

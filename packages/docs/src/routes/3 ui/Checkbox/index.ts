@@ -1,4 +1,4 @@
-import { Checkbox, Code, Label, Select } from "@savant/components"
+import { Checkbox, Code, Label, Select } from "@savant/ui"
 import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -74,7 +74,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Checkbox } from "savant/components"
+import { Checkbox } from "savant/ui"
 
 Checkbox(
     { class: \`${exampleVariant.val} ${exampleMood.val}\` },

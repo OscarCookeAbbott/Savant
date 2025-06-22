@@ -5,7 +5,7 @@ import {
     Input,
     Checkbox,
     CircularProgressBar,
-} from "@savant/components"
+} from "@savant/ui"
 import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -120,7 +120,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { CircularProgressBar } from "savant/components"
+import { CircularProgressBar } from "savant/ui"
 
 CircularProgressBar(
     {

@@ -1,4 +1,4 @@
-import { Button, Code, Tooltip } from "@savant/components"
+import { Button, Code, Tooltip } from "@savant/ui"
 import { html } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -43,7 +43,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Button, Tooltip } from "savant/components"
+import { Button, Tooltip } from "savant/ui"
 
 Button(
     {

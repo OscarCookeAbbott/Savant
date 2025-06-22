@@ -1,4 +1,4 @@
-import { Button, Code, Label, Select } from "@savant/components"
+import { Button, Code, Label, Select } from "@savant/ui"
 import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -95,7 +95,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Button } from "savant/components"
+import { Button } from "savant/ui"
 
 Button(
     { class: "${[exampleVariant.val, exampleMood.val, ...extraClasses.val].join(" ")}" },

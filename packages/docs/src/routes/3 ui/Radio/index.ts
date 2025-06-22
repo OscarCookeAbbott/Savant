@@ -1,4 +1,4 @@
-import { Code, Label, Radio, Select } from "@savant/components"
+import { Code, Label, Radio, Select } from "@savant/ui"
 import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -76,7 +76,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Radio } from "savant/components"
+import { Radio } from "savant/ui"
 
 Radio({
     value: state("Option 1"),

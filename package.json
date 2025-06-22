@@ -6,11 +6,14 @@
     "scripts": {
         "dev": "cd packages/docs && vite",
         "build": "pnpm -r run build",
-        "build:docs": "vite build --config packages/docs/vite.config.ts --outDir dist/docs"
+        "build:core": "pnpm --filter @savant/core... build",
+        "build:routing": "pnpm --filter @savant/routing... build",
+        "build:ui": "pnpm --filter @savant/ui... build",
+        "build:docs": "pnpm --filter @savant/docs... build"
     },
     "dependencies": {
         "@savant/core": "workspace:*",
         "@savant/routing": "workspace:*",
-        "@savant/components": "workspace:*"
+        "@savant/ui": "workspace:*"
     }
 }

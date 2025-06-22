@@ -1,4 +1,4 @@
-import { Code, Label, Select } from "@savant/components"
+import { Code, Label, Select } from "@savant/ui"
 import { html, State, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -105,7 +105,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Select } from "savant/components"
+import { Select } from "savant/ui"
 
 Select({
     value: state(${exampleType.val === DemoSelectType.SINGLE ? `"Option 1"` : `["Option 1", "Option 2"])`}),

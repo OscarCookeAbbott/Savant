@@ -26,7 +26,7 @@
         "paths": {
             "@savant/core": ["packages/core/src"],
             "@savant/routing": ["packages/routing/src"],
-            "@savant/components": ["packages/components/src"]
+            "@savant/ui": ["packages/ui/src"]
         },
         "types": ["vite/client"]
     },

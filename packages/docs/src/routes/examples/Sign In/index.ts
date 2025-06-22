@@ -1,4 +1,4 @@
-import { Code } from "@savant/components"
+import { Code } from "@savant/ui"
 import { html } from "@savant/core"
 import SignIn from "./SignIn"
 import DocPage from "../../../components/DocPage"

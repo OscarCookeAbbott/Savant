@@ -1,4 +1,4 @@
-import { Badge, Label, Select, Code } from "@savant/components"
+import { Badge, Label, Select, Code } from "@savant/ui"
 import { html, state } from "@savant/core"
 import DocPage from "../../../components/DocPage"
 
@@ -87,7 +87,7 @@ export default function Page() {
                 { language: "ts" },
 
                 `\
-import { Badge } from "savant/components"
+import { Badge } from "savant/ui"
 
 Badge(
     { class: "${exampleVariant.val} ${exampleMood.val}" },

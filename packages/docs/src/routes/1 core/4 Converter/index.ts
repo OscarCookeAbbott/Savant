@@ -1,5 +1,5 @@
 import { html, state } from "@savant/core"
-import { Code, Label } from "@savant/components"
+import { Code, Label } from "@savant/ui"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {

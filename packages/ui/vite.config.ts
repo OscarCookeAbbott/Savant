@@ -4,7 +4,7 @@ export default defineConfig({
     build: {
         lib: {
             entry: "src/index.ts",
-            name: "SavantComponents",
+            name: "SavantUI",
             fileName: (format) => `index.${format}.js`,
         },
         outDir: "dist",

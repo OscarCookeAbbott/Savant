@@ -1,5 +1,5 @@
 import { html, svg } from "@savant/core"
-import { Badge, Tooltip } from "@savant/components"
+import { Badge, Tooltip } from "@savant/ui"
 import logo from "../../../logo.svg"
 
 export default function Header(): HTMLElement {

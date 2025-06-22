@@ -26,9 +26,9 @@
                 "./packages/routing/dist/index.d.ts",
                 "./packages/routing/dist/index.es.js"
             ],
-            "@savant/components": [
-                "./packages/components/dist/index.d.ts",
-                "./packages/components/dist/index.es.js"
+            "@savant/ui": [
+                "./packages/ui/dist/index.d.ts",
+                "./packages/ui/dist/index.es.js"
             ]
         }
     }
