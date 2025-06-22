@@ -10,6 +10,8 @@ export default defineConfig(({ mode }) => {
         plugins: [tailwindcss()],
         resolve: {
             alias: {
+                "@savant/core": path.resolve(__dirname, "../core/src"),
+                "@savant/routing": path.resolve(__dirname, "../routing/src"),
                 "@savant/ui": path.resolve(__dirname, "../ui/src"),
             },
         },

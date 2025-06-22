@@ -2,17 +2,12 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "outDir": "dist",
-        "types": [
-            "vite/client"
-        ],
+        "types": ["vite/client"],
         "paths": {
-            "@savant/ui": [
-                "../ui/src"
-            ]
+            "@savant/core": ["../core/src"],
+            "@savant/routing": ["../routing/src"],
+            "@savant/ui": ["../ui/src"]
         }
     },
-    "include": [
-        "**/*.ts",
-        "tailwind.config.ts"
-    ]
+    "include": ["**/*.ts", "tailwind.config.ts"]
 }
