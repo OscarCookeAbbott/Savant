@@ -4,7 +4,6 @@ import {
     ElementProps,
     html,
     svg,
-    optionalAttribute,
     state,
     forceReactive,
 } from "@savant/core"
@@ -33,7 +32,7 @@ export default function Checkbox(
         {
             name: "Checkbox",
             onclick: () => (value.val = !value.val),
-            "data-selected": optionalAttribute(() => value.val || undefined),
+            "$data-selected": value,
             class: () =>
                 `flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
                     ?.split(" ")

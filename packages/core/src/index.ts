@@ -1,71 +1,19 @@
+import type {
+    Binding,
+    BindingFunc,
+    ChildDom,
+    ConnectedBinding,
+    DependencyBundle,
+    ElementProps,
+    Optional,
+    Primitive,
+    PropValueOrDerived,
+    Tags,
+    ValidChildDomValue,
+} from "./types"
+
 export * from "./utils"
 export * from "./context"
-
-//////// Types & Interfaces ////////
-
-export type Optional<T> = T | null | undefined
-
-export type Primitive = string | number | boolean | bigint
-
-export type Val<T> = State<T> | T
-
-export type PropValue<T> =
-    | Optional<T>
-    | ((e: any) => T)
-    | OptionalAttribute<Optional<T>>
-
-export type PropValueOrDerived<T> =
-    | PropValue<T>
-    | Readonly<State<Optional<T>>>
-    | (() => PropValue<T>)
-
-export type GenericProps = Record<
-    string,
-    PropValueOrDerived<Primitive> | ChildDom | any
-> & {
-    class?: PropValueOrDerived<string>
-    is?: string
-}
-
-export type SpecificProps<ElementType> = Partial<{
-    [K in keyof ElementType]: PropValueOrDerived<ElementType[K] | Primitive>
-}>
-
-export type ElementProps<T = Element> = GenericProps & SpecificProps<T>
-
-export type ValidChildDomValue = Optional<Primitive | ChildNode>
-
-export type BindingFunc = (dom?: ChildDom) => ChildDom
-
-export type ChildDom =
-    | ValidChildDomValue
-    | Readonly<State<Optional<Primitive>>>
-    | BindingFunc
-    | readonly ChildDom[]
-
-export type TagFunc<Result> = (
-    propsOrChild?: ElementProps<Result> | ChildDom,
-    ...rest: readonly ChildDom[]
-) => Result
-
-type Tags<T> = Readonly<Record<string, TagFunc<Element>>> & {
-    [K in keyof T]: TagFunc<T[K]>
-}
-
-type DependencyBundle = {
-    _getters: Set<State<any>>
-    _setters: Set<State<any>>
-}
-
-type Binding<T = any> = {
-    func: (dom: ChildNode) => Optional<T>
-    state: State<T> | undefined
-    _dom: Optional<{ isConnected: boolean }>
-}
-
-type ConnectedBinding<T = any> = Binding<T> & {
-    _dom: { isConnected: boolean }
-}
 
 //////// State & Reactivity Classes ////////
 
@@ -134,14 +82,6 @@ export class State<T> {
 
             return
         }
-    }
-}
-
-class OptionalAttribute<T> {
-    func: () => T
-
-    constructor(func: () => T) {
-        this.func = func
     }
 }
 
@@ -226,11 +166,6 @@ function deleteStates<T>(dependency: State<T>) {
 /** Creates a piece of reactive data with the given initial value. */
 export function state<T>(value: T, onDestroy?: () => void): State<T> {
     return new State(value, onDestroy)
-}
-
-/** Applies an attribute as normal except will reactively remove the attribute whenever the given function returns a nullish value. */
-export function optionalAttribute<T>(val: () => T): OptionalAttribute<T> {
-    return new OptionalAttribute(val)
 }
 
 /** Binds the given element-creation function and any states created within with a given element. */
@@ -379,6 +314,9 @@ function tag<T>(
         : document.createElement(name, { is })
 
     for (let [propName, propValue] of Object.entries(props)) {
+        const isOptional = propName.startsWith("$")
+        propName = isOptional ? propName.slice(1) : propName
+
         const getPropDescriptor: (
             proto: any,
         ) => PropertyDescriptor | undefined = (proto: any) =>
@@ -404,35 +342,31 @@ function tag<T>(
             : (elementPropSetter?.bind(dom) ??
               dom.setAttribute.bind(dom, propName))
 
-        if (!propName.startsWith("on") && typeof propValue === "function") {
+        if (!propName.startsWith("on") && typeof propValue === "function"){
             propValue = derive(propValue as PropValueOrDerived<any>)
-            bind(() => (setter(propValue.val, propValue._oldVal), dom))
-            continue
         }
 
         if (typeof propValue === "object" && propValue instanceof State) {
-            bind(() => (setter(propValue.val, propValue._oldVal), dom))
-            continue
-        }
-
-        if (
-            typeof propValue === "object" &&
-            propValue instanceof OptionalAttribute
-        ) {
-            const binding = derive(propValue.func)
-            bind(
-                () => (
-                    binding.val
-                        ? setter(binding.val, binding._oldVal)
-                        : dom.removeAttribute(propName),
-                    dom
-                ),
+            bind(() => (
+                (!isOptional || propValue.val)
+                    ? setter(propValue.val, propValue._oldVal)
+                    : dom.removeAttribute(propName),
+                dom)
             )
+
             continue
         }
 
-        // @ts-expect-error Argument type may not match setter signature
-        setter(propValue)
+        if (isOptional) {
+            bind(() => (
+                propValue.val
+                    ? setter(propValue)
+                    : dom.removeAttribute(propName),
+                dom)
+            )
+        } else {
+            setter(propValue)
+        }
     }
 
     return add(dom, children)

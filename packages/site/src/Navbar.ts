@@ -1,4 +1,4 @@
-import { ChildDom, derive, html, optionalAttribute, State } from "@savant/core"
+import { ChildDom, derive, html, State } from "@savant/core"
 import { Link, getRouterPath } from "@savant/routing"
 
 type NavOption = {
@@ -40,18 +40,11 @@ function NavOption(
                 onclick: () => {
                     window.scrollTo({ top: 0, left: 0 })
                 },
-                "data-selected": optionalAttribute(
-                    () =>
-                        currentPath.val ===
-                            `${import.meta.env.BASE_URL.slice(0, -1)}${option.path}` ||
-                        undefined,
-                ),
-                "data-group": optionalAttribute(
-                    () => (depth === 0 && option.children) || undefined,
-                ),
-                "data-indented": optionalAttribute(
-                    () => depth !== 0 || undefined,
-                ),
+                "$data-selected": () =>
+                    currentPath.val ===
+                    `${import.meta.env.BASE_URL.slice(0, -1)}${option.path}`,
+                "$data-group": () => depth === 0 && option.children,
+                "$data-indented": () => depth !== 0,
                 style: `--indent: ${depth}rem;`,
                 class: "relative flex gap-4 group text-mood-weak data-selected:text-mood data-group:font-semibold data-group:not-first:mt-6 data-group:mb-1 not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:z-10",
             },

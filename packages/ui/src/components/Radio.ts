@@ -2,7 +2,6 @@ import {
     State,
     ElementProps,
     html,
-    optionalAttribute,
     state,
     derive,
     forceReactive,
@@ -47,9 +46,7 @@ export default function Radio<T>({
                         (value.val = isOptionSelected.val
                             ? undefined
                             : option.value),
-                    "data-selected": optionalAttribute(
-                        () => isOptionSelected.val || undefined,
-                    ),
+                    "$data-selected": isOptionSelected,
                     class: () =>
                         `group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-critical ${reactiveClass.val
                             ?.split(" ")
