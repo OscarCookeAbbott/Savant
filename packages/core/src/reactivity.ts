@@ -53,33 +53,39 @@ export class State<T> {
 
     /** Sets the state's value and adds its assigner to the state's reactive dependencies. */
     set val(v) {
+        this.set(v)
+    }
+
+    /** Sets the state's value without creating or triggering any reactivity. */
+    set rawVal(v) {
+        this.setRaw(v)
+    }
+
+    /** Sets the state's value and adds its assigner to the state's reactive dependencies. */
+    set = (v: T) => {
         curDependencies?._setters?.add(this)
 
-        if (v === this._rawVal) return
-
-        this._rawVal = v
-
-        if (this._bindings.length + this._listeners.length === 0) {
-            this._oldVal = v
-
-            return
-        }
+        if (!this.setRaw(v)) return
 
         derivedStates?.add(this)
         changedStates = addAndScheduleOnFirst(changedStates, this, updateDoms)
     }
 
-    /** Sets the state's value without creating or triggering any reactivity. */
-    set rawVal(v) {
-        if (v === this._rawVal) return
+    /** Sets the state's value without creating or triggering any reactivity.
+     * @return Whether reactivity *would* be triggered.
+     */
+    setRaw = (v: T): boolean => {
+        if (v === this._rawVal) return false
 
         this._rawVal = v
 
         if (this._bindings.length + this._listeners.length === 0) {
             this._oldVal = v
 
-            return
+            return false
         }
+
+        return true
     }
 }
 
