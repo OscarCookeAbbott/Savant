@@ -1,18 +1,6 @@
-import { derive, PropValueOrDerived, State, Val } from "./index"
-
-// FUNCTIONS
 /** Creates a promise which resolves after the given duration. */
 export function delay(durationMS = 0): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, durationMS))
-}
-
-/** Determines whether the given value is Record type. */
-export function checkIsRecord(value: unknown) {
-    return (
-        typeof value === "object" &&
-        value !== null &&
-        !Object.getOwnPropertyDescriptor(value, "nodeType")
-    )
 }
 
 /** Creates a copy of the given array with the given item removed if present, otherwise returns the original array. */
@@ -67,18 +55,6 @@ export function match<T, T2>(value: T, checks: [T, T2][]): T2 {
     throw `error: non-exhaustive patterns: ${value} not covered`
 }
 
-/** Creates a reactive binding function from the given generic prop value.
- * @warning Type is coerced as directed, not safe.
- */
-export function forceReactive<T>(
-    value: Val<T> | PropValueOrDerived<T> | undefined,
-): State<T | undefined> {
-    if (typeof value === "function") return derive(value as () => T)
-
-    if (value instanceof State) return derive(() => value.val as T)
-
-    return derive(() => value as T)
-}
 
 /** Checks whether the given target either is or includes the given value or values. */
 export function isOrArrayHas<T>(
@@ -92,16 +68,4 @@ export function isOrArrayHas<T>(
         if (targets.includes(requiredValue)) return true
 
     return false
-}
-
-/** Unwraps the given value, which can be a State, derivation function, or direct value.
- * @returns The unwrapped value.
- */
-export function unwrapVal<T>(value: Val<T>): T {
-    if (value instanceof State) return value.val
-
-    if (typeof value === "function") return value()
-
-    // TODO: Check why type is suddenly not inferred correctly here
-    return value as T
 }

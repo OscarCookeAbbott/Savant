@@ -10,8 +10,9 @@ import type {
     Primitive,
     PropValueOrDerived,
     Tags,
+    Val,
     ValidChildDomValue,
-} from "./types"
+} from "./reactivity.types"
 import { CONTEXT_IN_PREFIX, CONTEXT_OUT_PREFIX } from "./context"
 
 //////// Classes ////////
@@ -498,4 +499,29 @@ export function hydrate(
 ): void {
     // @ts-expect-error Type mismatch for ChildNode and dom
     return update(dom, bind(func, dom))
+}
+
+/** Creates a reactive binding function from the given generic prop value.
+ * @warning Type is coerced as directed, not safe.
+ */
+export function forceReactive<T>(
+    value: Val<T> | PropValueOrDerived<T> | undefined,
+): State<T | undefined> {
+    if (typeof value === "function") return derive(value as () => T)
+
+    if (value instanceof State) return derive(() => value.val as T)
+
+    return derive(() => value as T)
+}
+
+/** Unwraps the given value, which can be a State, derivation function, or direct value.
+ * @returns The unwrapped value.
+ */
+export function unwrapVal<T>(value: Val<T>): T {
+    if (value instanceof State) return value.val
+
+    if (typeof value === "function") return value()
+
+    // TODO: Check why type is suddenly not inferred correctly here
+    return value as T
 }

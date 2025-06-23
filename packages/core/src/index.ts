@@ -1,4 +1,4 @@
 export * from "./reactivity"
-export * from "./types"
-export * from "./utils"
+export * from "./reactivity.types"
+
 export { setContext, getContext, removeContext, ContextProbe } from "./context"

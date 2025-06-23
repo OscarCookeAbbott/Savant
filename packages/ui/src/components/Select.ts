@@ -7,12 +7,11 @@ import {
     html,
     svg,
     forceReactive,
-    arrayToggleItem,
-    isOrArrayHas,
 } from "@savant/core"
 
 import Button from "./Button"
 import Popup from "./Popup"
+import { arrayToggleItem, isOrArrayHas } from "../utils"
 
 type SelectProps<T> = ElementProps & {
     /** What potential values to present to the user. */
