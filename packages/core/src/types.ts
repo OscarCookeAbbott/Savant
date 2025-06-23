@@ -1,6 +1,4 @@
-
-
-//////// Types & Interfaces ////////
+import { State } from "./reactivity"
 
 export type Optional<T> = T | null | undefined
 
@@ -65,34 +63,4 @@ export type Binding<T = any> = {
 
 export type ConnectedBinding<T = any> = Binding<T> & {
     _dom: { isConnected: boolean }
-}
-
-
-//////// Class Declarations ////////
-
-export declare class State<T> {
-    _rawVal: T
-    _oldVal: T
-
-    _bindings: Binding[]
-    _listeners: Binding[]
-
-    _onDestroy?: () => void
-
-    constructor(value: T, onDestroy?: () => void)
-
-    /** Gets the state's current value and adds its accessor to the state's reactive effects. */
-    get val(): T
-
-    /** Gets the state's current value *without* adding any reactive effects to its accessor. */
-    get rawVal(): T
-
-    /** Gets the state's previous value and adds its accessor to the state's reactive effects. */
-    get oldVal(): T
-
-    /** Sets the state's value and adds its assigner to the state's reactive dependencies. */
-    set val(v)
-
-    /** Sets the state's value without creating or triggering any reactivity. */
-    set rawVal(v)
 }
