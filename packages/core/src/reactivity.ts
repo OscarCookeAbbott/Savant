@@ -16,12 +16,19 @@ import type {
 //////// Classes ////////
 
 export class State<T> {
+    /** The current value of the state. */
     _rawVal: T
+
+    /** The previous value of the state. */
     _oldVal: T
 
+    /** Links to any derived DOM state. */
     _bindings: Binding[]
+
+    /** Links to any derived states. */
     _listeners: Binding[]
 
+    /** The function to call when the state is destroyed. */
     _onDestroy?: () => void
 
     constructor(value: T, onDestroy?: () => void) {
