@@ -5,21 +5,28 @@ import { derive, state, State, Val } from ".";
 type ContextKey = string & {}
 type ContextValue<T> = Val<T>
 
-type ContextCssKey = string & {}
-
-type ContextProviderId = string & {}
 type ContextProviderValue<T> = State<ContextValue<T> | undefined> & { triggerRecheck: State<number>}
+type ContextProvider = Map<ContextKey, ContextProviderValue<unknown>>
+
+type ContextEventDetail = {
+    key: ContextKey;
+    context: ContextProviderValue<unknown> | undefined;
+}
+
+//////// Config ////////
+
+const CONTEXT_EVENT_NAME = "savant-context-request"
 
 //////// Internal State ////////
 
-const CONTEXT_BY_PROVIDER = new Map<ContextProviderId, ContextProviderValue<unknown>>();
+const CONTEXT_BY_PROVIDER = new WeakMap<HTMLElement, ContextProvider>();
 
 //////// API ////////
 
 /** Sets context with the given key and value at the nearest DOM element. */
 export function setContext<T>(dom: HTMLElement, key: ContextKey, value: ContextValue<T>): void {
     // Prepare to trigger context recalculation if the dom element doesn't already have this context
-    const triggerInsertRecheck = getDirectContextProviderId(dom, key) === ""
+    const triggerInsertRecheck = getContextProviderValue(dom, key) === undefined
     const existingContextProviderValue = triggerInsertRecheck && getContextFromDom(dom, key)
 
     // Set the context, return early if it already exists and has the same value
@@ -94,62 +101,67 @@ function ensureContextProviderExists(key: ContextKey): void {
  * @returns Whether any context was newly set or changed.
  */
 function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: ContextValue<T>): boolean {
-    const cssKey = createContextCssKey(key)
+    const existingProvider = getContextProvider(dom)
 
-    let contextProviderId: ContextProviderId = getDirectContextProviderId(dom, key)
+    // First context being set at this DOM element, create full context provider
+    if (existingProvider === undefined) {
+        // Setup event listener for reacting to context requests
+        dom.addEventListener(CONTEXT_EVENT_NAME, (event: Event) => {
+            const customEvent = event as CustomEvent<ContextEventDetail>
 
-    if (contextProviderId === "") {
-        contextProviderId = createProviderId();
-        dom.style.setProperty(cssKey, contextProviderId);
-    }
+            const providerValue = getContextProviderValue(dom, customEvent.detail.key)
 
-    let contextProviderValue = CONTEXT_BY_PROVIDER.get(contextProviderId)
+            if (providerValue === undefined) return
 
-    if (contextProviderValue === undefined) {
-        contextProviderValue = Object.assign(state(value), { triggerRecheck: state(0) })
+            customEvent.detail.context = providerValue
+            event.stopPropagation()
+        })
 
-        CONTEXT_BY_PROVIDER.set(contextProviderId, contextProviderValue)
+        CONTEXT_BY_PROVIDER.set(dom, new Map([[key, Object.assign(state(value), { triggerRecheck: state(0) })]]))
+
         return true
     }
 
-    if (contextProviderValue.rawVal === value) return false
+    const existingProviderValue = existingProvider.get(key)
 
-    contextProviderValue.val = value
+    // DOM element is already a context provider but not for this key, add new context key value
+    if (existingProviderValue === undefined) {
+        existingProvider.set(key, Object.assign(state(value), { triggerRecheck: state(0) }))
 
-    return true
+        return true
+    }
+
+    // DOM element is already a context provider for this key, update the value if it has changed
+    if (existingProviderValue.rawVal !== value) {
+        existingProviderValue.val = value
+
+        return true
+    }
+
+    // DOM element is already a context provider for this key and this value, no changes made
+    return false
 }
 
 /** Retrives context value at the associated DOM location if present. */
 function getContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> | undefined {
-    const cssKey = createContextCssKey(key)
+    const event = new CustomEvent<ContextEventDetail>(CONTEXT_EVENT_NAME, { bubbles: true, cancelable: true, detail: { key, context: undefined } })
 
-    const contextProviderId = getCascadingContextProviderId(dom, cssKey)
+    dom.dispatchEvent(event)
 
-    if (contextProviderId === "") return undefined
-
-    return CONTEXT_BY_PROVIDER.get(contextProviderId)
-}
-
-/** Creates a CSS variable name for the context key. */
-function createContextCssKey(key: ContextKey): ContextCssKey {
-    return `--savant-context-${key}`
-}
-
-/** Creates a random ID for a context provider. */
-function createProviderId(): ContextProviderId {
-    return crypto.randomUUID().slice(0, 8)
+    return event.detail.context
 }
 
 /** Retrieves the context provider ID from the DOM element's local style.
  * Will return an empty string if no context is set.
  */
-function getDirectContextProviderId(dom: HTMLElement, key: ContextKey): ContextProviderId {
-    return dom.style.getPropertyValue(createContextCssKey(key)).trim()
+function getContextProvider(dom: HTMLElement): Map<ContextKey, ContextProviderValue<unknown>> | undefined {
+    return CONTEXT_BY_PROVIDER.get(dom)
 }
 
-/** Retrieves the context provider ID from the DOM element's computed cascading style.
+/** Retrieves the context provider ID from the DOM element's local style.
  * Will return an empty string if no context is set.
  */
-function getCascadingContextProviderId(dom: HTMLElement, key: ContextCssKey): ContextProviderId {
-    return getComputedStyle(dom).getPropertyValue(key).trim()
+function getContextProviderValue(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> | undefined
+{
+    return getContextProvider(dom)?.get(key)
 }
