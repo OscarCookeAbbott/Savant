@@ -40,7 +40,7 @@ export function setContext<T>(dom: HTMLElement, key: ContextKey, value: ContextV
 }
 
 /** Retrieves context with the given key if it exists.
- * Naively coerces to the given type. Apply type validation as needed.
+ * Naively coerces to the given type. Apply type validation if necessary.
  */
 export function getContext<T>(dom: HTMLElement, key: ContextKey): ContextProviderValue<T> {
     const retrievedContext = getEnsuredContextFromDom(dom, key)
@@ -157,7 +157,7 @@ function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: T | undefi
 }
 
 /** Retrieves context with the given key at the given DOM element, ensuring that at *least* a root context provider exists.
- * Naively coerces to the given type. Apply type validation as needed.
+ * Naively coerces to the given type. Apply type validation if necessary.
  */
 function getEnsuredContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> {
     const existingContext = getContextFromDom(dom, key)
