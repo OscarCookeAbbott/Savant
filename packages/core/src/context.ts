@@ -41,12 +41,23 @@ export function setContext<T>(dom: HTMLElement, key: ContextKey, value: ContextV
  * Naively coerces to the given type. Apply type validation as needed.
  */
 export function getContext<T>(dom: HTMLElement, key: ContextKey): ContextProviderValue<T> {
-    ensureContextProviderExists(key);
+    const retrievedContext = getEnsuredContextFromDom(dom, key)
 
-    // Existence of some context has been ensured via `ensureContextProviderExists()` above
-    return getContextFromDom(dom, key) as ContextProviderValue<T>
+    const returnContext = state(retrievedContext)
 
-    // TODO: Re-calculate context automatically if current provider's value itself changes, like `RetrieveContext()` does
+    // Reactively recalculate context if existing context provider is marked as potentially stale
+    derive(() => {
+        if (retrievedContext.triggerRecheck.val) {
+            const newContext = getContextFromDom(dom, key) as ContextProviderValue<T>
+
+            if (newContext === returnContext.val) return
+
+            returnContext.val = newContext
+        }
+    })
+
+    // Not technically a `ContextProviderValue`, but consumers don't care about the `triggerRecheck`
+    return derive(() => returnContext.val.val) as ContextProviderValue<T>
 }
 
 /** Mounts the given DOM element and then immediately retrieves the requested contexts. */
@@ -54,23 +65,6 @@ export function RetrieveContext(context: Record<string, State<unknown> | ((val: 
     setTimeout(() => {
         Object.entries(context).forEach(([key, value]) => {
             let retrievedContext = getContext(dom as HTMLElement, key)
-
-            // Reactively re-read context if provider value updates (whether due to being overridden directly or by a new context provider being added below in case it is between the current element and the context provider)
-            derive(() => {
-                if (retrievedContext.triggerRecheck.val) {
-                    const oldRetrievedContext = retrievedContext
-
-                    retrievedContext = getContext(dom as HTMLElement, key)
-
-                    if (retrievedContext === oldRetrievedContext) return
-
-                    if (value instanceof State) {
-                        value.val = retrievedContext
-                    } else {
-                        value(retrievedContext)
-                    }
-                }
-            })
 
             if (value instanceof State) {
                 value.val = retrievedContext
@@ -85,22 +79,10 @@ export function RetrieveContext(context: Record<string, State<unknown> | ((val: 
 
 //////// Internal Functions ////////
 
-/** Ensures there will be a set context with the given key.
- * Naively coerces to the given type. Apply type validation as needed.
- */
-function ensureContextProviderExists(key: ContextKey): void {
-    const dom = document.documentElement
-
-    if (getContextFromDom(dom, key)) return
-
-    // TODO: Maybe replace with just a 'base value' in the map to avoid bloating DOM debugging?
-    setContextOnDom(dom, key, undefined)
-}
-
 /** Sets new context value at the associated DOM location or updates existing context if present.
  * @returns Whether any context was newly set or changed.
  */
-function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: ContextValue<T>): boolean {
+function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: ContextValue<T> | undefined): ContextProviderValue<T> {
     const existingProvider = getContextProvider(dom)
 
     // First context being set at this DOM element, create full context provider
@@ -117,29 +99,45 @@ function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: ContextVal
             event.stopPropagation()
         })
 
-        CONTEXT_BY_PROVIDER.set(dom, new Map([[key, Object.assign(state(value), { triggerRecheck: state(0) })]]))
+        const newProviderValue = Object.assign(state(value), { triggerRecheck: state(0) })
 
-        return true
+        const newProvider = new Map([[key, newProviderValue]])
+
+        CONTEXT_BY_PROVIDER.set(dom, newProvider)
+
+        return newProviderValue
     }
 
-    const existingProviderValue = existingProvider.get(key)
+    const existingProviderValue = existingProvider.get(key) as ContextProviderValue<T>
 
     // DOM element is already a context provider but not for this key, add new context key value
     if (existingProviderValue === undefined) {
-        existingProvider.set(key, Object.assign(state(value), { triggerRecheck: state(0) }))
+        const newProviderValue = Object.assign(state(value), { triggerRecheck: state(0) })
 
-        return true
+        existingProvider.set(key, newProviderValue)
+
+        return newProviderValue
     }
 
     // DOM element is already a context provider for this key, update the value if it has changed
-    if (existingProviderValue.rawVal !== value) {
+    if (existingProviderValue.rawVal !== value)
         existingProviderValue.val = value
 
-        return true
-    }
+    return existingProviderValue
+}
 
-    // DOM element is already a context provider for this key and this value, no changes made
-    return false
+/** Retrieves context with the given key at the given DOM element, ensuring that at *least* a root context provider exists.
+ * Naively coerces to the given type. Apply type validation as needed.
+ */
+function getEnsuredContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> {
+    const existingContext = getContextFromDom(dom, key)
+
+    if (existingContext !== undefined) return existingContext
+
+    // TODO: Maybe replace with just a 'base value' in the map to avoid bloating DOM debugging?
+    const newContext = setContextOnDom(dom, key, undefined)
+
+    return newContext
 }
 
 /** Retrives context value at the associated DOM location if present. */
@@ -151,16 +149,12 @@ function getContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderVa
     return event.detail.context
 }
 
-/** Retrieves the context provider ID from the DOM element's local style.
- * Will return an empty string if no context is set.
- */
+/** Retrieves the context provider for the given DOM element, if it exists. */
 function getContextProvider(dom: HTMLElement): Map<ContextKey, ContextProviderValue<unknown>> | undefined {
     return CONTEXT_BY_PROVIDER.get(dom)
 }
 
-/** Retrieves the context provider ID from the DOM element's local style.
- * Will return an empty string if no context is set.
- */
+/** Retrieves the context provider value for the given DOM element and key, if it exists. */
 function getContextProviderValue(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> | undefined
 {
     return getContextProvider(dom)?.get(key)
