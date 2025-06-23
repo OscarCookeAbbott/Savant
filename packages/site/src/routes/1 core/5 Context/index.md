@@ -21,24 +21,34 @@ function PaginationManager(
     currentPage: State<number>,
     ...children: ChildDom[]
 ) {
-    setContext("paginationPage", state)
-
     return html.div(
-        { name: "Pagination Manager", style: "display: contents;" },
+        {
+            name: "Pagination Manager",
+            context: { paginationPage: state },
+            style: "display: contents;",
+        },
         ...children,
     )
 }
 
 function Page() {
-    const paginationPage = getContext("paginationPage")
+    const paginationPageContext = state(state(0))
 
-    return html.span("Current page: ", paginationPage)
+    return RetrieveContext(
+        { paginationPage: paginationPageContext },
+
+        html.span("Current page: ", paginationPage.val),
+    )
 }
 
 function PaginationButton() {
-    const paginationPage = getContext("paginationPage")
+    const paginationPageContext = state(state(0))
 
-    return html.button({ onclick: () => paginationState.val++ }, "Next Page")
+    return RetrieveContext(
+        { paginationPage: paginationPageContext },
+
+        html.button({ onclick: () => paginationState.val.val++ }, "Next Page"),
+    )
 }
 
 function App() {
@@ -58,12 +68,25 @@ add(document.body, App())
 
 ```typescript
 /** Sets context with the given key and value at the nearest DOM element. */
-function setContext<T>(key: ContextKey, value: ContextValue<T>): void
+function setContext<T>(
+    dom: HTMLElement,
+    key: ContextKey,
+    value: ContextValue<T>,
+): void
 
 /** Retrieves context with the given key if it exists.
  * Naively coerces to the given type. Apply type validation as needed.
  */
-function getContext<T>(key: ContextKey): ContextProviderValue<T>
+function getContext<T>(
+    dom: HTMLElement,
+    key: ContextKey,
+): ContextProviderValue<T>
+
+/** Mounts the given DOM element and then immediately retrieves the requested contexts. */
+function RetrieveContext(
+    context: Record<string, State<unknown> | ((val: State<unknown>) => void)>,
+    dom: ChildNode,
+): ChildNode
 ```
 
 ```typescript

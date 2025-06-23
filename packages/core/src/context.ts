@@ -17,10 +17,7 @@ const CONTEXT_BY_PROVIDER = new Map<ContextProviderId, ContextProviderValue<unkn
 //////// API ////////
 
 /** Sets context with the given key and value at the nearest DOM element. */
-export function setContext<T>(key: ContextKey, value: ContextValue<T>): void {
-    // TODO: Replace with current element at setting
-    const dom = document.body
-
+export function setContext<T>(dom: HTMLElement, key: ContextKey, value: ContextValue<T>): void {
     const existingContextProviderValue = getContextFromDom(dom, key)
 
     setContextOnDom<T>(dom, key, value)
@@ -34,16 +31,30 @@ export function setContext<T>(key: ContextKey, value: ContextValue<T>): void {
 /** Retrieves context with the given key if it exists.
  * Naively coerces to the given type. Apply type validation as needed.
  */
-export function getContext<T>(key: ContextKey): ContextProviderValue<T> {
+export function getContext<T>(dom: HTMLElement, key: ContextKey): ContextProviderValue<T> {
     ensureContextProviderExists(key);
-
-    // TODO: Replace with current element at setting
-    const dom = document.body
 
     // Existence of some context has been ensured via `ensureContextProviderExists()` above
     return getContextFromDom(dom, key) as ContextProviderValue<T>
 
     // TODO: Re-calculate context automatically if current provider's value itself changes
+}
+
+/** Mounts the given DOM element and then immediately retrieves the requested contexts. */
+export function RetrieveContext(context: Record<string, State<unknown> | ((val: State<unknown>) => void)>, dom: ChildNode): ChildNode {
+    setTimeout(() => {
+        Object.entries(context).forEach(([key, value]) => {
+            let retrievedContext = getContext(dom as HTMLElement, key)
+
+            if (value instanceof State) {
+                value.val = retrievedContext
+            } else {
+                value(retrievedContext)
+            }
+        })
+    })
+
+    return dom
 }
 
 //////// Internal Functions ////////

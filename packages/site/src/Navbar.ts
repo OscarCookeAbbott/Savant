@@ -1,4 +1,4 @@
-import { ChildDom, derive, html, State } from "@savant/core"
+import { ChildDom, derive, ElementProps, html, State } from "@savant/core"
 import { Link, getRouterPath } from "@savant/routing"
 
 type NavOption = {
@@ -11,9 +11,9 @@ type NavOption = {
 export default function Navbar({
     options,
     class: propClass,
-}: {
+    ...restProps
+}: ElementProps<HTMLElement> & {
     options: NavOption[]
-    class?: string
 }): HTMLElement {
     const path = derive(() => decodeURI(getRouterPath()))
 
@@ -21,6 +21,7 @@ export default function Navbar({
         {
             name: "Navbar",
             class: `p-6 flex flex-col overflow-y-auto fixed top-12 h-[calc(100%-3rem)] left-0 bg-background border-r border-surface-500/50 ${propClass}`,
+            ...restProps,
         },
 
         options.map((option) => NavOption(option, 0, path)),

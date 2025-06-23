@@ -1,3 +1,4 @@
+import { setContext } from "."
 import type {
     Binding,
     BindingFunc,
@@ -308,13 +309,28 @@ function tag<T>(
 
     const [{ is, ...props }, ...children] = hasProps
         ? [propsOrChild as ElementProps<T>, restChildren]
-        : [{}, [propsOrChild as ChildDom, ...restChildren]]
+        : [{} as ElementProps<T>, [propsOrChild as ChildDom, ...restChildren]]
 
     const dom = ns
         ? document.createElementNS(ns, name, { is })
         : document.createElement(name, { is })
 
-    for (let [propName, propValue] of Object.entries(props)) {
+    const { context, ...attrProps } = props
+
+    // Set any context
+    if (context) {
+        if (dom instanceof HTMLElement) {
+            Object.entries(context).forEach(
+                ([contextName, contextValue]) => setContext(dom, contextName, contextValue)
+            )
+        } else {
+            console.error(
+                `Context can only be set on HTML elements, not ${dom.tagName} which is a ${ns?.split("/").pop()?.toUpperCase()} element.`
+            )
+        }
+    }
+
+    for (let [propName, propValue] of Object.entries(attrProps)) {
         const isOptional = propName.startsWith("$")
         propName = isOptional ? propName.slice(1) : propName
 

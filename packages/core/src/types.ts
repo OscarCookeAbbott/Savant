@@ -21,6 +21,7 @@ export type GenericProps = Record<
 > & {
     class?: PropValueOrDerived<string>
     is?: string
+    context?: Record<string, Val<unknown>>
 }
 
 export type SpecificProps<ElementType> = Partial<{
