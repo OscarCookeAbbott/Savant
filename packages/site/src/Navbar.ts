@@ -2,7 +2,7 @@ import { ChildDom, derive, html, optionalAttribute, State } from "@savant/core"
 import { Link, getRouterPath } from "@savant/routing"
 
 type NavOption = {
-    name: string
+    name: ChildDom
     path?: string
     dom?: ChildDom
     children?: NavOption[]
