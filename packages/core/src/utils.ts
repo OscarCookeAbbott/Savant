@@ -102,5 +102,6 @@ export function unwrapVal<T>(value: Val<T>): T {
 
     if (typeof value === "function") return value()
 
-    return value
+    // TODO: Check why type is suddenly not inferred correctly here
+    return value as T
 }

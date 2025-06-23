@@ -12,6 +12,7 @@ import type {
     ValidChildDomValue,
 } from "./types"
 
+export * from "./types"
 export * from "./utils"
 export * from "./context"
 
@@ -365,6 +366,7 @@ function tag<T>(
                 dom)
             )
         } else {
+            // @ts-expect-error TODO: Fix type mismatch
             setter(propValue)
         }
     }
