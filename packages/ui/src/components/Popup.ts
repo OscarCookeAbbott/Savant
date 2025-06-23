@@ -6,12 +6,9 @@ import {
     html,
     state,
     State,
-    detectExternalClick,
     forceReactive,
-    delay,
-    match,
-    isOrArrayHas,
 } from "@savant/core"
+import { delay, match, detectExternalClick, isOrArrayHas } from "../utils"
 
 // TYPES
 type PopupProps = ElementProps & {

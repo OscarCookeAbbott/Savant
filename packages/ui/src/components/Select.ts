@@ -5,15 +5,13 @@ import {
     ElementProps,
     derive,
     html,
-    optionalAttribute,
     svg,
     forceReactive,
-    arrayToggleItem,
-    isOrArrayHas,
 } from "@savant/core"
 
 import Button from "./Button"
 import Popup from "./Popup"
+import { arrayToggleItem, isOrArrayHas } from "../utils"
 
 type SelectProps<T> = ElementProps & {
     /** What potential values to present to the user. */
@@ -147,19 +145,19 @@ export default function Select<T>({
             svg.path({
                 d: "M25,35L50,15L75,35",
                 class: "stroke-current stroke-[10] fill-none",
-                hidden: optionalAttribute(() => !isMulti.val || undefined),
+                $hidden: () => !isMulti.val,
             }),
 
             svg.path({
                 d: "M25,65L50,85L75,65",
                 class: "stroke-current stroke-[10] fill-none",
-                hidden: optionalAttribute(() => !isMulti.val || undefined),
+                $hidden: () => !isMulti.val,
             }),
 
             svg.path({
                 d: "M25,40L50,60L75,40",
                 class: "stroke-current stroke-[10] fill-none",
-                hidden: optionalAttribute(() => isMulti.val || undefined),
+                $hidden: isMulti,
             }),
         ),
 
@@ -206,9 +204,7 @@ function SelectOptionItem<T>(
 ) {
     return html.div(
         {
-            "data-selected": optionalAttribute(
-                () => isSelected.val || undefined,
-            ),
+            "$data-selected": isSelected,
             class: "contents group",
         },
 
@@ -220,7 +216,7 @@ function SelectOptionItem<T>(
         html.button(
             {
                 class: "flex gap-2 not-disabled:hover:bg-surface-500/20 not-disabled:focus-visible:bg-surface-500/20 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed items-center group-data-selected:mood-accent group-data-selected:!bg-mood-500/25",
-                disabled: optionalAttribute(() => option.disabled || undefined),
+                $disabled: () => option.disabled,
                 tabIndex: 0,
                 onclick: () => onClick?.(option.value),
             },
@@ -235,7 +231,7 @@ function SelectOptionItem<T>(
                     viewBox: "0 0 100 100",
                     class: "size-4 not-group-data-selected:invisible",
                     style: "stroke-linecap:round; stroke-linejoin:round;",
-                    hidden: optionalAttribute(() => !isMulti.val || undefined),
+                    $hidden: () => !isMulti.val,
                 },
 
                 svg.path({
@@ -246,7 +242,7 @@ function SelectOptionItem<T>(
 
             html.div({
                 class: "bg-current rounded-full size-2 m-0.75 aspect-square not-group-data-selected:invisible",
-                hidden: optionalAttribute(() => isMulti.val || undefined),
+                $hidden: isMulti,
             }),
         ),
     )

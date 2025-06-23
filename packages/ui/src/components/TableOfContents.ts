@@ -1,7 +1,6 @@
 import {
     ElementProps,
     html,
-    optionalAttribute,
     state,
     forceReactive,
 } from "@savant/core"
@@ -39,10 +38,8 @@ export default function TableOfContents(
                 {
                     onclick: () =>
                         heading.scrollIntoView({ behavior: "smooth" }),
-                    "data-indented": optionalAttribute(() => indent),
-                    "data-selected": optionalAttribute(
-                        () => firstVisibleHeading.val === heading,
-                    ),
+                    "$data-indented": () => indent > 0,
+                    "$data-selected": () => firstVisibleHeading.val === heading,
                     style: `--indent: ${1 + (indent - 1) * 0.5}rem;`,
                     class: "group relative flex gap-4 cursor-pointer text-mood-weak not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:text-mood",
                 },

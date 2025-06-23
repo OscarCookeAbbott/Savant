@@ -1,8 +1,8 @@
-import { ChildDom, derive, html, optionalAttribute, State } from "@savant/core"
+import { ChildDom, derive, ElementProps, html, State } from "@savant/core"
 import { Link, getRouterPath } from "@savant/routing"
 
 type NavOption = {
-    name: string
+    name: ChildDom
     path?: string
     dom?: ChildDom
     children?: NavOption[]
@@ -11,9 +11,9 @@ type NavOption = {
 export default function Navbar({
     options,
     class: propClass,
-}: {
+    ...restProps
+}: ElementProps<HTMLElement> & {
     options: NavOption[]
-    class?: string
 }): HTMLElement {
     const path = derive(() => decodeURI(getRouterPath()))
 
@@ -21,6 +21,7 @@ export default function Navbar({
         {
             name: "Navbar",
             class: `p-6 flex flex-col overflow-y-auto fixed top-12 h-[calc(100%-3rem)] left-0 bg-background border-r border-surface-500/50 ${propClass}`,
+            ...restProps,
         },
 
         options.map((option) => NavOption(option, 0, path)),
@@ -40,18 +41,11 @@ function NavOption(
                 onclick: () => {
                     window.scrollTo({ top: 0, left: 0 })
                 },
-                "data-selected": optionalAttribute(
-                    () =>
-                        currentPath.val ===
-                            `${import.meta.env.BASE_URL.slice(0, -1)}${option.path}` ||
-                        undefined,
-                ),
-                "data-group": optionalAttribute(
-                    () => (depth === 0 && option.children) || undefined,
-                ),
-                "data-indented": optionalAttribute(
-                    () => depth !== 0 || undefined,
-                ),
+                "$data-selected": () =>
+                    currentPath.val ===
+                    `${import.meta.env.BASE_URL.slice(0, -1)}${option.path}`,
+                "$data-group": () => depth === 0 && option.children,
+                "$data-indented": () => depth !== 0,
                 style: `--indent: ${depth}rem;`,
                 class: "relative flex gap-4 group text-mood-weak data-selected:text-mood data-group:font-semibold data-group:not-first:mt-6 data-group:mb-1 not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:z-10",
             },
