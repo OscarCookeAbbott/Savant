@@ -4,6 +4,8 @@
 
 ## Overview
 
+<blockquote class="mood-warning"> The context API works but is likely to be improved soon. </blockquote>
+
 When writing complex interfaces and functionality data often needs to be passed down through multiple layers of components. Like from a pagination manager to various pagination controls that may be nested in the interface.
 
 This _can_ be done by extracting the state of the manager out into whichever scope(s) it is used, and then manually passing that state to any nested components that require it. However this is not ideal as it requires the developer to create and maintain this coupling, and gets worse when components need to internally wrap other components which require that shared state, leading to large prop chains.

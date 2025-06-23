@@ -1,6 +1,6 @@
 # Elements
 
-> Create your interface.
+> Create reactive interface.
 
 ## Overview
 
@@ -13,7 +13,11 @@ const button: HTMLButtonElement = html.button()
 These tag functions allow passing any props to the element via the first object:
 
 ```typescript
-const button = html.button({ name: "Demo Button", style: "color: red;" })
+const button = html.button({
+    name: "Demo",
+    onclick: () => console.log("Clicked!"),
+    style: "color: red;",
+})
 ```
 
 And the tag functions also allow nesting of child elements, values, etc...
@@ -38,7 +42,7 @@ const username = state("")
 const usernameInput = html.input({
     value: username,
     oninput: (event) => (username.val = event.target.value),
-    placeholder: "Enter username..."
+    placeholder: "Enter username...",
 })
 
 const usernameDisplay = html.div(() => `Hello ${username.val}!`)
@@ -94,18 +98,18 @@ type BindingFunc = (dom?: ChildDom) => ChildDom
 
 Due to the suboptimal typing of the HTML API, Savant must force-leniency for element props typing, but it still includes the official type in the definition to assist you in writing code. For example, the typing for and SVG's `viewBox` is `PropValueOrDerived<Primitive | SVGAnimatedRect>`, because it must allow you to use a string like HTML itself does.
 
-### Congruent patterns
+### Near-equivalent patterns
 
-In many places, such as element props and children, providing a `State` directly is essentially identical to providing `() => state.val`, that is:
+In many places, such as element props and children, providing a `State` directly is essentially identical to providing `() => state.val`, meaning each of the following pairs ultimately produces equivalent final DOM:
 
 ```typescript
-const username = state("Oscar")
+const name = state("Savant")
 
-html.span(username) ~= html.span(() => username.val)
+html.span(name) ≈≈ html.span(() => name.val)
 
-html.span("Username: ", username) ~= html.span(() => `Username: ${username.val}`)
+html.span("Name: ", name) ≈≈ html.span(() => `Name: ${name.val}`)
 
-html.span({ name: username }) ~= html.span({ name: () => username.val })
+html.span({ name }) ≈≈ html.span({ name: name }) ≈≈ html.span({ name: () => name.val })
 ```
 
-Generally, the only differences are a slight reduction in memory usage by avoiding constructing more arrow functions, and a slight increase in the scope of the derived effect.
+Generally, the only differences are a slight reduction in memory usage by avoiding constructing more arrow functions, and a slight increase in the scope of the derived effect. Thus in the above examples the left sides are considered best practice.

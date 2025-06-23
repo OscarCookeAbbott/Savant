@@ -140,37 +140,37 @@
 
     h1,
     .h1 {
-        @apply mb-4 text-3xl font-bold not-first:mt-12;
+        @apply mb-4 text-3xl font-bold mt-12 first:mt-0;
     }
 
     h2,
     .h2 {
-        @apply mb-2 text-xl font-semibold not-first:mt-8;
+        @apply mb-2 text-xl font-semibold mt-8 [h2_+_&]:mt-4 first:mt-0;
     }
 
     h3,
     .h3 {
-        @apply text-lg font-semibold not-first:mt-8;
+        @apply text-lg font-semibold mt-8 [h2_+_&]:mt-4 first:mt-0;
     }
 
     h4,
     .h4 {
-        @apply not-first:mt-8;
+        @apply  mt-8 [h2_+_&]:mt-4 first:mt-0;
     }
 
     h5,
     .h5 {
-        @apply text-sm uppercase not-first:mt-8;
+        @apply text-sm uppercase mt-8 [h2_+_&]:mt-4 first:mt-0;
     }
 
     p,
     .p {
-        @apply not-first:mt-4 text-foreground-weak;
+        @apply not-first:mt-4 text-mood-weak;
     }
 
     blockquote,
     .blockquote {
-        @apply border-mood-500 bg-mood-500/10 border-l pl-2 italic not-first:mt-4;
+        @apply border-mood-500 bg-mood-500/10 text-mood-weak border-l pl-2 italic not-first:mt-4;
     }
 
     pre[class*="language-"] {
@@ -299,11 +299,7 @@
 }
 
 @utility text-mood-weak {
-    @apply text-mood-600 dark:text-mood-300;
-}
-
-@utility text-mood-strong {
-    @apply text-mood-300 dark:text-mood-600;
+    @apply text-mood-700 dark:text-mood-200;
 }
 
 /* BACKGROUND */
