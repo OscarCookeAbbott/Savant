@@ -55,7 +55,7 @@ export class State<T> {
     set val(v) {
         curDependencies?._setters?.add(this)
 
-        if (v === this.rawVal) return
+        if (v === this._rawVal) return
 
         this._rawVal = v
 
@@ -71,7 +71,7 @@ export class State<T> {
 
     /** Sets the state's value without creating or triggering any reactivity. */
     set rawVal(v) {
-        if (v === this.rawVal) return
+        if (v === this._rawVal) return
 
         this._rawVal = v
 
