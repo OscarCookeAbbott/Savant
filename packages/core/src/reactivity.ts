@@ -1,4 +1,4 @@
-import { setContext } from "."
+import { getContext, removeContext, setContext } from "."
 import type {
     Binding,
     BindingFunc,
@@ -12,6 +12,7 @@ import type {
     Tags,
     ValidChildDomValue,
 } from "./types"
+import { CONTEXT_IN_PREFIX, CONTEXT_OUT_PREFIX } from "./context"
 
 //////// Classes ////////
 
@@ -318,22 +319,7 @@ function tag<T>(
         ? document.createElementNS(ns, name, { is })
         : document.createElement(name, { is })
 
-    const { context, ...attrProps } = props
-
-    // Set any context
-    if (context) {
-        if (dom instanceof HTMLElement) {
-            Object.entries(context).forEach(
-                ([contextName, contextValue]) => setContext(dom, contextName, contextValue)
-            )
-        } else {
-            console.error(
-                `Context can only be set on HTML elements, not ${dom.tagName} which is a ${ns?.split("/").pop()?.toUpperCase()} element.`
-            )
-        }
-    }
-
-    for (let [propName, propValue] of Object.entries(attrProps)) {
+    for (let [propName, propValue] of Object.entries(props)) {
         const isOptional = propName.startsWith("$")
         propName = isOptional ? propName.slice(1) : propName
 
@@ -359,8 +345,39 @@ function tag<T>(
 
                   dom.addEventListener(eventName, value)
               }
-            : (elementPropSetter?.bind(dom) ??
-              dom.setAttribute.bind(dom, propName))
+             : (elementPropSetter?.bind(dom) ??
+                dom.setAttribute.bind(dom, propName))
+
+        if (propName.startsWith(CONTEXT_OUT_PREFIX)) {
+            const contextKey = propName.slice(CONTEXT_OUT_PREFIX.length)
+
+            setTimeout(() => {
+                let retrievedContext = getContext(dom as HTMLElement, contextKey)
+
+                if (typeof propValue === "object" && propValue instanceof State) {
+                    propValue.val = retrievedContext.val
+                } else if (typeof propValue === "function") {
+                    propValue(retrievedContext)
+                } else {
+                    console.warn(
+                        `Context out property "${propName}" on element <${name}> expects a function or State, but got ${typeof propValue}.`
+                    )
+                }
+            })
+
+            continue
+        }
+
+        if (propName.startsWith(CONTEXT_IN_PREFIX)){
+            bind(() => (
+                (!isOptional || (typeof propValue === "object" && propValue instanceof State && propValue.val))
+                    ? setContext(dom as HTMLElement, propName.slice(CONTEXT_IN_PREFIX.length), propValue)
+                    : removeContext(dom as HTMLElement, propName.slice(CONTEXT_IN_PREFIX.length)),
+                dom)
+            )
+
+            continue
+        }
 
         if (!propName.startsWith("on") && typeof propValue === "function"){
             propValue = derive(propValue as PropValueOrDerived<any>)
