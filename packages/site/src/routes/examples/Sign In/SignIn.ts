@@ -52,7 +52,7 @@ export default function SignIn(): HTMLElement {
                     Button(
                         {
                             type: "button",
-                            class: "mood-accent text-mood",
+                            class: "mood-accent text-mood-500",
                         },
 
                         "Forgot?",
@@ -79,7 +79,7 @@ export default function SignIn(): HTMLElement {
                                 `transition ${
                                     passwordVisible.val
                                         ? ""
-                                        : "text-foreground-weak"
+                                        : "text-swatch-700-foreground"
                                 }`,
                         },
 
@@ -103,7 +103,7 @@ export default function SignIn(): HTMLElement {
             },
 
             html.span(
-                { class: "text-mini text-mood-weak" },
+                { class: "text-mini text-swatch-700-mood" },
                 "Remember Password",
             ),
         ),
@@ -114,7 +114,7 @@ export default function SignIn(): HTMLElement {
             Button(
                 {
                     type: "button",
-                    class: "variant-base hover:variant-soft",
+                    class: "hover:variant-soft",
                 },
                 "Cancel",
             ),

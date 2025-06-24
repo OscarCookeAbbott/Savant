@@ -22,7 +22,7 @@ export default function Page() {
 
                 Button(
                     {
-                        class: "variant-base text-accent font-bold",
+                        class: "text-accent-500 font-bold",
                     },
 
                     "Tooltip (Hover Me)",
@@ -47,7 +47,7 @@ import { Button, Tooltip } from "savant/ui"
 
 Button(
     {
-        class: "variant-base text-accent font-bold",
+        class: "text-accent-500 font-bold",
     },
 
     "Tooltip (Hover Me)",

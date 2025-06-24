@@ -41,7 +41,7 @@ export default function TableOfContents(
                     "$data-indented": () => indent > 0,
                     "$data-selected": () => firstVisibleHeading.val === heading,
                     style: `--indent: ${1 + (indent - 1) * 0.5}rem;`,
-                    class: "group relative flex gap-4 cursor-pointer text-mood-weak not-data-selected:hover:text-foreground data-selected:mood-accent data-selected:text-mood",
+                    class: "group relative flex gap-4 cursor-pointer text-swatch-700-mood not-data-selected:hover:text-swatch-900-foreground data-selected:mood-accent data-selected:text-mood-500",
                 },
 
                 html.span({

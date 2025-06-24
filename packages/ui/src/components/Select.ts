@@ -93,7 +93,7 @@ export default function Select<T>({
                 {
                     name: "Value Display",
                     class: () =>
-                        `text-nowrap text-ellipsis overflow-hidden ${isNull.val ? "text-foreground-weak" : ""} ${useChips ? "flex flex-wrap gap-1" : ""} ${isOpen.val ? "invisible" : ""}`,
+                        `text-nowrap text-ellipsis overflow-hidden ${isNull.val ? "text-swatch-700-foreground" : ""} ${useChips ? "flex flex-wrap gap-1" : ""} ${isOpen.val ? "invisible" : ""}`,
                 },
 
                 (() => {

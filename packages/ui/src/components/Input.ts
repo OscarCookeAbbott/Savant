@@ -64,7 +64,7 @@ export default function Input<T extends string | number>(
         {
             name: "Text Input",
             class: () =>
-                `flex p-0 *:first:pl-2 *:last:pr-2 gap-2 *:py-1 has-focus-visible:mood-accent  has-invalid:has-invalid:mood-critical ${reactiveClass.val}`,
+                `control flex p-0 *:first:pl-2 *:last:pr-2 gap-2 *:py-1 has-focus-visible:mood-accent  has-invalid:has-invalid:mood-critical ${reactiveClass.val}`,
             ...restProps,
         },
 

@@ -7,7 +7,8 @@ import {
     _routerQuery,
 } from "./state"
 
-// TYPES
+//////// Types ////////
+
 export type Route = {
     path: string | "*"
     dom: ChildDom
@@ -18,13 +19,16 @@ type RouterProps = {
     basename?: string
 }
 
-// PARAMS
+//////// Config ////////
+
 const _QUERY_PARAM_REGEX = /:([^\\d|^/]([^/]+)?)/
 
-// DATA
+//////// State ////////
+
 let currentRoute: Route | undefined = undefined
 
-// FUNCTIONS
+//////// API ////////
+
 export default function Router({ routes, basename }: RouterProps) {
     const container = html.div({
         name: "Savant Router",

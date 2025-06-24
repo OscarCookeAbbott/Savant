@@ -8,7 +8,7 @@ export default function Header(): HTMLElement {
     return html.header(
         {
             name: "Header",
-            class: "bg-background-translucent fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-500/50 z-10",
+            class: "bg-background-50 fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-500/50 z-10",
         },
 
         html["left-content"](
@@ -23,13 +23,14 @@ export default function Header(): HTMLElement {
 
             Badge(
                 {
-                    class: "cursor-help variant-filled mood-info rounded-full px-1 py-0.5",
+                    class: "cursor-help variant-filled mood-info rounded-full control-sm",
                 },
 
                 html.i("construction"),
 
                 Tooltip(
                     { class: "mood-info" },
+
                     "Savant is still under construction",
                 ),
             ),
@@ -41,7 +42,7 @@ export default function Header(): HTMLElement {
             html.a(
                 {
                     name: "GitHub",
-                    class: "variant-base !rounded-full **:fill-current hover:variant-soft text-lg !p-2",
+                    class: "control !rounded-full **:fill-current hover:variant-soft text-lg !p-2",
                     href: "https://github.com/OscarCookeAbbott/Savant",
                     target: "_blank",
                 },

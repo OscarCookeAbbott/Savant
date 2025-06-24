@@ -5,12 +5,16 @@ import { ChildDom, derive, html, state, State, Val } from ".";
 type ContextKey = string & {}
 type ContextValue<T> = Val<T>
 
-type ContextProviderValue<T> = State<T | undefined> & { triggerRecheck: State<number>}
-type ContextProvider = Map<ContextKey, ContextProviderValue<unknown>>
+type ContextProviderValue<T> = State<T | undefined>
+type ContextProvider = {
+    listener: EventListener,
+    contexts: Map<ContextKey, ContextProviderValueInternal<unknown>>
+}
 
+type ContextProviderValueInternal<T> = ContextProviderValue<T> & { triggerRecheck: State<number>}
 type ContextEventDetail = {
     key: ContextKey;
-    context: ContextProviderValue<unknown> | undefined;
+    context: ContextProviderValueInternal<unknown> | undefined;
 }
 
 //////// Config ////////
@@ -21,7 +25,7 @@ export const CONTEXT_OUT_PREFIX = "context-out-"
 
 //////// Internal State ////////
 
-const CONTEXT_BY_PROVIDER = new WeakMap<HTMLElement, ContextProvider>();
+const PROVIDER_BY_DOM = new WeakMap<HTMLElement, ContextProvider>();
 
 //////// API ////////
 
@@ -43,14 +47,14 @@ export function setContext<T>(dom: HTMLElement, key: ContextKey, value: ContextV
  * Naively coerces to the given type. Apply type validation if necessary.
  */
 export function getContext<T>(dom: HTMLElement, key: ContextKey): ContextProviderValue<T> {
-    const retrievedContext = getEnsuredContextFromDom(dom, key)
+    const retrievedContext = getEnsuredContextFromDom(dom, key) as ContextProviderValueInternal<T>
 
     const returnContext = state(retrievedContext)
 
     // Reactively recalculate context if existing context provider is marked as potentially stale
     derive(() => {
         if (retrievedContext.triggerRecheck.val) {
-            const newContext = getContextFromDom(dom, key) as ContextProviderValue<T>
+            const newContext = getContextFromDom(dom, key) as ContextProviderValueInternal<T>
 
             if (newContext === returnContext.val) return
 
@@ -58,8 +62,7 @@ export function getContext<T>(dom: HTMLElement, key: ContextKey): ContextProvide
         }
     })
 
-    // Not technically a `ContextProviderValue`, but consumers don't care about the `triggerRecheck`
-    return derive(() => returnContext.val?.val) as ContextProviderValue<T>
+    return createContextProviderValue(derive(() => returnContext.val?.val))
 }
 
 /** Removes context of the given key from the given DOM element, if it exists. */
@@ -70,30 +73,27 @@ export function removeContext(dom: HTMLElement, key: ContextKey): void {
     if (existingProvider === undefined) return
 
     // Prepare to trigger context recalculation if the dom element doesn't already have this context
-    const existingContextProviderValue = existingProvider.get(key)
+    const existingContextProviderValue = existingProvider.contexts.get(key)
 
     if (existingContextProviderValue === undefined) return
 
-    // If no more contexts are present, remove the provider from the DOM element
-    if (existingProvider.size === 1) {
-        CONTEXT_BY_PROVIDER.delete(dom)
+    existingProvider.contexts.delete(key)
 
-        // TODO: Remove event listener
-        // dom.removeEventListener(CONTEXT_EVENT_NAME, () => {})
+    // If no more contexts are present, remove the provider from the DOM element
+    if (existingProvider.contexts.size === 1) {
+        PROVIDER_BY_DOM.delete(dom)
+        dom.removeEventListener(CONTEXT_EVENT_NAME, existingProvider.listener)
     }
 
     // Trigger context recalculation for consumers of the existing context
     existingContextProviderValue.triggerRecheck.val++
-
-    // Fully delete the context from the provider
-    existingProvider.delete(key)
 }
 
 //////// Components ////////
 
 /** Retrieves context of the given key at the component's position in the DOM and passes it to the given child generator. */
 export function ContextProbe<T extends ContextValue<unknown>>(key: ContextKey, out: (context: ContextProviderValue<T>) => ChildDom): ChildNode {
-    const context: ContextProviderValue<T> = createContextProviderValue(undefined)
+    const context: ContextProviderValueInternal<T> = createContextProviderValue(state(undefined))
 
     const probeDom = html.contextProbe(
         {
@@ -112,13 +112,12 @@ export function ContextProbe<T extends ContextValue<unknown>>(key: ContextKey, o
 /** Sets new context value at the associated DOM location or updates existing context if present.
  * @returns Whether any context was newly set or changed.
  */
-function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: T | undefined): ContextProviderValue<T> {
+function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: T | undefined): ContextProviderValueInternal<T> {
     const existingProvider = getContextProvider(dom)
 
     // First context being set at this DOM element, create full context provider
     if (existingProvider === undefined) {
-        // Setup event listener for reacting to context requests
-        dom.addEventListener(CONTEXT_EVENT_NAME, (event: Event) => {
+        const newListener = (event: Event) => {
             const customEvent = event as CustomEvent<ContextEventDetail>
 
             const providerValue = getContextProviderValue(dom, customEvent.detail.key)
@@ -127,24 +126,27 @@ function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: T | undefi
 
             customEvent.detail.context = providerValue
             event.stopPropagation()
-        })
+        }
+
+        // Setup event listener for reacting to context requests
+        dom.addEventListener(CONTEXT_EVENT_NAME,newListener )
 
         const newProviderValue = Object.assign(state(value), { triggerRecheck: state(0) })
 
-        const newProvider = new Map([[key, newProviderValue]])
+        const newProvider = { listener: newListener, contexts: new Map([[key, newProviderValue]]) }
 
-        CONTEXT_BY_PROVIDER.set(dom, newProvider)
+        PROVIDER_BY_DOM.set(dom, newProvider)
 
         return newProviderValue
     }
 
-    const existingProviderValue = existingProvider.get(key) as ContextProviderValue<T>
+    const existingProviderValue = existingProvider.contexts.get(key) as ContextProviderValueInternal<T>
 
     // DOM element is already a context provider but not for this key, add new context key value
     if (existingProviderValue === undefined) {
         const newProviderValue = Object.assign(state(value), { triggerRecheck: state(0) })
 
-        existingProvider.set(key, newProviderValue)
+        existingProvider.contexts.set(key, newProviderValue)
 
         return newProviderValue
     }
@@ -159,7 +161,7 @@ function setContextOnDom<T>(dom: HTMLElement, key: ContextKey, value: T | undefi
 /** Retrieves context with the given key at the given DOM element, ensuring that at *least* a root context provider exists.
  * Naively coerces to the given type. Apply type validation if necessary.
  */
-function getEnsuredContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> {
+function getEnsuredContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValueInternal<unknown> {
     const existingContext = getContextFromDom(dom, key)
 
     if (existingContext !== undefined) return existingContext
@@ -171,7 +173,7 @@ function getEnsuredContextFromDom(dom: HTMLElement, key: ContextKey): ContextPro
 }
 
 /** Retrives context value at the associated DOM location if present. */
-function getContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> | undefined {
+function getContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderValueInternal<unknown> | undefined {
     const event = new CustomEvent<ContextEventDetail>(CONTEXT_EVENT_NAME, { bubbles: true, cancelable: true, detail: { key, context: undefined } })
 
     dom.dispatchEvent(event)
@@ -180,17 +182,17 @@ function getContextFromDom(dom: HTMLElement, key: ContextKey): ContextProviderVa
 }
 
 /** Retrieves the context provider for the given DOM element, if it exists. */
-function getContextProvider(dom: HTMLElement): Map<ContextKey, ContextProviderValue<unknown>> | undefined {
-    return CONTEXT_BY_PROVIDER.get(dom)
+function getContextProvider(dom: HTMLElement): ContextProvider | undefined {
+    return PROVIDER_BY_DOM.get(dom)
 }
 
 /** Retrieves the context provider value for the given DOM element and key, if it exists. */
-function getContextProviderValue(dom: HTMLElement, key: ContextKey): ContextProviderValue<unknown> | undefined
+function getContextProviderValue(dom: HTMLElement, key: ContextKey): ContextProviderValueInternal<unknown> | undefined
 {
-    return getContextProvider(dom)?.get(key)
+    return getContextProvider(dom)?.contexts.get(key)
 }
 
 /** Adds a `triggerRecheck` state property to finish incomplete ContextProviderValues. */
-function createContextProviderValue<T>(from: T): ContextProviderValue<T> {
-    return Object.assign(state(from), { triggerRecheck: state(0) })
+function createContextProviderValue<T>(from: ContextProviderValue<T>): ContextProviderValueInternal<T> {
+    return Object.assign(from, { triggerRecheck: state(0) })
 }

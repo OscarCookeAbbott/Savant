@@ -72,7 +72,7 @@ function SignIn() {
 
                     Button(
                         {
-                            class: "mood-accent text-mood",
+                            class: "mood-accent text-mood-500",
                         },
 
                         "Forgot?",
@@ -100,7 +100,7 @@ function SignIn() {
                             class: () =>
                                 \`transition \${
                                     !passwordVisible.val
-                                        ? "text-foreground-weak"
+                                        ? "text-swatch-700-foreground"
                                         : ""
                                 }\`,
                         },
@@ -126,7 +126,7 @@ function SignIn() {
             },
 
             html.span(
-                { class: "text-mini text-mood-weak" },
+                { class: "text-mini text-swatch-700-mood" },
                 "Remember Password",
             ),
         ),
@@ -136,7 +136,7 @@ function SignIn() {
 
             Button(
                 {
-                    class: "variant-base hover:variant-soft",
+                    class: "hover:variant-soft",
                 },
                 "Cancel",
             ),

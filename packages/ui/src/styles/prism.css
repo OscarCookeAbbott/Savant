@@ -6,7 +6,7 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
 @layer components {
     code[class*="language-"],
     pre[class*="language-"] {
-        @apply text-foreground text-left font-mono text-base break-normal hyphens-none whitespace-pre;
+        @apply text-swatch-900-foreground text-left font-mono text-base break-normal hyphens-none whitespace-pre;
 
         word-spacing: normal;
         word-wrap: normal;
@@ -16,7 +16,7 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
     }
     code[class*="language-console"],
     pre[class*="language-console"] {
-        @apply text-foreground-weak;
+        @apply text-swatch-700-foreground;
     }
     code[class*="language-"] ::-moz-selection,
     code[class*="language-"]::-moz-selection,
@@ -35,7 +35,7 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
     }
     :not(pre) > code[class*="language-"],
     pre[class*="language-"] {
-        @apply variant-outline bg-surface-500/10 p-2;
+        @apply control variant-outline bg-surface-500/10 p-2;
     }
     :not(pre) > code[class*="language-"] {
         @apply rounded px-1 py-0.5 whitespace-normal;

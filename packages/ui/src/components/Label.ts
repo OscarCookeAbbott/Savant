@@ -18,7 +18,7 @@ export default function Label(
 
         html.label(
             {
-                class: "flex items-center text-mini text-mood-weak",
+                class: "flex items-center text-mini text-swatch-700-mood",
                 ...restProps,
             },
 

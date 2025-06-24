@@ -13,11 +13,11 @@ export default function Callout(
     return html.div(
         {
             class: () =>
-                `flex items-center variant-soft-outline text-mood-weak gap-2 ${reactiveClass.val}`,
+                `flex items-center control variant-soft-outline text-swatch-700-mood gap-2 ${reactiveClass.val}`,
             ...restProps,
         },
 
-        html.i({ class: `text-mood` }, icon),
+        html.i({ class: `text-mood-500` }, icon),
 
         children,
     )

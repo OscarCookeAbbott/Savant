@@ -10,7 +10,8 @@ import {
 } from "@savant/core"
 import { delay, match, detectExternalClick, isOrArrayHas } from "../utils"
 
-// TYPES
+//////// Types ////////
+
 type PopupProps = ElementProps & {
     visible?: State<boolean>
     direction?: PopupDirection
@@ -38,7 +39,8 @@ export const PopupTrigger = {
 } as const
 export type PopupTrigger = (typeof PopupTrigger)[keyof typeof PopupTrigger]
 
-// DATA
+//////// State ////////
+
 /** Root container for all popups which will render them above all other content. */
 const container = html.div({
     name: "Popups",
@@ -46,7 +48,8 @@ const container = html.div({
 })
 add(document.documentElement, container)
 
-// COMPONENTS
+//////// API ////////
+
 export default function Popup(
     {
         visible = state(false),
