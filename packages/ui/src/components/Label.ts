@@ -1,30 +1,30 @@
-import { ChildDom, ElementProps, html, forceReactive } from "@savant/core"
+import { ChildDom, ElementProps, forceReactive, html } from "@savant/core"
 
 type LabelProps = ElementProps & {
-    content: ChildDom
+	content: ChildDom
 }
 
 export default function Label(
-    { content, class: propClass, ...restProps }: LabelProps,
-    ...children: ChildDom[]
+	{ content, class: propClass, ...restProps }: LabelProps,
+	...children: ChildDom[]
 ): HTMLElement {
-    const reactiveClass = forceReactive(propClass)
+	const reactiveClass = forceReactive(propClass)
 
-    return html.div(
-        {
-            name: "Label",
-            class: () => `flex flex-col gap-1 ${reactiveClass.val}`,
-        },
+	return html.div(
+		{
+			name: "Label",
+			class: () => `flex flex-col gap-1 ${reactiveClass.val}`,
+		},
 
-        html.label(
-            {
-                class: "flex items-center text-mini text-swatch-700-mood",
-                ...restProps,
-            },
+		html.label(
+			{
+				class: "flex items-center text-mini text-swatch-700-mood",
+				...restProps,
+			},
 
-            content,
-        ),
+			content,
+		),
 
-        children,
-    )
+		children,
+	)
 }

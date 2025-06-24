@@ -1,13 +1,13 @@
 @import "./style.css";
 
 @layer components {
-    .style-markup {
-        a {
-            @apply text-accent-500 visited:text-purple-500 hover:underline not-disabled:hover:brightness-110 not-disabled:active:brightness-95;
-        }
+	.style-markup {
+		a {
+			@apply text-accent-500 not-disabled:hover:brightness-110 not-disabled:active:brightness-95 visited:text-purple-500 hover:underline;
+		}
 
-        hr {
-            @apply mt-4 border-current;
-        }
-    }
+		hr {
+			@apply mt-4 border-current;
+		}
+	}
 }

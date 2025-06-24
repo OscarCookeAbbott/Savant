@@ -94,3 +94,9 @@ The `derive()` function itself creates a new `State` which reacts to any depende
 Arrow functions `() => ...` are used for _all_ reactive dependence in Savant because it is the only way to defer and/or repeat execution of a clause beyond the scope of its definition.
 
 Other reactive frameworks that allow derived state without arrow function syntax (eg. `derive(num * 2)`) use a _compiler_ to allow this shorthand.
+
+### How it works
+
+When a new state is created, via `state()`, `derive()` or from binding functions passed to elements etc, the state sets itself as the local 'state scope'. Any states that are created within the call stack of its creation then subscribe to the enclosing scope state.
+
+At regular intervals Savant checks all states and deletes (clears references so it can be recognised as garbage) any which have no dependent states.

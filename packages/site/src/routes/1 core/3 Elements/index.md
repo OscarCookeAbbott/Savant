@@ -14,9 +14,9 @@ These tag functions allow passing any props to the element via the first object:
 
 ```typescript
 const button = html.button({
-    name: "Demo",
-    onclick: () => console.log("Clicked!"),
-    style: "color: red;",
+	name: "Demo",
+	onclick: () => console.log("Clicked!"),
+	style: "color: red;",
 })
 ```
 
@@ -24,11 +24,11 @@ And the tag functions also allow nesting of child elements, values, etc...
 
 ```typescript
 const list = html.div(
-    { style: "display: flex; flex-direction: column;" },
+	{ style: "display: flex; flex-direction: column;" },
 
-    html.button({ style: "color: red;" }, "I'm a button!"),
+	html.button({ style: "color: red;" }, "I'm a button!"),
 
-    html.span("I am not :("),
+	html.span("I am not :("),
 )
 ```
 
@@ -40,9 +40,9 @@ Reactive states and even just derivation arrow functions can be given directly t
 const username = state("")
 
 const usernameInput = html.input({
-    value: username,
-    oninput: (event) => (username.val = event.target.value),
-    placeholder: "Enter username...",
+	value: username,
+	oninput: (event) => (username.val = event.target.value),
+	placeholder: "Enter username...",
 })
 
 const usernameDisplay = html.div(() => `Hello ${username.val}!`)
@@ -53,6 +53,28 @@ const container = html.div(usernameInput, usernameDisplay)
 savant.add(document, container)
 ```
 
+## Optional props
+
+Any props prefixed with `$` will be automatically added and removed (with the prefix removed) whenever the given value/state-value becomes truthy/falsy.
+
+For example, the following element will hide whenever the state is odd, and reappear when it is even.
+
+```typescript
+const num = state(0)
+
+const dom = html.span({ $hidden: () => num.val % 2 == 0 }, num)
+```
+
+## Context props
+
+Any props prefixed with `context-` will set [context]("/#!/core/context") of that name (with the prefix removed) on the element instead of setting a DOM attribute.
+
+This can be combine with optional props if desired.
+
+## Context-out props
+
+Any props prefixed with `context-out-` will retrieve context of that name (with the)
+
 ### Scoping Reactions
 
 It is important to consider the scoping of your reactivity when creating components, because reactivity is bound to the lowest enclosing reactive scope (including element definitions), thus in the following example the first button is efficient because only its content will update when `username` is changed, while the second button will be entirely destroyed and recreated instead.
@@ -61,11 +83,11 @@ It is important to consider the scoping of your reactivity when creating compone
 const username = state("Jarnathan")
 
 const dom = html.div(
-    // Good scoping
-    html.button(() => username.val.toLowercase()),
+	// Good scoping
+	html.button(() => username.val.toLowercase()),
 
-    // Bad scoping
-    () => html.button(username.val.toLowercase()),
+	// Bad scoping
+	() => html.button(username.val.toLowercase()),
 )
 ```
 
@@ -84,10 +106,10 @@ function [element](propsOrChild: ElementProps<Element> | ChildDom, ...restChildr
 
 ```typescript
 type ChildDom =
-    | ValidChildDomValue
-    | Readonly<State<Optional<Primitive>>>
-    | BindingFunc
-    | readonly ChildDom[]
+	| ValidChildDomValue
+	| Readonly<State<Optional<Primitive>>>
+	| BindingFunc
+	| readonly ChildDom[]
 type ValidChildDomValue = Optional<Primitive | ChildNode>
 type BindingFunc = (dom?: ChildDom) => ChildDom
 ```

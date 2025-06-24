@@ -1,35 +1,35 @@
 name: Deploy Github Pages
 
 on:
-  push:
-    branches: [ "main" ]
+    push:
+        branches: ["main"]
 
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+    build:
+        runs-on: ubuntu-22.04
 
-    strategy:
-      matrix:
-        node-version: [20]
+        strategy:
+            matrix:
+                node-version: [20]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
 
-      - name: Install dependencies
-        run: pnpm install
+            - name: Install dependencies
+              run: pnpm install
 
-      - name: Build
-        run: pnpm build
+            - name: Build
+              run: pnpm build
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: ./packages/site/dist
+            - name: Deploy to GitHub Pages
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  folder: ./packages/site/dist

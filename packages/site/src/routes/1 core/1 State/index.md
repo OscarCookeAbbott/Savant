@@ -47,11 +47,11 @@ function state<T>(value: T): State<T>
 
 ```typescript
 class State<T> {
-    /** The current value. Assigning will trigger reactivity. */
-    val: T
+	/** The current value. Assigning will trigger reactivity. */
+	val: T
 
-    /** The current value. Assigning will not trigger reactivity. */
-    rawVal: T
+	/** The current value. Assigning will not trigger reactivity. */
+	rawVal: T
 }
 ```
 
@@ -69,3 +69,7 @@ num.val = 43
 num = 43
 num = state(43)
 ```
+
+### How it works
+
+Fundamentally, a Savant `State` is a wrapper which stores a value and a list of other states that it relies on and that rely on it.

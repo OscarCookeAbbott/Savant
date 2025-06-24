@@ -1,32 +1,32 @@
-import { ChildDom, ElementProps, html, forceReactive } from "@savant/core"
+import { ChildDom, ElementProps, forceReactive, html } from "@savant/core"
 
 type CodeProps = ElementProps & {
-    language: string
+	language: string
 }
 
 export default function Code(
-    { language, class: propClass, ...restProps }: CodeProps,
-    ...children: ChildDom[]
+	{ language, class: propClass, ...restProps }: CodeProps,
+	...children: ChildDom[]
 ): HTMLElement {
-    const reactiveClass = forceReactive(propClass)
+	const reactiveClass = forceReactive(propClass)
 
-    const baseDom = html.pre(
-        {
-            class: reactiveClass.val,
-            ...restProps,
-        },
+	const baseDom = html.pre(
+		{
+			class: reactiveClass.val,
+			...restProps,
+		},
 
-        html.code(
-            {
-                class: `language-${language}`,
-            },
+		html.code(
+			{
+				class: `language-${language}`,
+			},
 
-            children,
-        ),
-    )
+			children,
+		),
+	)
 
-    // Convert any code snippets
-    Prism.highlightAllUnder(baseDom)
+	// Convert any code snippets
+	Prism.highlightAllUnder(baseDom)
 
-    return baseDom
+	return baseDom
 }

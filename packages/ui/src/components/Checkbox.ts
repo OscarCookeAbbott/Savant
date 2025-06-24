@@ -1,79 +1,80 @@
 import {
-    State,
-    ChildDom,
-    ElementProps,
-    html,
-    svg,
-    state,
-    forceReactive,
+	ChildDom,
+	ElementProps,
+	forceReactive,
+	html,
+	State,
+	state,
+	svg,
 } from "@savant/core"
+
 import Button from "./Button"
 
 type CheckboxProps = ElementProps & {
-    value?: State<boolean>
+	value?: State<boolean>
 
-    required?: boolean
+	required?: boolean
 }
 
 export default function Checkbox(
-    {
-        value = state(false),
+	{
+		value = state(false),
 
-        required,
+		required,
 
-        class: propClass,
-        ...restProps
-    }: CheckboxProps,
-    ...children: ChildDom[]
+		class: propClass,
+		...restProps
+	}: CheckboxProps,
+	...children: ChildDom[]
 ): HTMLElement {
-    const reactiveClass = forceReactive(propClass)
+	const reactiveClass = forceReactive(propClass)
 
-    return html.div(
-        {
-            name: "Checkbox",
-            onclick: () => (value.val = !value.val),
-            "$data-selected": value,
-            class: () =>
-                `flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
-                    ?.split(" ")
-                    .filter((className) => !className.includes("variant"))
-                    .join(" ")}`,
-            ...restProps,
-        },
+	return html.div(
+		{
+			name: "Checkbox",
+			onclick: () => (value.val = !value.val),
+			"$data-selected": value,
+			class: () =>
+				`flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
+					?.split(" ")
+					.filter((className) => !className.includes("variant"))
+					.join(" ")}`,
+			...restProps,
+		},
 
-        children,
+		children,
 
-        Button(
-            {
-                role: "checkbox",
-                type: "button",
-                tabIndex: 0,
-                class: () =>
-                    `button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-critical ${reactiveClass.val
-                        ?.split(" ")
-                        .filter((className) => className.includes("variant"))
-                        .join(" ")}`,
-            },
+		Button(
+			{
+				role: "checkbox",
+				type: "button",
+				tabIndex: 0,
+				class: () =>
+					`button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-critical ${reactiveClass.val
+						?.split(" ")
+						.filter((className) => className.includes("variant"))
+						.join(" ")}`,
+			},
 
-            svg.svg(
-                {
-                    viewBox: "0 0 100 100",
-                    class: "size-4 not-group-data-selected:hidden",
-                    style: "stroke-linecap:round; stroke-linejoin:round;",
-                },
+			svg.svg(
+				{
+					viewBox: "0 0 100 100",
+					class: "size-4 not-group-data-selected:hidden",
+					style: "stroke-linecap:round; stroke-linejoin:round;",
+				},
 
-                svg.path({
-                    d: "M20,60L40,80L80,20",
-                    class: "stroke-current stroke-[10] fill-none",
-                }),
-            ),
-        ),
+				svg.path({
+					d: "M20,60L40,80L80,20",
+					class: "stroke-current stroke-[10] fill-none",
+				}),
+			),
+		),
 
-        html.input({
-            type: "checkbox",
-            checked: value,
-            required: required,
-            hidden: true,
-        }),
-    )
+		html.input({
+			type: "checkbox",
+			checked: value,
+			required: required,
+			hidden: true,
+		}),
+	)
 }

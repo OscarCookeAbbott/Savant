@@ -1,35 +1,36 @@
-import { Code } from "@savant/ui"
 import { html } from "@savant/core"
-import SignIn from "./SignIn"
+import { Code } from "@savant/ui"
+
 import DocPage from "../../../components/DocPage"
+import SignIn from "./SignIn"
 
 export default function Page() {
-    return DocPage(
-        html.h1("Sign In"),
+	return DocPage(
+		html.h1("Sign In"),
 
-        html.blockquote("Example Sign In component."),
+		html.blockquote("Example Sign In component."),
 
-        html.h2("Demo"),
+		html.h2("Demo"),
 
-        html.div(
-            {
-                class: "card vessel bg-zebra zebra-opacity-20 flex flex-col items-center gap-4",
-            },
+		html.div(
+			{
+				class: "card vessel bg-zebra zebra-opacity-20 flex flex-col items-center gap-4",
+			},
 
-            html.div(
-                {
-                    class: "p-8 card vessel bg-background flex items-center",
-                },
-                SignIn(),
-            ),
-        ),
+			html.div(
+				{
+					class: "p-8 card vessel bg-background flex items-center",
+				},
+				SignIn(),
+			),
+		),
 
-        html.h2("Code"),
+		html.h2("Code"),
 
-        Code(
-            { language: "typescript" },
+		Code(
+			{ language: "typescript" },
 
-            `\
+			`\
 function SignIn() {
     const username = state("")
     const password = state("")
@@ -150,6 +151,6 @@ function SignIn() {
         ),
     )
 }`,
-        ),
-    )
+		),
+	)
 }

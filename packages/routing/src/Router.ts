@@ -1,22 +1,23 @@
-import { html, derive, ChildDom, add } from "@savant/core"
+import { add, ChildDom, derive, html } from "@savant/core"
+
 import {
-    _routerBasename,
-    _routerHash,
-    _routerParams,
-    _routerPathname,
-    _routerQuery,
+	_routerBasename,
+	_routerHash,
+	_routerParams,
+	_routerPathname,
+	_routerQuery,
 } from "./state"
 
 //////// Types ////////
 
-export type Route = {
-    path: string | "*"
-    dom: ChildDom
+export interface Route {
+	path: string | "*"
+	dom: ChildDom
 }
 
-type RouterProps = {
-    routes: Route[]
-    basename?: string
+interface RouterProps {
+	routes: Route[]
+	basename?: string
 }
 
 //////// Config ////////
@@ -30,133 +31,133 @@ let currentRoute: Route | undefined = undefined
 //////// API ////////
 
 export default function Router({ routes, basename }: RouterProps) {
-    const container = html.div({
-        name: "Savant Router",
-        style: "display: contents;",
-    })
+	const container = html.div({
+		name: "Savant Router",
+		style: "display: contents;",
+	})
 
-    /** Returns a sanitized path which with a leading slash but no trailing slashes*/
-    const sanitizePath = (path: string) => {
-        if (!path) return ""
+	/** Returns a sanitized path which with a leading slash but no trailing slashes*/
+	const sanitizePath = (path: string) => {
+		if (!path) return ""
 
-        if (!path.startsWith("/")) path = "/" + path
+		if (!path.startsWith("/")) path = "/" + path
 
-        while (path !== "/" && path.endsWith("/")) {
-            path = path.slice(0, path.length - 1)
-        }
+		while (path !== "/" && path.endsWith("/")) {
+			path = path.slice(0, path.length - 1)
+		}
 
-        path = decodeURI(path)
+		path = decodeURI(path)
 
-        return path
-    }
+		return path
+	}
 
-    /** Match the current URL pathname to a route. Matching is done in the order of routes */
-    const routeMatcher = (path: string, basename: string) => {
-        path = sanitizePath(path)
-        basename = sanitizePath(basename)
+	/** Match the current URL pathname to a route. Matching is done in the order of routes */
+	const routeMatcher = (path: string, basename: string) => {
+		path = sanitizePath(path)
+		basename = sanitizePath(basename)
 
-        const pathParts = path.split("/")
-        const params: Record<string, string> = {}
-        let matchedRoute: Route | null = null
+		const pathParts = path.split("/")
+		const params: Record<string, string> = {}
+		let matchedRoute: Route | null = null
 
-        for (const route of routes) {
-            const routePathParts = sanitizePath(basename + route.path).split(
-                "/",
-            )
-            if (routePathParts.length !== pathParts.length) continue
+		for (const route of routes) {
+			const routePathParts = sanitizePath(basename + route.path).split(
+				"/",
+			)
+			if (routePathParts.length !== pathParts.length) continue
 
-            let matchFound = true
+			let matchFound = true
 
-            for (let idx = 0; idx < routePathParts.length; idx++) {
-                const routePathPart = routePathParts[idx]
-                const pathPart = pathParts[idx]
+			for (let idx = 0; idx < routePathParts.length; idx++) {
+				const routePathPart = routePathParts[idx]
+				const pathPart = pathParts[idx]
 
-                if (_QUERY_PARAM_REGEX.test(routePathPart)) {
-                    params[decodeURIComponent(routePathPart.slice(1))] =
-                        decodeURIComponent(pathPart)
-                } else if (pathPart !== routePathPart) {
-                    matchFound = false
-                    break
-                }
-            }
+				if (_QUERY_PARAM_REGEX.test(routePathPart)) {
+					params[decodeURIComponent(routePathPart.slice(1))] =
+						decodeURIComponent(pathPart)
+				} else if (pathPart !== routePathPart) {
+					matchFound = false
+					break
+				}
+			}
 
-            if (matchFound) {
-                matchedRoute = route
-                break
-            }
-        }
+			if (matchFound) {
+				matchedRoute = route
+				break
+			}
+		}
 
-        if (!matchedRoute) {
-            // Find match-all (404) route if no match is found
-            matchedRoute = routes.find((route) => route.path === "*") || null
-        }
+		if (!matchedRoute) {
+			// Find match-all (404) route if no match is found
+			matchedRoute = routes.find((route) => route.path === "*") || null
+		}
 
-        return { route: matchedRoute, params }
-    }
+		return { route: matchedRoute, params }
+	}
 
-    const parseQuery = (search: string) => {
-        if (search.startsWith("?")) search = search.slice(1).trim()
+	const parseQuery = (search: string) => {
+		if (search.startsWith("?")) search = search.slice(1).trim()
 
-        if (!search) return {}
+		if (!search) return {}
 
-        const query: Record<string, string> = {}
-        const groups = search.split("&")
+		const query: Record<string, string> = {}
+		const groups = search.split("&")
 
-        for (const group of groups) {
-            const [key, value] = group.split("=")
-            query[decodeURIComponent(key)] = decodeURIComponent(value)
-        }
+		for (const group of groups) {
+			const [key, value] = group.split("=")
+			query[decodeURIComponent(key)] = decodeURIComponent(value)
+		}
 
-        return query
-    }
+		return query
+	}
 
-    const handleWindowPopState = () => {
-        const { route, params } = routeMatcher(
-            window.location.pathname + window.location.hash,
-            basename || "",
-        )
+	const handleWindowPopState = () => {
+		const { route, params } = routeMatcher(
+			window.location.pathname + window.location.hash,
+			basename || "",
+		)
 
-        if (!route) {
-            currentRoute = undefined
+		if (!route) {
+			currentRoute = undefined
 
-            container.replaceChildren()
+			container.replaceChildren()
 
-            add(container, html.div("Could not find route"))
+			add(container, html.div("Could not find route"))
 
-            return
-        }
+			return
+		}
 
-        if (route === currentRoute) {
-            _routerQuery.val = parseQuery(window.location.search)
-            _routerParams.val = params
-            return
-        }
+		if (route === currentRoute) {
+			_routerQuery.val = parseQuery(window.location.search)
+			_routerParams.val = params
+			return
+		}
 
-        currentRoute = route
+		currentRoute = route
 
-        _routerQuery.rawVal = parseQuery(window.location.search)
-        _routerParams.rawVal = params
+		_routerQuery.rawVal = parseQuery(window.location.search)
+		_routerParams.rawVal = params
 
-        container.replaceChildren()
+		container.replaceChildren()
 
-        add(container, route.dom)
-    }
+		add(container, route.dom)
+	}
 
-    window.onpopstate = handleWindowPopState
+	window.onpopstate = handleWindowPopState
 
-    derive(() => {
-        const pathChanged = _routerPathname.val
-        const hashChanged = _routerHash.val
+	derive(() => {
+		const pathChanged = _routerPathname.val
+		const hashChanged = _routerHash.val
 
-        if (pathChanged || hashChanged) {
-            setTimeout(() => {
-                handleWindowPopState()
-            })
-        }
-    })
+		if (pathChanged || hashChanged) {
+			setTimeout(() => {
+				handleWindowPopState()
+			})
+		}
+	})
 
-    derive(() => {
-        _routerBasename.val = sanitizePath(basename || "")
-    })
-    return container
+	derive(() => {
+		_routerBasename.val = sanitizePath(basename || "")
+	})
+	return container
 }

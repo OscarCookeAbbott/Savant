@@ -16,24 +16,24 @@ import { add, html, state } from "@savant/core"
 import { Router } from "@savant/routing"
 
 function Counter() {
-    const value = state(0)
+	const value = state(0)
 
-    return html.div(
-        "Counter: ",
-        value,
-        " ",
-        html.button({ onclick: () => ++value.val }, "👍"),
-        html.button({ onclick: () => --value.val }, "👎"),
-    )
+	return html.div(
+		"Counter: ",
+		value,
+		" ",
+		html.button({ onclick: () => ++value.val }, "👍"),
+		html.button({ onclick: () => --value.val }, "👎"),
+	)
 }
 
 function App() {
-    return Router({
-        routes: {
-            "/": html.div("Hello world!"),
-            "/counter": Counter,
-        },
-    })
+	return Router({
+		routes: {
+			"/": html.div("Hello world!"),
+			"/counter": Counter,
+		},
+	})
 }
 
 add(document.body, App())

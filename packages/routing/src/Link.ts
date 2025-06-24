@@ -1,49 +1,50 @@
 import {
-    ChildDom,
-    ElementProps,
-    html,
-    forceReactive,
-    unwrapVal,
+	ChildDom,
+	ElementProps,
+	forceReactive,
+	html,
+	unwrapVal,
 } from "@savant/core"
+
 import { navigate } from "./helpers"
 
 type LinkProps = ElementProps<HTMLAnchorElement> & {
-    replace?: boolean
-    disabled?: boolean
+	replace?: boolean
+	disabled?: boolean
 }
 
 export default function Link(
-    {
-        replace = false,
-        disabled = false,
-        onclick,
-        href,
-        class: propClass,
-        ...restProps
-    }: LinkProps,
-    ...children: ChildDom[]
+	{
+		replace = false,
+		disabled = false,
+		onclick,
+		href,
+		class: propClass,
+		...restProps
+	}: LinkProps,
+	...children: ChildDom[]
 ): HTMLAnchorElement {
-    const reactiveClass = forceReactive(propClass)
+	const reactiveClass = forceReactive(propClass)
 
-    return html.a(
-        {
-            href,
-            onclick(this: GlobalEventHandlers, e: MouseEvent) {
-                e.preventDefault()
+	return html.a(
+		{
+			href,
+			onclick(this: GlobalEventHandlers, e: MouseEvent) {
+				e.preventDefault()
 
-                const hrefValue = unwrapVal(href)
+				const hrefValue = unwrapVal(href)
 
-                if (disabled || hrefValue === undefined) return
+				if (disabled || hrefValue === undefined) return
 
-                navigate(String(hrefValue), { replace })
+				navigate(String(hrefValue), { replace })
 
-                if (typeof onclick === "function") onclick.call(this, e)
-            },
-            tabIndex: 0,
-            class: () =>
-                `not-disabled:focus-visible:focus-ring ${reactiveClass.val}`,
-            ...restProps,
-        },
-        ...children,
-    )
+				if (typeof onclick === "function") onclick.call(this, e)
+			},
+			tabIndex: 0,
+			class: () =>
+				`not-disabled:focus-visible:focus-ring ${reactiveClass.val}`,
+			...restProps,
+		},
+		...children,
+	)
 }

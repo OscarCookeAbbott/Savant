@@ -1,131 +1,124 @@
-import {
-    Button,
-    Checkbox,
-    Icon,
-    Label,
-    Input,
-    Form,
-} from "@savant/ui"
 import { html, state } from "@savant/core"
+import { Button, Checkbox, Form, Icon, Input, Label } from "@savant/ui"
 
 export default function SignIn(): HTMLElement {
-    const username = state("")
-    const password = state("")
-    const savePassword = state(false)
+	const username = state("")
+	const password = state("")
+	const savePassword = state(false)
 
-    const passwordVisible = state(false)
+	const passwordVisible = state(false)
 
-    const passwordValid = state(false)
+	const passwordValid = state(false)
 
-    return Form(
-        {
-            name: "Sign In",
-            class: "flex flex-col gap-4",
-        },
+	return Form(
+		{
+			name: "Sign In",
+			class: "flex flex-col gap-4",
+		},
 
-        html.span({ class: "text-xl font-bold" }, "Sign In"),
+		html.span({ class: "text-xl font-bold" }, "Sign In"),
 
-        Label(
-            {
-                content: "Username",
-            },
+		Label(
+			{
+				content: "Username",
+			},
 
-            Input({
-                type: "username",
-                value: username,
-                placeholder: "Enter username...",
-                required: true,
+			Input({
+				type: "username",
+				value: username,
+				placeholder: "Enter username...",
+				required: true,
 
-                lead: Icon("person"),
+				lead: Icon("person"),
 
-                class: "variant-outline",
-            }),
-        ),
+				class: "variant-outline",
+			}),
+		),
 
-        Label(
-            {
-                content: html.span(
-                    { class: "flex flex-1 justify-between items-center" },
+		Label(
+			{
+				content: html.span(
+					{ class: "flex flex-1 justify-between items-center" },
 
-                    "Password",
+					"Password",
 
-                    Button(
-                        {
-                            type: "button",
-                            class: "mood-accent text-mood-500",
-                        },
+					Button(
+						{
+							type: "button",
+							class: "mood-accent text-mood-500",
+						},
 
-                        "Forgot?",
-                    ),
-                ),
-            },
+						"Forgot?",
+					),
+				),
+			},
 
-            Input({
-                type: () => (passwordVisible.val ? "text" : "password"),
-                value: password,
-                placeholder: "Enter password...",
-                required: true,
+			Input({
+				type: () => (passwordVisible.val ? "text" : "password"),
+				value: password,
+				placeholder: "Enter password...",
+				required: true,
 
-                lead: Icon("key"),
-                trail: Button(
-                    {
-                        onclick: () =>
-                            (passwordVisible.val = !passwordVisible.val),
-                    },
+				lead: Icon("key"),
+				trail: Button(
+					{
+						onclick: () =>
+							(passwordVisible.val = !passwordVisible.val),
+					},
 
-                    Icon(
-                        {
-                            class: () =>
-                                `transition ${
-                                    passwordVisible.val
-                                        ? ""
-                                        : "text-swatch-700-foreground"
-                                }`,
-                        },
+					Icon(
+						{
+							class: () =>
+								`transition ${
+									passwordVisible.val
+										? ""
+										: "text-swatch-700-foreground"
+								}`,
+						},
 
-                        () =>
-                            passwordVisible.val
-                                ? "visibility"
-                                : "visibility_off",
-                    ),
-                ),
+						() =>
+							passwordVisible.val
+								? "visibility"
+								: "visibility_off",
+					),
+				),
 
-                onValidityChanged: (valid) => (passwordValid.val = valid),
+				onValidityChanged: (valid) => (passwordValid.val = valid),
 
-                class: "variant-outline",
-            }),
-        ),
+				class: "variant-outline",
+			}),
+		),
 
-        Checkbox(
-            {
-                value: savePassword,
-                class: "variant-outline",
-            },
+		Checkbox(
+			{
+				value: savePassword,
+				class: "variant-outline",
+			},
 
-            html.span(
-                { class: "text-mini text-swatch-700-mood" },
-                "Remember Password",
-            ),
-        ),
+			html.span(
+				{ class: "text-mini text-swatch-700-mood" },
+				"Remember Password",
+			),
+		),
 
-        html.div(
-            { class: "flex gap-4 justify-end" },
+		html.div(
+			{ class: "flex gap-4 justify-end" },
 
-            Button(
-                {
-                    type: "button",
-                    class: "hover:variant-soft",
-                },
-                "Cancel",
-            ),
+			Button(
+				{
+					type: "button",
+					class: "hover:variant-soft",
+				},
+				"Cancel",
+			),
 
-            Button(
-                {
-                    type: "button",
-                    class: "variant-filled mood-accent",
-                },
-                "Sign In",
-            ),
-        ),
-    )
+			Button(
+				{
+					type: "button",
+					class: "variant-filled mood-accent",
+				},
+				"Sign In",
+			),
+		),
+	)
 }

@@ -9,21 +9,21 @@ export type Val<T> = State<T> | T
 export type PropValue<T> = Optional<T> | ((e: any) => T)
 
 export type PropValueOrDerived<T> =
-    | PropValue<T>
-    | Readonly<State<Optional<T>>>
-    | (() => PropValue<T>)
+	| PropValue<T>
+	| Readonly<State<Optional<T>>>
+	| (() => PropValue<T>)
 
 export type GenericProps = Record<
-    string,
-    PropValueOrDerived<Primitive> | ChildDom | any
+	string,
+	PropValueOrDerived<Primitive> | ChildDom | any
 > & {
-    class?: PropValueOrDerived<string>
-    is?: string
-    context?: Record<string, Val<unknown>>
+	class?: PropValueOrDerived<string>
+	is?: string
+	context?: Record<string, Val<unknown>>
 }
 
 export type SpecificProps<ElementType> = Partial<{
-    [K in keyof ElementType]: PropValueOrDerived<ElementType[K] | Primitive>
+	[K in keyof ElementType]: PropValueOrDerived<ElementType[K] | Primitive>
 }>
 
 /** All known properties and attributes for a given element tag.
@@ -36,31 +36,31 @@ export type ValidChildDomValue = Optional<Primitive | ChildNode>
 export type BindingFunc = (dom?: ChildDom) => ChildDom
 
 export type ChildDom =
-    | ValidChildDomValue
-    | Readonly<State<Optional<Primitive>>>
-    | BindingFunc
-    | readonly ChildDom[]
+	| ValidChildDomValue
+	| Readonly<State<Optional<Primitive>>>
+	| BindingFunc
+	| readonly ChildDom[]
 
 export type TagFunc<Result> = (
-    propsOrChild?: ElementProps<Result> | ChildDom,
-    ...rest: readonly ChildDom[]
+	propsOrChild?: ElementProps<Result> | ChildDom,
+	...rest: readonly ChildDom[]
 ) => Result
 
 export type Tags<T> = Readonly<Record<string, TagFunc<Element>>> & {
-    [K in keyof T]: TagFunc<T[K]>
+	[K in keyof T]: TagFunc<T[K]>
 }
 
-export type DependencyBundle = {
-    _getters: Set<State<any>>
-    _setters: Set<State<any>>
+export interface DependencyBundle {
+	_getters: Set<State<any>>
+	_setters: Set<State<any>>
 }
 
-export type Binding<T = any> = {
-    func: (dom: ChildNode) => Optional<T>
-    state: State<T> | undefined
-    _dom: Optional<{ isConnected: boolean }>
+export interface Binding<T = any> {
+	func: (dom: ChildNode) => Optional<T>
+	state: State<T> | undefined
+	_dom: Optional<{ isConnected: boolean }>
 }
 
 export type ConnectedBinding<T = any> = Binding<T> & {
-    _dom: { isConnected: boolean }
+	_dom: { isConnected: boolean }
 }

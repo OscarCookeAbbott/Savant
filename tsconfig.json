@@ -1,33 +1,33 @@
 {
-    "compilerOptions": {
-        "target": "ES2020",
-        "useDefineForClassFields": true,
-        "module": "ESNext",
-        "lib": ["ES2020", "DOM", "DOM.Iterable"],
-        "skipLibCheck": true,
+	"compilerOptions": {
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"skipLibCheck": true,
 
-        /* Bundler mode */
-        "moduleResolution": "bundler",
-        "isolatedModules": true,
-        "moduleDetection": "force",
-        "declaration": true,
-        "emitDeclarationOnly": false,
-        "outDir": "dist",
-        "noEmit": false,
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"declaration": true,
+		"emitDeclarationOnly": false,
+		"outDir": "dist",
+		"noEmit": false,
 
-        /* Linting */
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": true,
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true,
 
-        "baseUrl": ".",
-        "paths": {
-            "@savant/core": ["packages/core/src"],
-            "@savant/routing": ["packages/routing/src"],
-            "@savant/ui": ["packages/ui/src"]
-        },
-        "types": ["vite/client"]
-    },
+		"baseUrl": ".",
+		"paths": {
+			"@savant/core": ["packages/core/src"],
+			"@savant/routing": ["packages/routing/src"],
+			"@savant/ui": ["packages/ui/src"]
+		},
+		"types": ["vite/client"]
+	}
 }

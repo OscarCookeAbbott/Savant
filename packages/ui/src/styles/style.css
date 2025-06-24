@@ -1,298 +1,298 @@
 @import "tailwindcss";
 
 @theme {
-    --color-surface: var(--color-zinc-500);
-    --color-surface-50: var(--color-zinc-50);
-    --color-surface-100: var(--color-zinc-100);
-    --color-surface-200: var(--color-zinc-200);
-    --color-surface-300: var(--color-zinc-300);
-    --color-surface-400: var(--color-zinc-400);
-    --color-surface-500: var(--color-zinc-500);
-    --color-surface-600: var(--color-zinc-600);
-    --color-surface-700: var(--color-zinc-700);
-    --color-surface-800: var(--color-zinc-800);
-    --color-surface-900: var(--color-zinc-900);
-    --color-surface-950: var(--color-zinc-950);
+	--color-surface: var(--color-zinc-500);
+	--color-surface-50: var(--color-zinc-50);
+	--color-surface-100: var(--color-zinc-100);
+	--color-surface-200: var(--color-zinc-200);
+	--color-surface-300: var(--color-zinc-300);
+	--color-surface-400: var(--color-zinc-400);
+	--color-surface-500: var(--color-zinc-500);
+	--color-surface-600: var(--color-zinc-600);
+	--color-surface-700: var(--color-zinc-700);
+	--color-surface-800: var(--color-zinc-800);
+	--color-surface-900: var(--color-zinc-900);
+	--color-surface-950: var(--color-zinc-950);
 
-    --color-foreground: var(--color-neutral-500);
-    --color-foreground-50: var(--color-neutral-50);
-    --color-foreground-100: var(--color-neutral-100);
-    --color-foreground-200: var(--color-neutral-200);
-    --color-foreground-300: var(--color-neutral-300);
-    --color-foreground-400: var(--color-neutral-400);
-    --color-foreground-500: var(--color-neutral-500);
-    --color-foreground-600: var(--color-neutral-600);
-    --color-foreground-700: var(--color-neutral-700);
-    --color-foreground-800: var(--color-neutral-800);
-    --color-foreground-900: var(--color-neutral-900);
-    --color-foreground-950: var(--color-neutral-950);
+	--color-foreground: var(--color-neutral-500);
+	--color-foreground-50: var(--color-neutral-50);
+	--color-foreground-100: var(--color-neutral-100);
+	--color-foreground-200: var(--color-neutral-200);
+	--color-foreground-300: var(--color-neutral-300);
+	--color-foreground-400: var(--color-neutral-400);
+	--color-foreground-500: var(--color-neutral-500);
+	--color-foreground-600: var(--color-neutral-600);
+	--color-foreground-700: var(--color-neutral-700);
+	--color-foreground-800: var(--color-neutral-800);
+	--color-foreground-900: var(--color-neutral-900);
+	--color-foreground-950: var(--color-neutral-950);
 
-    --color-accent: var(--color-blue-500);
-    --color-accent-50: var(--color-blue-50);
-    --color-accent-100: var(--color-blue-100);
-    --color-accent-200: var(--color-blue-200);
-    --color-accent-300: var(--color-blue-300);
-    --color-accent-400: var(--color-blue-400);
-    --color-accent-500: var(--color-blue-500);
-    --color-accent-600: var(--color-blue-600);
-    --color-accent-700: var(--color-blue-700);
-    --color-accent-800: var(--color-blue-800);
-    --color-accent-900: var(--color-blue-900);
-    --color-accent-950: var(--color-blue-950);
+	--color-accent: var(--color-blue-500);
+	--color-accent-50: var(--color-blue-50);
+	--color-accent-100: var(--color-blue-100);
+	--color-accent-200: var(--color-blue-200);
+	--color-accent-300: var(--color-blue-300);
+	--color-accent-400: var(--color-blue-400);
+	--color-accent-500: var(--color-blue-500);
+	--color-accent-600: var(--color-blue-600);
+	--color-accent-700: var(--color-blue-700);
+	--color-accent-800: var(--color-blue-800);
+	--color-accent-900: var(--color-blue-900);
+	--color-accent-950: var(--color-blue-950);
 
-    --color-info: var(--color-sky-500);
-    --color-info-50: var(--color-sky-50);
-    --color-info-100: var(--color-sky-100);
-    --color-info-200: var(--color-sky-200);
-    --color-info-300: var(--color-sky-300);
-    --color-info-400: var(--color-sky-400);
-    --color-info-500: var(--color-sky-500);
-    --color-info-600: var(--color-sky-600);
-    --color-info-700: var(--color-sky-700);
-    --color-info-800: var(--color-sky-800);
-    --color-info-900: var(--color-sky-900);
-    --color-info-950: var(--color-sky-950);
+	--color-info: var(--color-sky-500);
+	--color-info-50: var(--color-sky-50);
+	--color-info-100: var(--color-sky-100);
+	--color-info-200: var(--color-sky-200);
+	--color-info-300: var(--color-sky-300);
+	--color-info-400: var(--color-sky-400);
+	--color-info-500: var(--color-sky-500);
+	--color-info-600: var(--color-sky-600);
+	--color-info-700: var(--color-sky-700);
+	--color-info-800: var(--color-sky-800);
+	--color-info-900: var(--color-sky-900);
+	--color-info-950: var(--color-sky-950);
 
-    --color-success: var(--color-green-500);
-    --color-success-50: var(--color-green-50);
-    --color-success-100: var(--color-green-100);
-    --color-success-200: var(--color-green-200);
-    --color-success-300: var(--color-green-300);
-    --color-success-400: var(--color-green-400);
-    --color-success-500: var(--color-green-500);
-    --color-success-600: var(--color-green-600);
-    --color-success-700: var(--color-green-700);
-    --color-success-800: var(--color-green-800);
-    --color-success-900: var(--color-green-900);
-    --color-success-950: var(--color-green-950);
+	--color-success: var(--color-green-500);
+	--color-success-50: var(--color-green-50);
+	--color-success-100: var(--color-green-100);
+	--color-success-200: var(--color-green-200);
+	--color-success-300: var(--color-green-300);
+	--color-success-400: var(--color-green-400);
+	--color-success-500: var(--color-green-500);
+	--color-success-600: var(--color-green-600);
+	--color-success-700: var(--color-green-700);
+	--color-success-800: var(--color-green-800);
+	--color-success-900: var(--color-green-900);
+	--color-success-950: var(--color-green-950);
 
-    --color-warning: var(--color-orange-500);
-    --color-warning-50: var(--color-orange-50);
-    --color-warning-100: var(--color-orange-100);
-    --color-warning-200: var(--color-orange-200);
-    --color-warning-300: var(--color-orange-300);
-    --color-warning-400: var(--color-orange-400);
-    --color-warning-500: var(--color-orange-500);
-    --color-warning-600: var(--color-orange-600);
-    --color-warning-700: var(--color-orange-700);
-    --color-warning-800: var(--color-orange-800);
-    --color-warning-900: var(--color-orange-900);
-    --color-warning-950: var(--color-orange-950);
+	--color-warning: var(--color-orange-500);
+	--color-warning-50: var(--color-orange-50);
+	--color-warning-100: var(--color-orange-100);
+	--color-warning-200: var(--color-orange-200);
+	--color-warning-300: var(--color-orange-300);
+	--color-warning-400: var(--color-orange-400);
+	--color-warning-500: var(--color-orange-500);
+	--color-warning-600: var(--color-orange-600);
+	--color-warning-700: var(--color-orange-700);
+	--color-warning-800: var(--color-orange-800);
+	--color-warning-900: var(--color-orange-900);
+	--color-warning-950: var(--color-orange-950);
 
-    --color-critical: var(--color-red-500);
-    --color-critical-50: var(--color-red-50);
-    --color-critical-100: var(--color-red-100);
-    --color-critical-200: var(--color-red-200);
-    --color-critical-300: var(--color-red-300);
-    --color-critical-400: var(--color-red-400);
-    --color-critical-500: var(--color-red-500);
-    --color-critical-600: var(--color-red-600);
-    --color-critical-700: var(--color-red-700);
-    --color-critical-800: var(--color-red-800);
-    --color-critical-900: var(--color-red-900);
-    --color-critical-950: var(--color-red-950);
+	--color-critical: var(--color-red-500);
+	--color-critical-50: var(--color-red-50);
+	--color-critical-100: var(--color-red-100);
+	--color-critical-200: var(--color-red-200);
+	--color-critical-300: var(--color-red-300);
+	--color-critical-400: var(--color-red-400);
+	--color-critical-500: var(--color-red-500);
+	--color-critical-600: var(--color-red-600);
+	--color-critical-700: var(--color-red-700);
+	--color-critical-800: var(--color-red-800);
+	--color-critical-900: var(--color-red-900);
+	--color-critical-950: var(--color-red-950);
 
-    --color-mood: var(--color-surface);
-    --color-mood-50: var(--color-surface-50);
-    --color-mood-100: var(--color-surface-100);
-    --color-mood-200: var(--color-surface-200);
-    --color-mood-300: var(--color-surface-300);
-    --color-mood-400: var(--color-surface-400);
-    --color-mood-500: var(--color-surface-500);
-    --color-mood-600: var(--color-surface-600);
-    --color-mood-700: var(--color-surface-700);
-    --color-mood-800: var(--color-surface-800);
-    --color-mood-900: var(--color-surface-900);
-    --color-mood-950: var(--color-surface-950);
+	--color-mood: var(--color-surface);
+	--color-mood-50: var(--color-surface-50);
+	--color-mood-100: var(--color-surface-100);
+	--color-mood-200: var(--color-surface-200);
+	--color-mood-300: var(--color-surface-300);
+	--color-mood-400: var(--color-surface-400);
+	--color-mood-500: var(--color-surface-500);
+	--color-mood-600: var(--color-surface-600);
+	--color-mood-700: var(--color-surface-700);
+	--color-mood-800: var(--color-surface-800);
+	--color-mood-900: var(--color-surface-900);
+	--color-mood-950: var(--color-surface-950);
 }
 
 @layer base {
-    * {
-        @apply selection:!bg-surface-500/50 appearance-none outline-transparent;
-    }
+	* {
+		@apply selection:!bg-surface-500/50 appearance-none outline-transparent;
+	}
 
-    :root {
-        @apply bg-background text-swatch-900-foreground overflow-y-auto overscroll-none;
-    }
+	:root {
+		@apply bg-background text-swatch-900-foreground overflow-y-auto overscroll-none;
+	}
 }
 
 @layer components {
-    i {
-        font-family: "Material Symbols Outlined";
-        font-style: normal;
-        letter-spacing: normal;
-        text-transform: none;
+	i {
+		font-family: "Material Symbols Outlined";
+		font-style: normal;
+		letter-spacing: normal;
+		text-transform: none;
 
-        @apply inline-block align-bottom font-normal whitespace-nowrap select-none;
+		@apply inline-block select-none whitespace-nowrap align-bottom font-normal;
 
-        word-wrap: normal;
-        direction: ltr;
-        line-height: inherit;
-        text-orientation: upright;
-        font-feature-settings: "liga";
-        -moz-font-feature-settings: "liga";
-        -moz-osx-font-smoothing: neutralscale;
-    }
+		word-wrap: normal;
+		direction: ltr;
+		line-height: inherit;
+		text-orientation: upright;
+		font-feature-settings: "liga";
+		-moz-font-feature-settings: "liga";
+		-moz-osx-font-smoothing: neutralscale;
+	}
 
-    .icon {
-        font-family: "Material Symbols Outlined";
-        font-style: normal;
-        letter-spacing: normal;
-        text-transform: none;
+	.icon {
+		font-family: "Material Symbols Outlined";
+		font-style: normal;
+		letter-spacing: normal;
+		text-transform: none;
 
-        @apply inline-block align-bottom font-normal whitespace-nowrap select-none;
+		@apply inline-block select-none whitespace-nowrap align-bottom font-normal;
 
-        word-wrap: normal;
-        direction: ltr;
-        line-height: inherit;
-        text-orientation: upright;
-        font-feature-settings: "liga";
-        -moz-font-feature-settings: "liga";
-        -moz-osx-font-smoothing: neutralscale;
-    }
+		word-wrap: normal;
+		direction: ltr;
+		line-height: inherit;
+		text-orientation: upright;
+		font-feature-settings: "liga";
+		-moz-font-feature-settings: "liga";
+		-moz-osx-font-smoothing: neutralscale;
+	}
 
-    h1,
-    .h1 {
-        @apply mb-4 text-3xl font-bold mt-12 first:mt-0;
-    }
+	h1,
+	.h1 {
+		@apply mb-4 mt-12 text-3xl font-bold first:mt-0;
+	}
 
-    h2,
-    .h2 {
-        @apply mb-2 text-xl font-semibold mt-8 [h2_+_&]:mt-4 first:mt-0;
-    }
+	h2,
+	.h2 {
+		@apply mb-2 mt-8 text-xl font-semibold first:mt-0 [h2_+_&]:mt-4;
+	}
 
-    h3,
-    .h3 {
-        @apply text-lg font-semibold mt-8 [h2_+_&]:mt-4 first:mt-0;
-    }
+	h3,
+	.h3 {
+		@apply mt-8 text-lg font-semibold first:mt-0 [h2_+_&]:mt-4;
+	}
 
-    h4,
-    .h4 {
-        @apply  mt-8 [h2_+_&]:mt-4 first:mt-0;
-    }
+	h4,
+	.h4 {
+		@apply mt-8 first:mt-0 [h2_+_&]:mt-4;
+	}
 
-    h5,
-    .h5 {
-        @apply text-sm uppercase mt-8 [h2_+_&]:mt-4 first:mt-0;
-    }
+	h5,
+	.h5 {
+		@apply mt-8 text-sm uppercase first:mt-0 [h2_+_&]:mt-4;
+	}
 
-    p,
-    .p {
-        @apply not-first:mt-4 text-swatch-700-mood;
-    }
+	p,
+	.p {
+		@apply not-first:mt-4 text-swatch-700-mood;
+	}
 
-    blockquote,
-    .blockquote {
-        @apply border-mood-500 bg-mood-500/10 text-swatch-700-mood border-l pl-2 italic not-first:mt-4;
-    }
+	blockquote,
+	.blockquote {
+		@apply border-mood-500 bg-mood-500/10 text-swatch-700-mood not-first:mt-4 border-l pl-2 italic;
+	}
 
-    pre[class*="language-"] {
-        @apply not-first:mt-4;
-    }
+	pre[class*="language-"] {
+		@apply not-first:mt-4;
+	}
 
-    .badge {
-        @apply control rounded text-mood-700 dark:text-mood-200 text-xs;
-    }
+	.badge {
+		@apply control text-mood-700 dark:text-mood-200 rounded text-xs;
+	}
 
-    .button {
-        @apply control focus-visible:focus-ring disabled:text-swatch-700-foreground flex cursor-pointer items-center justify-center gap-1 outline-0 not-disabled:hover:brightness-110 not-disabled:active:brightness-95 disabled:cursor-not-allowed;
+	.button {
+		@apply control focus-visible:focus-ring disabled:text-swatch-700-foreground not-disabled:hover:brightness-110 not-disabled:active:brightness-95 flex cursor-pointer items-center justify-center gap-1 outline-0 disabled:cursor-not-allowed;
 
-        &.icon {
-            @apply aspect-square;
-        }
-    }
+		&.icon {
+			@apply aspect-square;
+		}
+	}
 
-    .input {
-        @apply min-w-12 outline-0;
-    }
+	.input {
+		@apply min-w-12 outline-0;
+	}
 
-    .control-container {
-        @apply flex overflow-hidden rounded-lg !p-0 *:px-2 *:py-1 *:not-first:!rounded-l-none *:not-last:!rounded-r-none;
-    }
+	.control-container {
+		@apply *:not-first:!rounded-l-none *:not-last:!rounded-r-none flex overflow-hidden rounded-lg !p-0 *:px-2 *:py-1;
+	}
 
-    .container-separator {
-        @apply bg-surface-500 w-[1px] !p-0;
-    }
+	.container-separator {
+		@apply bg-surface-500 w-[1px] !p-0;
+	}
 
-    .card {
-        @apply bg-background-50 ring-surface-500/50 ring ring-inset;
-    }
+	.card {
+		@apply bg-background-50 ring-surface-500/50 ring ring-inset;
+	}
 
-    .anchor {
-        @apply text-accent-500 visited:text-purple-500 hover:underline not-disabled:hover:brightness-110 not-disabled:active:brightness-95;
-    }
+	.anchor {
+		@apply text-accent-500 not-disabled:hover:brightness-110 not-disabled:active:brightness-95 visited:text-purple-500 hover:underline;
+	}
 
-    .vessel {
-        @apply rounded-lg p-4;
-    }
+	.vessel {
+		@apply rounded-lg p-4;
+	}
 
-    .control-container {
-        @apply flex *:not-first:!rounded-l-none *:not-last:!rounded-r-none;
-    }
+	.control-container {
+		@apply *:not-first:!rounded-l-none *:not-last:!rounded-r-none flex;
+	}
 }
 
 @utility mood-* {
-    --color-mood: var(--color-*);
-    --color-mood-50: --value(--color-*-50);
-    --color-mood-100: --value(--color-*-100);
-    --color-mood-200: --value(--color-*-200);
-    --color-mood-300: --value(--color-*-300);
-    --color-mood-400: --value(--color-*-400);
-    --color-mood-500: --value(--color-*-500);
-    --color-mood-600: --value(--color-*-600);
-    --color-mood-700: --value(--color-*-700);
-    --color-mood-800: --value(--color-*-800);
-    --color-mood-900: --value(--color-*-900);
-    --color-mood-950: --value(--color-*-950);
+	--color-mood: var(--color-*);
+	--color-mood-50: --value(--color-* -50);
+	--color-mood-100: --value(--color-* -100);
+	--color-mood-200: --value(--color-* -200);
+	--color-mood-300: --value(--color-* -300);
+	--color-mood-400: --value(--color-* -400);
+	--color-mood-500: --value(--color-* -500);
+	--color-mood-600: --value(--color-* -600);
+	--color-mood-700: --value(--color-* -700);
+	--color-mood-800: --value(--color-* -800);
+	--color-mood-900: --value(--color-* -900);
+	--color-mood-950: --value(--color-* -950);
 }
 
 /* VARIANTS */
 @utility control {
-    @apply rounded-lg px-2 py-1 ring-inset;
+	@apply rounded-lg px-2 py-1 ring-inset;
 }
 
 @utility control-sm {
-    @apply rounded px-1 py-0.5 ring-inset;
+	@apply rounded px-1 py-0.5 ring-inset;
 }
 
 @utility variant-outline {
-    @apply ring-mood-500/50 ring;
+	@apply ring-mood-500/50 ring;
 }
 
 @utility variant-soft {
-    @apply bg-mood-500/10;
+	@apply bg-mood-500/10;
 }
 
 @utility variant-soft-outline {
-    @apply variant-soft variant-outline;
+	@apply variant-soft variant-outline;
 }
 
 @utility variant-filled {
-    @apply bg-mood-500 text-swatch-100-foreground;
+	@apply bg-mood-500 text-swatch-100-foreground;
 }
 
 @utility glass {
-    @apply backdrop-blur-lg;
+	@apply backdrop-blur-lg;
 }
 
 @utility raised {
-    @apply not-disabled:scale-105 not-disabled:shadow;
+	@apply not-disabled:scale-105 not-disabled:shadow;
 }
 
 @utility lowered {
-    @apply not-disabled:scale-95 not-disabled:shadow-none not-disabled:inset-shadow-sm not-disabled:brightness-95;
+	@apply not-disabled:scale-95 not-disabled:shadow-none not-disabled:inset-shadow-sm not-disabled:brightness-95;
 }
 
 @utility focus-ring {
-    @apply outline-2 outline-offset-2 outline-fuchsia-500;
+	@apply outline-2 outline-offset-2 outline-fuchsia-500;
 }
 
 @utility text-mini {
-    @apply text-sm font-bold;
+	@apply text-sm font-bold;
 }
 
 @utility text-micro {
-    @apply text-xs font-bold;
+	@apply text-xs font-bold;
 }
 
 /* FOREGROUND */
@@ -300,327 +300,491 @@
 /* Tailwind doesn't support arguments being anywhere but the end of the class name, so we need to order the shade number weirdly. */
 
 @utility text-swatch-50-* {
-    color: --value(--color-*-50);
-    color: color-mix(in oklab, --value(--color-*-50) --modifier(integer)%, transparent);
+	color: --value(--color-* -50);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -50) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-950);
-        color: color-mix(in oklab, --value(--color-*-950) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -950);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -950) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-100-* {
-    color: --value(--color-*-100);
-    color: color-mix(in oklab, --value(--color-*-100) --modifier(integer)%, transparent);
+	color: --value(--color-* -100);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -100) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-900);
-        color: color-mix(in oklab, --value(--color-*-900) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -900);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -900) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-200-* {
-    color: --value(--color-*-200);
-    color: color-mix(in oklab, --value(--color-*-200) --modifier(integer)%, transparent);
+	color: --value(--color-* -200);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -200) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-800);
-        color: color-mix(in oklab, --value(--color-*-800) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -800);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -800) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-300-* {
-    color: --value(--color-*-300);
-    color: color-mix(in oklab, --value(--color-*-300) --modifier(integer)%, transparent);
+	color: --value(--color-* -300);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -300) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-700);
-        color: color-mix(in oklab, --value(--color-*-700) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -700);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -700) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-400-* {
-    color: --value(--color-*-400);
-    color: color-mix(in oklab, --value(--color-*-400) --modifier(integer)%, transparent);
+	color: --value(--color-* -400);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -400) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-600);
-        color: color-mix(in oklab, --value(--color-*-600) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -600);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -600) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-500-* {
-    @apply text-[--value(--color-*-500)];
+	@apply text-[--value(--color-*-500)];
 }
 
 @utility text-swatch-600-* {
-    color: --value(--color-*-600);
-    color: color-mix(in oklab, --value(--color-*-600) --modifier(integer)%, transparent);
+	color: --value(--color-* -600);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -600) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-400);
-        color: color-mix(in oklab, --value(--color-*-400) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -400);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -400) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-700-* {
-    color: --value(--color-*-700);
-    color: color-mix(in oklab, --value(--color-*-700) --modifier(integer)%, transparent);
+	color: --value(--color-* -700);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -700) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-300);
-        color: color-mix(in oklab, --value(--color-*-300) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -300);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -300) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-800-* {
-    color: --value(--color-*-800);
-    color: color-mix(in oklab, --value(--color-*-800) --modifier(integer)%, transparent);
+	color: --value(--color-* -800);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -800) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-200);
-        color: color-mix(in oklab, --value(--color-*-200) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -200);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -200) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-900-* {
-    color: --value(--color-*-900);
-    color: color-mix(in oklab, --value(--color-*-900) --modifier(integer)%, transparent);
+	color: --value(--color-* -900);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -900) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-100);
-        color: color-mix(in oklab, --value(--color-*-100) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -100);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -100) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility text-swatch-950-* {
-    color: --value(--color-*-950);
-    color: color-mix(in oklab, --value(--color-*-950) --modifier(integer)%, transparent);
+	color: --value(--color-* -950);
+	color: color-mix(
+		in oklab,
+		--value(--color-* -950) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        color: --value(--color-*-50);
-        color: color-mix(in oklab, --value(--color-*-50) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		color: --value(--color- * -50);
+		color: color-mix(
+			in oklab,
+			--value(--color- * -50) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 /* BACKGROUND */
 @utility bg-background {
-    background: white;
+	background: white;
 
-    @variant dark {
-        background: var(--color-surface-950);
-    }
+	@variant dark {
+		background: var(--color-surface-950);
+	}
 }
 
 @utility bg-background-* {
-    background: white;
-    background: color-mix(in oklab, white --value(integer)%, transparent);
+	background: white;
+	background: color-mix(in oklab, white --value(integer) %, transparent);
 
-    @variant dark {
-        background: var(--color-surface-950);
-        background: color-mix(in oklab, var(--color-surface-950) --value(integer)%, transparent);
-    }
+	@variant dark {
+		background: var(--color-surface-950);
+		background: color-mix(
+			in oklab,
+			var(--color-surface-950) --value(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-50-* {
-    background: --value(--color-*-50);
-    background: color-mix(in oklab, --value(--color-*-50) --modifier(integer)%, transparent);
+	background: --value(--color-* -50);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -50) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-950);
-        background: color-mix(in oklab, --value(--color-*-950) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -950);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -950) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-100-* {
-    background: --value(--color-*-100);
-    background: color-mix(in oklab, --value(--color-*-100) --modifier(integer)%, transparent);
+	background: --value(--color-* -100);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -100) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-900);
-        background: color-mix(in oklab, --value(--color-*-900) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -900);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -900) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-200-* {
-    background: --value(--color-*-200);
-    background: color-mix(in oklab, --value(--color-*-200) --modifier(integer)%, transparent);
+	background: --value(--color-* -200);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -200) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-800);
-        background: color-mix(in oklab, --value(--color-*-800) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -800);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -800) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-300-* {
-    background: --value(--color-*-300);
-    background: color-mix(in oklab, --value(--color-*-300) --modifier(integer)%, transparent);
+	background: --value(--color-* -300);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -300) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-700);
-        background: color-mix(in oklab, --value(--color-*-700) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -700);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -700) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-400-* {
-    background: --value(--color-*-400);
-    background: color-mix(in oklab, --value(--color-*-400) --modifier(integer)%, transparent);
+	background: --value(--color-* -400);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -400) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-600);
-        background: color-mix(in oklab, --value(--color-*-600) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -600);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -600) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-500-* {
-    @apply bg-[color-mix(in_oklab,_--value(--color-*-500)_--modifier(integer)%,_transparent)];
+	@apply bg-[color-mix(in_oklab,_--value(--color-*-500)_--modifier(integer)%,_transparent)];
 }
 
 @utility bg-swatch-600-* {
-    background: --value(--color-*-600);
-    background: color-mix(in oklab, --value(--color-*-600) --modifier(integer)%, transparent);
+	background: --value(--color-* -600);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -600) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-400);
-        background: color-mix(in oklab, --value(--color-*-400) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -400);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -400) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-700-* {
-    background: --value(--color-*-700);
-    background: color-mix(in oklab, --value(--color-*-700) --modifier(integer)%, transparent);
+	background: --value(--color-* -700);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -700) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-300);
-        background: color-mix(in oklab, --value(--color-*-300) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -300);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -300) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-800-* {
-    background: --value(--color-*-800);
-    background: color-mix(in oklab, --value(--color-*-800) --modifier(integer)%, transparent);
+	background: --value(--color-* -800);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -800) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-200);
-        background: color-mix(in oklab, --value(--color-*-200) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -200);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -200) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-900-* {
-    background: --value(--color-*-900);
-    background: color-mix(in oklab, --value(--color-*-900) --modifier(integer)%, transparent);
+	background: --value(--color-* -900);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -900) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-100);
-        background: color-mix(in oklab, --value(--color-*-100) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -100);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -100) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 @utility bg-swatch-950-* {
-    background: --value(--color-*-950);
-    background: color-mix(in oklab, --value(--color-*-950) --modifier(integer)%, transparent);
+	background: --value(--color-* -950);
+	background: color-mix(
+		in oklab,
+		--value(--color-* -950) --modifier(integer) %,
+		transparent
+	);
 
-    @variant dark {
-        background: --value(--color-*-50);
-        background: color-mix(in oklab, --value(--color-*-50) --modifier(integer)%, transparent);
-    }
+	@variant dark {
+		background: --value(--color- * -50);
+		background: color-mix(
+			in oklab,
+			--value(--color- * -50) --modifier(integer) %,
+			transparent
+		);
+	}
 }
 
 /* ZEBRA */
 @utility bg-zebra {
-    @apply zebra;
+	@apply zebra;
 
-    background-image: var(--zebra);
+	background-image: var(--zebra);
 
-    background-attachment: fixed;
+	background-attachment: fixed;
 }
 
 @utility zebra {
-    --zebra-color-from: color-mix(
-        in oklab,
-        var(--color-surface-500) var(--zebra-opacity),
-        transparent
-    );
-    --zebra-color-to: transparent;
+	--zebra-color-from: color-mix(
+		in oklab,
+		var(--color-surface-500) var(--zebra-opacity),
+		transparent
+	);
+	--zebra-color-to: transparent;
 
-    --zebra-width-from: 0.5rem;
-    --zebra-width-to: 0.5rem;
+	--zebra-width-from: 0.5rem;
+	--zebra-width-to: 0.5rem;
 
-    --zebra-angle: -45deg;
-    --zebra-opacity: 100%;
+	--zebra-angle: -45deg;
+	--zebra-opacity: 100%;
 
-    --zebra-speed: 0;
+	--zebra-speed: 0;
 
-    --zebra: repeating-linear-gradient(
-        var(--zebra-angle),
-        var(--zebra-color-from),
-        var(--zebra-color-from) var(--zebra-width-from),
-        var(--zebra-color-to) var(--zebra-width-from),
-        var(--zebra-color-to)
-            calc(var(--zebra-width-from) + var(--zebra-width-to))
-    );
+	--zebra: repeating-linear-gradient(
+		var(--zebra-angle),
+		var(--zebra-color-from),
+		var(--zebra-color-from) var(--zebra-width-from),
+		var(--zebra-color-to) var(--zebra-width-from),
+		var(--zebra-color-to)
+			calc(var(--zebra-width-from) + var(--zebra-width-to))
+	);
 
-    animation: ZebraSlide calc(1s / var(--zebra-speed)) linear infinite;
+	animation: ZebraSlide calc(1s / var(--zebra-speed)) linear infinite;
 }
 
 @keyframes ZebraSlide {
-    100% {
-        background-position: calc(
-                (var(--zebra-width-from) + var(--zebra-width-from)) *
-                    cos(calc(var(--zebra-angle) + 90deg))
-            )
-            calc(
-                (var(--zebra-width-from) + var(--zebra-width-from)) *
-                    sin(calc(var(--zebra-angle) + 90deg))
-            );
-    }
+	100% {
+		background-position: calc(
+				(var(--zebra-width-from) + var(--zebra-width-from)) *
+					cos(calc(var(--zebra-angle) + 90deg))
+			)
+			calc(
+				(var(--zebra-width-from) + var(--zebra-width-from)) *
+					sin(calc(var(--zebra-angle) + 90deg))
+			);
+	}
 }
 
 @utility zebra-from-* {
-    --zebra-color-from: color-mix(
-        in oklab,
-        --value(--color- *) var(--zebra-opacity),
-        transparent
-    );
+	--zebra-color-from: color-mix(
+		in oklab,
+		--value(--color-*) var(--zebra-opacity),
+		transparent
+	);
 }
 
 @utility zebra-to-* {
-    --zebra-color-to: color-mix(
-        in oklab,
-        --value(--color- *) var(--zebra-opacity),
-        transparent
-    );
+	--zebra-color-to: color-mix(
+		in oklab,
+		--value(--color-*) var(--zebra-opacity),
+		transparent
+	);
 }
 
 @utility zebra-width-* {
-    --zebra-width-from: --value([ *]);
-    --zebra-width-to: --value([ *]);
+	--zebra-width-from: --value([*]);
+	--zebra-width-to: --value([*]);
 
-    --zebra-width-from: calc(var(--spacing) * --value(integer));
-    --zebra-width-to: calc(var(--spacing) * --value(integer));
+	--zebra-width-from: calc(var(--spacing) * --value(integer));
+	--zebra-width-to: calc(var(--spacing) * --value(integer));
 }
 
 @utility zebra-from-width-* {
-    --zebra-width-from: --value([ *]);
+	--zebra-width-from: --value([*]);
 
-    --zebra-width-from: calc(var(--spacing) * --value(integer));
+	--zebra-width-from: calc(var(--spacing) * --value(integer));
 }
 
 @utility zebra-to-width-* {
-    --zebra-width-to: --value([ *]);
+	--zebra-width-to: --value([*]);
 
-    --zebra-width-to: calc(var(--spacing) * --value(integer));
+	--zebra-width-to: calc(var(--spacing) * --value(integer));
 }
 
 @utility zebra-angle-* {
-    --zebra-angle: --value([ *]);
+	--zebra-angle: --value([*]);
 }
 
 @utility zebra-opacity-* {
-    /* prettier-ignore */
-    --zebra-opacity: --value(integer)%;
+	/* prettier-ignore */
+	--zebra-opacity: --value(integer)%;
 }
 
 @utility zebra-speed-* {
-    --zebra-speed: --value(number);
+	--zebra-speed: --value(number);
 }

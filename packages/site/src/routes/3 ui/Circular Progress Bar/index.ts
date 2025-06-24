@@ -1,125 +1,126 @@
-import {
-    Label,
-    Select,
-    Code,
-    Input,
-    Checkbox,
-    CircularProgressBar,
-} from "@savant/ui"
 import { html, state } from "@savant/core"
+import {
+	Checkbox,
+	CircularProgressBar,
+	Code,
+	Input,
+	Label,
+	Select,
+} from "@savant/ui"
+
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-    const exampleVariant = state("variant-outline")
-    const exampleMood = state("mood-accent")
-    const exampleIndefinite = state(true)
-    const exampleProgress = state(50)
+	const exampleVariant = state("variant-outline")
+	const exampleMood = state("mood-accent")
+	const exampleIndefinite = state(true)
+	const exampleProgress = state(50)
 
-    return DocPage(
-        html.h1("Circular Progress Bar"),
+	return DocPage(
+		html.h1("Circular Progress Bar"),
 
-        html.blockquote("Displays the progress state of a lengthy process."),
+		html.blockquote("Displays the progress state of a lengthy process."),
 
-        html.h2("Design"),
+		html.h2("Design"),
 
-        html.p(
-            "Circular Progress Bars are used to compactly provide feedback to the user on the current progress state of a lengthy process.",
-        ),
+		html.p(
+			"Circular Progress Bars are used to compactly provide feedback to the user on the current progress state of a lengthy process.",
+		),
 
-        html.p(
-            "Circular Progress Bars default to matching the size of enclosing text flows, ensuring they fit seamlessly into layouts.",
-        ),
+		html.p(
+			"Circular Progress Bars default to matching the size of enclosing text flows, ensuring they fit seamlessly into layouts.",
+		),
 
-        html.p(
-            "Circular Progress Bars can be given children which will be displayed within the circle. Such children should be short, typically a percentage or number. Anything longer should be placed beneath the progress bar.",
-        ),
+		html.p(
+			"Circular Progress Bars can be given children which will be displayed within the circle. Such children should be short, typically a percentage or number. Anything longer should be placed beneath the progress bar.",
+		),
 
-        html.h2("Demo"),
+		html.h2("Demo"),
 
-        html.div(
-            {
-                name: "Demo",
-                class: "card vessel flex flex-col items-center gap-4",
-            },
+		html.div(
+			{
+				name: "Demo",
+				class: "card vessel flex flex-col items-center gap-4",
+			},
 
-            html.div(
-                { class: "p-8 h-48 flex items-center" },
+			html.div(
+				{ class: "p-8 h-48 flex items-center" },
 
-                CircularProgressBar(
-                    {
-                        progress: exampleProgress,
-                        indefinite: exampleIndefinite,
-                        class: () => `${exampleVariant.val} ${exampleMood.val}`,
-                    },
-                    "Loading...",
-                ),
-            ),
+				CircularProgressBar(
+					{
+						progress: exampleProgress,
+						indefinite: exampleIndefinite,
+						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+					},
+					"Loading...",
+				),
+			),
 
-            html.div(
-                { class: "flex flex-wrap gap-4 justify-center" },
+			html.div(
+				{ class: "flex flex-wrap gap-4 justify-center" },
 
-                Label(
-                    { content: "Variant", class: "items-center" },
+				Label(
+					{ content: "Variant", class: "items-center" },
 
-                    Select({
-                        options: [
-                            { value: "variant-outline" },
-                            { value: "variant-soft" },
-                            { value: "variant-soft-outline" },
-                            { value: "variant-filled" },
-                        ],
-                        value: exampleVariant,
-                        class: "variant-outline w-48",
-                    }),
-                ),
+					Select({
+						options: [
+							{ value: "variant-outline" },
+							{ value: "variant-soft" },
+							{ value: "variant-soft-outline" },
+							{ value: "variant-filled" },
+						],
+						value: exampleVariant,
+						class: "variant-outline w-48",
+					}),
+				),
 
-                Label(
-                    { content: "Mood", class: "items-center" },
+				Label(
+					{ content: "Mood", class: "items-center" },
 
-                    Select({
-                        options: [
-                            { value: "mood-none" },
-                            { value: "mood-accent" },
-                            { value: "mood-info" },
-                            { value: "mood-success" },
-                            { value: "mood-warning" },
-                            { value: "mood-critical" },
-                        ],
-                        value: exampleMood,
-                        class: "variant-outline w-48",
-                    }),
-                ),
+					Select({
+						options: [
+							{ value: "mood-none" },
+							{ value: "mood-accent" },
+							{ value: "mood-info" },
+							{ value: "mood-success" },
+							{ value: "mood-warning" },
+							{ value: "mood-critical" },
+						],
+						value: exampleMood,
+						class: "variant-outline w-48",
+					}),
+				),
 
-                Label(
-                    { content: "Progress", class: "items-center" },
+				Label(
+					{ content: "Progress", class: "items-center" },
 
-                    Input({
-                        value: exampleProgress,
-                        min: 0,
-                        max: 100,
-                        class: "variant-outline w-48",
-                    }),
-                ),
+					Input({
+						value: exampleProgress,
+						min: 0,
+						max: 100,
+						class: "variant-outline w-48",
+					}),
+				),
 
-                Label(
-                    { content: "Indefinite", class: "items-center" },
+				Label(
+					{ content: "Indefinite", class: "items-center" },
 
-                    Checkbox(
-                        {
-                            value: exampleIndefinite,
-                            class: "variant-outline w-48",
-                        },
-                        "Enabled",
-                    ),
-                ),
-            ),
-        ),
+					Checkbox(
+						{
+							value: exampleIndefinite,
+							class: "variant-outline w-48",
+						},
+						"Enabled",
+					),
+				),
+			),
+		),
 
-        () =>
-            Code(
-                { language: "ts" },
+		() =>
+			Code(
+				{ language: "ts" },
 
-                `\
+				`\
 import { CircularProgressBar } from "savant/ui"
 
 CircularProgressBar(
@@ -130,14 +131,14 @@ CircularProgressBar(
     },
     "Loading...",
 )`,
-            ),
+			),
 
-        html.h2("Signature"),
+		html.h2("Signature"),
 
-        Code(
-            { language: "ts" },
+		Code(
+			{ language: "ts" },
 
-            `\
+			`\
 function CircularProgressBar(
     {
         progress?: number = 50,
@@ -147,6 +148,6 @@ function CircularProgressBar(
     }: CircularProgressBarProps,
     ...children: ChildDom[]
 ): HTMLElement`,
-        ),
-    )
+		),
+	)
 }

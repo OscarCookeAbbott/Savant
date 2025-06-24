@@ -18,49 +18,49 @@ This flexible system allows loose and dynamic coupling which can be useful for a
 
 ```typescript
 function PaginationManager(
-    currentPage: State<number>,
-    ...children: ChildDom[]
+	currentPage: State<number>,
+	...children: ChildDom[]
 ) {
-    return html.div(
-        {
-            name: "Pagination Manager",
-            "context-paginationPage": state(0),
-            style: "display: contents;",
-        },
-        ...children,
-    )
+	return html.div(
+		{
+			name: "Pagination Manager",
+			"context-paginationPage": state(0),
+			style: "display: contents;",
+		},
+		...children,
+	)
 }
 
 function Page() {
-    return ContextProbe(
-        "paginationPage",
+	return ContextProbe(
+		"paginationPage",
 
-        (pageContext) => html.span("Current page: ", pageContext.val?.val),
-    )
+		(pageContext) => html.span("Current page: ", pageContext.val?.val),
+	)
 }
 
 function PaginationButton() {
-    return ContextProbe(
-        "paginationPage",
+	return ContextProbe(
+		"paginationPage",
 
-        (pageContext) =>
-            html.button(
-                { onclick: () => pageContext.val && pageContext.val.val++ },
-                "Next Page",
-            ),
-    )
+		(pageContext) =>
+			html.button(
+				{ onclick: () => pageContext.val && pageContext.val.val++ },
+				"Next Page",
+			),
+	)
 }
 
 function App() {
-    return html.div(
-        PaginationManager(
-            { currentPage: state(0) },
+	return html.div(
+		PaginationManager(
+			{ currentPage: state(0) },
 
-            Page(),
+			Page(),
 
-            html.footer(PaginationButton()),
-        ),
-    )
+			html.footer(PaginationButton()),
+		),
+	)
 }
 
 add(document.body, App())
@@ -71,17 +71,17 @@ add(document.body, App())
 ```typescript
 /** Sets context with the given key and value at the given DOM element. */
 function setContext<T>(
-    dom: HTMLElement,
-    key: ContextKey,
-    value: ContextValue<T>,
+	dom: HTMLElement,
+	key: ContextKey,
+	value: ContextValue<T>,
 ): void
 
 /** Retrieves context with the given key if it exists.
  * Naively coerces to the given type. Apply type validation if necessary.
  */
 function getContext<T>(
-    dom: HTMLElement,
-    key: ContextKey,
+	dom: HTMLElement,
+	key: ContextKey,
 ): ContextProviderValue<T>
 
 /** Removes context of the given key from the given DOM element, if it exists. */
@@ -96,7 +96,7 @@ type ContextKey = string
 type ContextValue<T> = State<T> | T
 
 type ContextProviderValue<T> = State<T | undefined> & {
-    triggerRecheck: State<number>
+	triggerRecheck: State<number>
 }
 type ContextProvider = Map<ContextKey, ContextProviderValue<any>>
 ```

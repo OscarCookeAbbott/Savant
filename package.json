@@ -1,22 +1,33 @@
 {
-    "private": true,
-    "name": "savant-monorepo",
-    "type": "module",
-    "version": "0.1.0",
-    "scripts": {
-        "dev": "cd packages/site && vite",
-        "build": "pnpm -r run build",
-        "build:core": "pnpm --filter @savant/core... build",
-        "build:routing": "pnpm --filter @savant/routing... build",
-        "build:ui": "pnpm --filter @savant/ui... build",
-        "build:site": "pnpm --filter @savant/site... build"
-    },
-    "devDependencies": {
-        "vite": "^6.3.5"
-    },
-    "dependencies": {
-        "@savant/core": "workspace:*",
-        "@savant/routing": "workspace:*",
-        "@savant/ui": "workspace:*"
-    }
+	"private": true,
+	"name": "savant-monorepo",
+	"type": "module",
+	"version": "0.1.0",
+	"scripts": {
+		"lint": "prettier --check . && eslint .",
+		"lint:fix": "prettier --write . && eslint . --fix",
+		"dev": "cd packages/site && vite",
+		"build": "pnpm -r run build",
+		"build:core": "pnpm --filter @savant/core... build",
+		"build:routing": "pnpm --filter @savant/routing... build",
+		"build:ui": "pnpm --filter @savant/ui... build",
+		"build:site": "pnpm --filter @savant/site... build"
+	},
+	"devDependencies": {
+		"vite": "^7.0.0"
+	},
+	"dependencies": {
+		"@eslint/js": "^9.29.0",
+		"@savant/core": "workspace:*",
+		"@savant/routing": "workspace:*",
+		"@savant/ui": "workspace:*",
+		"eslint": "^9.29.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-prettier": "^5.5.0",
+		"eslint-plugin-simple-import-sort": "^12.1.1",
+		"prettier": "^3.6.0",
+		"prettier-plugin-tailwindcss": "^0.6.13",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.35.0"
+	}
 }
