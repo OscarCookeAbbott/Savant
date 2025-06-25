@@ -17,6 +17,8 @@ type PopupProps = ElementProps & {
 	visible?: State<boolean>
 	direction?: PopupDirection
 	trigger?: PopupTrigger | PopupTrigger[]
+
+	onHide?: () => void
 }
 
 export const PopupDirection = {
@@ -56,6 +58,8 @@ export default function Popup(
 		visible = state(false),
 		direction = PopupDirection.BOTTOM,
 		trigger = PopupTrigger.CLICK,
+
+		onHide,
 
 		name,
 
@@ -164,8 +168,10 @@ export default function Popup(
 		)
 
 		// Hide popup after other click-triggered effects
-		const abortController = detectExternalClick(popup, () =>
-			delay().then(() => (visible.val = false)),
+		const abortController = detectExternalClick(
+			popup,
+			() => delay().then(() => (visible.val = false)),
+			target.parentElement ? [target.parentElement] : [],
 		)
 
 		add(container, anchor)
@@ -179,6 +185,8 @@ export default function Popup(
 		dom?.abortController.abort()
 
 		dom = undefined
+
+		onHide?.()
 	}
 
 	const setupTriggers = () => {

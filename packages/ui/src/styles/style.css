@@ -183,7 +183,7 @@
 
 	blockquote,
 	.blockquote {
-		@apply border-mood-500 bg-mood-500/10 text-swatch-700-mood not-first:mt-4 border-l pl-2 italic;
+		@apply border-mood-500 bg-mood-500/15 text-swatch-700-mood not-first:mt-4 border-l pl-2 italic;
 	}
 
 	pre[class*="language-"] {
@@ -260,7 +260,7 @@
 }
 
 @utility variant-soft {
-	@apply bg-mood-500/10;
+	@apply bg-mood-500/15;
 }
 
 @utility variant-soft-outline {

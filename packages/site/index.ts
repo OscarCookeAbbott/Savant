@@ -92,7 +92,7 @@ function App() {
 			class: "flex flex-col relative size-full",
 		},
 
-		Header(),
+		Header({ searchLinks: routes }),
 
 		html.div(
 			{ class: "flex flex-1" },

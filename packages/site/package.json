@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@savant/core": "workspace:*",
 		"@savant/routing": "workspace:*",
-		"@savant/ui": "workspace:*"
+		"@savant/ui": "workspace:*",
+		"fast-fuzzy": "^1.12.0"
 	}
 }

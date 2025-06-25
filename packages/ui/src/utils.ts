@@ -25,6 +25,7 @@ export function arrayToggleItem<T>(array: T[], item: T): T[] {
 export function detectExternalClick(
 	target: HTMLElement,
 	callback: (event: MouseEvent) => void,
+	whitelist: HTMLElement[] = [],
 ): AbortController {
 	const abortController = new AbortController()
 
@@ -33,10 +34,15 @@ export function detectExternalClick(
 		(event) => {
 			if (!(event.target instanceof Node)) return
 
-			if (target.contains(event.target)) return
+			const targetNode = event.target as Node
+
+			if (target.contains(targetNode)) return
+
+			if (whitelist.some((element) => element.contains(targetNode)))
+				return
 
 			// Ignore DOM-detached targets (due to coincidental Svelte reactivity)
-			if (!document.contains(event.target)) return
+			if (!document.contains(targetNode)) return
 
 			callback(event)
 		},

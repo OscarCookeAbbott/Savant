@@ -8,22 +8,21 @@ Using nothing but standard JS/TS functions and any existing tooling, _anybody_ c
 
 Inspired by the incredible [VanJS](https://vanjs.org).
 
-## Counter Example
+## Example - Counter
 
 ```typescript
-// Counter.ts
 import { add, html, state } from "@savant/core"
 import { Router } from "@savant/routing"
 
 function Counter() {
-	const value = state(0)
+	const count = state(0)
 
 	return html.div(
-		"Counter: ",
-		value,
+		"Count: ",
+		count,
 		" ",
-		html.button({ onclick: () => ++value.val }, "👍"),
-		html.button({ onclick: () => --value.val }, "👎"),
+		html.button({ onclick: () => ++value.val }, "+"),
+		html.button({ onclick: () => --value.val }, "-"),
 	)
 }
 

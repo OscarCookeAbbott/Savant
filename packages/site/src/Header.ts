@@ -1,9 +1,15 @@
 import { html, svg } from "@savant/core"
+import { Route } from "@savant/routing"
 import { Badge, Tooltip } from "@savant/ui"
 
 import logo from "../../../logo.svg"
+import SiteSearch from "./SiteSearch"
 
-export default function Header(): HTMLElement {
+interface HeaderProps {
+	searchLinks: (Route & { name: string })[]
+}
+
+export default function Header({ searchLinks }: HeaderProps): HTMLElement {
 	const headerSectionClasses = "flex gap-4 items-center"
 
 	return html.header(
@@ -39,6 +45,8 @@ export default function Header(): HTMLElement {
 
 		html["right-content"](
 			{ class: headerSectionClasses },
+
+			SiteSearch(searchLinks),
 
 			html.a(
 				{

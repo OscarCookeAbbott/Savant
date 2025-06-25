@@ -13,6 +13,8 @@ type InputProps<T extends string | number> = ElementProps & {
 	lead?: ChildDom
 	trail?: ChildDom
 
+	inputProps?: ElementProps<HTMLInputElement>
+
 	onValueChanged?: (value: T | undefined) => void
 	onValidityChanged?: (valid: boolean) => void
 }
@@ -27,6 +29,8 @@ export default function Input<T extends string | number>(
 
 		lead,
 		trail,
+
+		inputProps,
 
 		onValueChanged,
 		onValidityChanged,
@@ -52,27 +56,31 @@ export default function Input<T extends string | number>(
 	}
 
 	const inputElement = html.input({
-		class: "input flex-1",
+		id: "input",
+		class: "input flex-1 min-w-0",
 		type: type,
 		value: () => value.val ?? "",
 		oninput: handleInput,
 		placeholder: placeholder,
 		required: required,
+		...inputProps,
 	})
 
 	return html.div(
 		{
 			name: "Text Input",
 			class: () =>
-				`control flex p-0 *:first:pl-2 *:last:pr-2 gap-2 *:py-1 has-focus-visible:mood-accent  has-invalid:has-invalid:mood-critical ${reactiveClass.val}`,
+				`control flex p-0 *:first:pl-2 *:last:pr-2 gap-2 *:py-1 has-focus-visible:mood-accent has-invalid:has-invalid:mood-critical ${reactiveClass.val}`,
 			...restProps,
 		},
 
 		// Ensure elements to enable flex
 		() =>
 			["boolean", "string", "number", "bigint"].includes(typeof lead)
-				? html.span(lead)
-				: lead,
+				? html.label({ for: "input" }, html.span(lead))
+				: lead != undefined
+					? html.label({ for: "input" }, lead)
+					: undefined,
 
 		inputElement,
 
@@ -81,7 +89,9 @@ export default function Input<T extends string | number>(
 		// Ensure elements to enable flex
 		() =>
 			["boolean", "string", "number", "bigint"].includes(typeof trail)
-				? html.span(trail)
-				: trail,
+				? html.label({ for: "input" }, html.span(trail))
+				: trail != undefined
+					? html.label({ for: "input" }, trail)
+					: undefined,
 	)
 }
