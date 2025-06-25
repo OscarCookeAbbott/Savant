@@ -37,7 +37,7 @@ num.val++
 > 43
 ```
 
-In derived definitions where you want to _exclude_ some accessed states from reactive dependence you can utilise the state's `.rawVal` property.
+In derived definitions where you want to _exclude_ some accessed states from reactive dependence you can utilise the state's `.raw` property.
 
 This is most often useful for refining reactive chains to limit unnecessary re-execution for optimisation reasons.
 
@@ -45,7 +45,7 @@ This is most often useful for refining reactive chains to limit unnecessary re-e
 const num = state(42)
 const doubleNum = derive(() => num.val * 2)
 
-derive(() => console.log(num.val, doubleNum.rawVal))
+derive(() => console.log(num.val, doubleNum.raw))
 
 num.val++
 ```

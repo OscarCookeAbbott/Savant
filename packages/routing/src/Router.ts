@@ -1,4 +1,4 @@
-import { add, ChildDom, derive, html } from "@savant/core"
+import { ChildDom, derive, html, mount } from "@savant/core"
 
 import {
 	_routerBasename,
@@ -122,7 +122,7 @@ export default function Router({ routes, basename }: RouterProps) {
 
 			container.replaceChildren()
 
-			add(container, html.div("Could not find route"))
+			mount(container, html.div("Could not find route"))
 
 			return
 		}
@@ -135,12 +135,12 @@ export default function Router({ routes, basename }: RouterProps) {
 
 		currentRoute = route
 
-		_routerQuery.rawVal = parseQuery(window.location.search)
-		_routerParams.rawVal = params
+		_routerQuery.raw = parseQuery(window.location.search)
+		_routerParams.raw = params
 
 		container.replaceChildren()
 
-		add(container, route.dom)
+		mount(container, route.dom)
 	}
 
 	window.onpopstate = handleWindowPopState

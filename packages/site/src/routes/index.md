@@ -11,7 +11,7 @@ Inspired by the incredible [VanJS](https://vanjs.org).
 ## Example - Counter
 
 ```typescript
-import { add, html, state } from "@savant/core"
+import { mount, html, state } from "@savant/core"
 import { Router } from "@savant/routing"
 
 function Counter() {
@@ -35,5 +35,5 @@ function App() {
 	})
 }
 
-add(document.body, App())
+mount(document.body, App())
 ```

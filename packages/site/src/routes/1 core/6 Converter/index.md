@@ -42,7 +42,7 @@ const usernameDisplay = html.div(() => `Hello ${username.val}!`)
 
 const container = html.div(usernameInput, usernameDisplay)
 
-savant.add(document, container)
+mount(document, container)
 ```
 
 ### Scoping Reactions

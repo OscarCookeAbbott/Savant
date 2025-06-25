@@ -1,10 +1,10 @@
 import {
-	add,
 	ChildDom,
 	derive,
 	ElementProps,
 	forceReactive,
 	html,
+	mount,
 	State,
 	state,
 } from "@savant/core"
@@ -49,7 +49,7 @@ const container = html.div({
 	name: "Popups",
 	class: "fixed inset-0 z-[100] pointer-events-none",
 })
-add(document.documentElement, container)
+mount(document.documentElement, container)
 
 //////// API ////////
 
@@ -174,7 +174,7 @@ export default function Popup(
 			target.parentElement ? [target.parentElement] : [],
 		)
 
-		add(container, anchor)
+		mount(container, anchor)
 
 		dom = { anchor, popup, abortController }
 	}

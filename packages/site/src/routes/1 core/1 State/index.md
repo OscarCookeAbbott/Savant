@@ -24,13 +24,13 @@ console.log(num.val)
 
 Assigning a _new_ value to a state's `.raw` property will update reactive dependencies.
 
-To prevent triggering [reactive updates](http://localhost:5173/core/Derive), such as during a complex operation etc, assignments can be made to `.rawVal` instead. Effects can similarly refer to `.rawVal` to avoid creating a dependency.
+To prevent triggering [reactive updates](http://localhost:5173/core/Derive), such as during a complex operation etc, assignments can be made to `.raw` instead. Effects can similarly refer to `.raw` to avoid creating a dependency.
 
 ```typescript
-num.rawVal++
+num.raw++
 
 console.log(num.val)
-console.log(num.rawVal)
+console.log(num.raw)
 ```
 
 ```console

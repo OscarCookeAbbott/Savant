@@ -63,7 +63,7 @@ function App() {
 	)
 }
 
-add(document.body, App())
+mount(document.body, App())
 ```
 
 ## Signature

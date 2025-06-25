@@ -23,7 +23,7 @@ export default function Input<T extends string | number>(
 	{
 		value = state(undefined),
 
-		type = value.rawVal !== undefined ? typeof value.rawVal : "text",
+		type = value.raw !== undefined ? typeof value.raw : "text",
 		placeholder = `Enter ${type}...`,
 		required = false,
 
@@ -51,7 +51,7 @@ export default function Input<T extends string | number>(
 		else if (typeof value.val === "string")
 			(value as State<string | undefined>).val = newValue
 
-		onValueChanged?.(value.rawVal)
+		onValueChanged?.(value.raw)
 		onValidityChanged?.(inputElement.checkValidity())
 	}
 

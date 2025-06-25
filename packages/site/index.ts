@@ -1,6 +1,6 @@
 import "./style.css"
 
-import { add, html } from "@savant/core"
+import { html, mount } from "@savant/core"
 import { Router } from "@savant/routing"
 
 import Header from "./src/Header"
@@ -119,4 +119,4 @@ function App() {
 	)
 }
 
-add(document.body, App())
+mount(document.body, App())

@@ -32,6 +32,12 @@ export default tsEslint.config(
 		},
 	},
 	{
-		ignores: ["**/.DS_Store", "**/build", "**/node_modules", "**/dist"],
+		ignores: [
+			"**/.DS_Store",
+			"**/build",
+			"**/node_modules",
+			"**/dist",
+			"**/pnpm-lock.yaml",
+		],
 	},
 )

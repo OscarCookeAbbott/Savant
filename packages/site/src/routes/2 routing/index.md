@@ -11,7 +11,7 @@ Using just the `Router` and `Link` components, you can get a single-page-app run
 **Demo**
 
 ```typescript
-import { add } from "savant"
+import { mount } from "savant"
 import { Router, Link } from "savant/routing"
 
 function App() {
@@ -33,5 +33,5 @@ function App() {
     )
 }
 
-add(document.body, App())
+mount(document.body, App())
 ```

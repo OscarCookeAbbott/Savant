@@ -15,96 +15,37 @@ import type {
 	ValidChildDomValue,
 } from "./reactivity.types"
 
-//////// Classes ////////
-
-export class State<T> {
-	/** The current value of the state. */
-	_rawVal: T
-
-	/** The previous value of the state. */
-	_oldVal: T
-
-	/** Links to any derived DOM state. */
-	_bindings: Binding[]
-
-	/** Links to any derived states. */
-	_listeners: Binding[]
-
-	/** The function to call when the state is destroyed. */
-	_onDestroy?: () => void
-
-	constructor(value: T, onDestroy?: () => void) {
-		this._rawVal = value
-		this._oldVal = value
-
-		this._bindings = []
-		this._listeners = []
-
-		this._onDestroy = onDestroy
-	}
-
-	/** Sets the state's value and adds its assigner to the state's reactive dependencies. */
-	set val(v: T) {
-		curDependencies?._setters?.add(this)
-
-		if (v === this._rawVal) return
-
-		this._rawVal = v
-
-		if (this._bindings.length + this._listeners.length === 0) {
-			this._oldVal = v
-
-			return
-		}
-
-		derivedStates?.add(this)
-		changedStates = addAndScheduleOnFirst(changedStates, this, updateDoms)
-	}
-
-	/** Gets the state's current value and adds its accessor to the state's reactive effects. */
-	get val(): T {
-		curDependencies?._getters?.add(this)
-		return this._rawVal
-	}
-
-	/** Sets the state's value without creating or triggering any reactivity. */
-	set rawVal(v: T) {
-		if (v === this._rawVal) return
-
-		this._rawVal = v
-
-		if (this._bindings.length + this._listeners.length === 0) {
-			this._oldVal = v
-
-			return
-		}
-	}
-
-	/** Gets the state's current value *without* adding any reactive effects to its accessor. */
-	get rawVal(): T {
-		return this._rawVal
-	}
-
-	/** Gets the state's previous value and adds its accessor to the state's reactive effects. */
-	get oldVal(): T {
-		curDependencies?._getters?.add(this)
-		return this._oldVal
-	}
-}
-
 ///////// Constants ////////
 
+/** How often the deletion cycle runs to clean up disconnected states, in milliseconds. */
 const DELETE_CYCLE_INTERVAL_MS = 1000
+
+/** A constant DOM object that is always connected, used to prevent errors when a binding's DOM is not set. */
 const ALWAYS_CONNECTED_DOM = { isConnected: true }
 
 //////// Internal State ////////
 
-let changedStates: Set<State<any>> | undefined = undefined
-let derivedStates: Set<State<any>> | undefined = undefined
-let curDependencies: DependencyBundle | undefined = undefined
-let curNewDerives: Binding[] | undefined = undefined
+/** The current reactive scope's dependencies, used to capture which states are accessed during a reactive function call.
+ * Undefined if not in a reactive scope -- if the top-most level.
+ */
+let currentScopedDependencies: DependencyBundle | undefined = undefined
 
-let statesToDelete: Set<State<any>> | undefined = undefined
+let currentScopedDerives: Binding[] | undefined = undefined
+
+/** States that are being derived from the current 'reactive scope', used to capture dependencies. */
+const CURRENT_SCOPED_DERIVED_STATES: Set<State<any>> = new Set()
+
+/** States that have been altered since the last DOM update cycle. */
+const DIRTY_STATES: Set<State<any>> = new Set()
+
+/** States that are queued for deletion during the next deletion cycle. */
+const STATE_DELETION_QUEUE: Set<State<any>> = new Set()
+
+/** Whether a DOM update cycle is currently scheduled, to prevent multiple updates within the same cycle. */
+let isDomUpdateScheduled = false
+
+/** Whether a deletion cycle is currently scheduled, to prevent multiple deletions within the same cycle. */
+let isDeletionScheduled = false
 
 /** Dynamic cache of setter functions for different element types and their various properties to improve prop performance of repeated element props. */
 const ELEMENT_PROP_SETTER_CACHE_BY_NAME: Record<
@@ -127,7 +68,7 @@ export function derive<T>(func: () => T, onDestroy?: () => void): State<T> {
 	}
 
 	const resultState = state(
-		runAndCaptureDeps(func, dependencies, undefined),
+		captureDependencies(func, dependencies, undefined),
 		onDestroy,
 	)
 
@@ -138,8 +79,9 @@ export function derive<T>(func: () => T, onDestroy?: () => void): State<T> {
 	}
 
 	if (!listener._dom)
-		if (!curNewDerives) listener._dom = document.getRootNode().firstChild
-		else curNewDerives.push(listener)
+		if (!currentScopedDerives)
+			listener._dom = document.getRootNode().firstChild
+		else currentScopedDerives.push(listener)
 
 	for (const getter of dependencies._getters)
 		if (!dependencies._setters.has(getter)) {
@@ -151,7 +93,7 @@ export function derive<T>(func: () => T, onDestroy?: () => void): State<T> {
 }
 
 /** Adds the given children elements or effects to the given DOM element and returns it. */
-export function add(dom: Element, ...children: readonly ChildDom[]): Element {
+export function mount(dom: Element, ...children: readonly ChildDom[]): Element {
 	// @ts-ignore ts-2589 because nesting needs to be limitless
 	for (const rawChild of children.flat(Infinity) as (
 		| ValidChildDomValue
@@ -219,70 +161,65 @@ export function unwrapVal<T>(value: Val<T>): T {
 
 	if (typeof value === "function") return value()
 
-	// TODO: Check why type is suddenly not inferred correctly here
 	return value as T
 }
 
-///////// Utility Functions ////////
-
-function addAndScheduleOnFirst(
-	set: Set<State<any>> | undefined,
-	s: State<any>,
-	f: () => void,
-	waitMs?: number,
-) {
-	if (!set) setTimeout(f, waitMs)
-
-	return (set ?? new Set()).add(s)
-}
+///////// Internals ////////
 
 /** Executes the given function with an optional initial value and captures any accessed states as dependencies. */
-function runAndCaptureDeps<T, V>(
+function captureDependencies<T, V>(
 	func: (value: V) => T,
 	dependencies: DependencyBundle,
 	value: V,
 ): T {
-	const prevDeps = curDependencies
+	// Store current scoped dependency stack
+	const prevDeps = currentScopedDependencies
 
-	curDependencies = dependencies
+	// Prepare new scoped dependency stack for this function
+	currentScopedDependencies = dependencies
 
-	// Execute the function, any accessed states will add themselves to `curDependencies`
+	// Execute the function, any accessed states will add themselves to `currentScopedDependencies`
 	const result = func(value)
 
-	curDependencies = prevDeps
+	// Reinstate previous scoped dependency stack
+	currentScopedDependencies = prevDeps
 
 	return result
 }
 
-/** Filters all DOM-disconnected bindings from the given array of bindings. */
-function filterDisconnected<T>(l: Binding<T>[]): ConnectedBinding<T>[] {
-	return l.filter((b) => b._dom?.isConnected) as ConnectedBinding<T>[]
+/** Filters out all bindings that either have no DOM element or are disconnected from the main DOM from the given array. */
+function filterConnectedBindings<T>(
+	bindings: Binding<T>[],
+): ConnectedBinding<T>[] {
+	return bindings.filter((b) => b._dom?.isConnected) as ConnectedBinding<T>[]
 }
 
-/** Queues the given state for deletion. */
-function queueStateForDeletion<T>(dependency: State<T>) {
-	statesToDelete = addAndScheduleOnFirst(
-		statesToDelete,
-		dependency,
-		() => {
-			for (const state of statesToDelete ?? []) {
-				state._bindings = filterDisconnected(state._bindings)
-				state._listeners = filterDisconnected(state._listeners)
+/** Queues the given state for deletion and prepares a deletion sweep if not already running. */
+function queueStateForDeletion<T>(state: State<T>): void {
+	// Rather than `setInterval` we queue deletion cycles manually when called to reduce overhead
+	if (!isDeletionScheduled) {
+		isDeletionScheduled = true
 
-				if (
-					state._bindings.length === 0 &&
-					state._listeners.length === 0
-				)
-					state._onDestroy?.()
-			}
+		setTimeout(deleteQueuedStates, DELETE_CYCLE_INTERVAL_MS)
+	}
 
-			statesToDelete = undefined
-		},
-		DELETE_CYCLE_INTERVAL_MS,
-	)
+	STATE_DELETION_QUEUE.add(state)
 }
 
-///////// Core Reactivity API ////////
+/** Deletes all states that have no bindings or listeners left, calling their destroy functions if defined. */
+function deleteQueuedStates() {
+	for (const state of STATE_DELETION_QUEUE) {
+		state._bindings = filterConnectedBindings(state._bindings)
+		state._listeners = filterConnectedBindings(state._listeners)
+
+		if (state._bindings.length + state._listeners.length === 0)
+			state._onDestroy?.()
+	}
+
+	STATE_DELETION_QUEUE.clear()
+
+	isDeletionScheduled = false
+}
 
 /** Binds the given element-creation function and any states created within with a given element. */
 function bind(
@@ -298,11 +235,11 @@ function bind(
 		state: undefined,
 		_dom: undefined,
 	}
-	const prevNewDerives = curNewDerives
+	const prevNewDerives = currentScopedDerives
 
-	curNewDerives = []
+	currentScopedDerives = []
 
-	const newDomBase = runAndCaptureDeps(func, dependencies, dom)
+	const newDomBase = captureDependencies(func, dependencies, dom)
 
 	const newDom =
 		(newDomBase ?? document) instanceof Node
@@ -315,9 +252,9 @@ function bind(
 			getter._bindings.push(binding)
 		}
 
-	for (const newDerive of curNewDerives) newDerive._dom = newDom
+	for (const newScopedDerive of currentScopedDerives) newScopedDerive._dom = newDom
 
-	curNewDerives = prevNewDerives
+	currentScopedDerives = prevNewDerives
 
 	return (binding._dom = newDom)
 }
@@ -333,25 +270,27 @@ function deriveDom<T extends ChildNode>(
 		_setters: new Set<State<any>>(),
 	}
 
-	resultState.val = runAndCaptureDeps(func, dependencies, resultState.rawVal)
+	resultState.val = captureDependencies(func, dependencies, resultState.raw)
 
-	const listener: Binding<T> = {
+	const newDomListener: Binding<T> = {
 		func,
 		state: resultState,
 		_dom: dom,
 	}
 
-	if (!listener._dom)
-		if (!curNewDerives) listener._dom = ALWAYS_CONNECTED_DOM
-		else curNewDerives.push(listener)
+	if (!newDomListener._dom)
+		if (!currentScopedDerives)
+			// If there is no enclosing reactive scope (at top level), tie to the document root
+			newDomListener._dom = ALWAYS_CONNECTED_DOM
+		else currentScopedDerives.push(newDomListener)
 
 	for (const getter of dependencies._getters)
 		if (!dependencies._setters.has(getter)) {
 			queueStateForDeletion(getter)
-			getter._listeners.push(listener)
+			getter._listeners.push(newDomListener)
 		}
 
-	return resultState as State<T>
+	return resultState
 }
 
 //////// DOM Manipulation ////////
@@ -461,7 +400,7 @@ function tag<T>(
 			bind(
 				() => (
 					!isOptional || propValue.val
-						? setter(propValue.val, propValue._oldVal)
+						? setter(propValue.val, propValue._old)
 						: dom.removeAttribute(propName),
 					dom
 				),
@@ -485,7 +424,7 @@ function tag<T>(
 		}
 	}
 
-	return add(dom, children)
+	return mount(dom, children)
 }
 
 /** Replaces the given target DOM element with the given replacement if defined, otherwise removes target element from DOM. */
@@ -495,21 +434,21 @@ function update(target: ChildNode, replacement: Optional<ChildNode>) {
 	if (replacement !== target) return target.replaceWith(replacement)
 }
 
+/** Updates all DOM elements that are connected to reactive states, derived states, or bindings that are listed as changed. */
 function updateDoms() {
 	const MAX_CHANGE_ITERATIONS = 100
 
 	let iter = 0
 
-	let changedDerivedStates = [...(changedStates ?? [])].filter(
-		(s) => s.rawVal !== s._oldVal,
-	)
+	// Re-filter changed states in case some have 'un-changed' within the same cycle
+	let stillChangedStates = [...DIRTY_STATES].filter(hasStateChanged)
 
 	do {
-		derivedStates = new Set()
+		CURRENT_SCOPED_DERIVED_STATES.clear()
 
 		const connectedDerivedStates = new Set(
-			changedDerivedStates.flatMap(
-				(s) => (s._listeners = filterDisconnected(s._listeners)),
+			stillChangedStates.flatMap(
+				(s) => (s._listeners = filterConnectedBindings(s._listeners)),
 			),
 		)
 
@@ -525,18 +464,17 @@ function updateDoms() {
 		}
 	} while (
 		++iter < MAX_CHANGE_ITERATIONS &&
-		(changedDerivedStates = [...(derivedStates ?? [])]).length > 0
+		(stillChangedStates = [...CURRENT_SCOPED_DERIVED_STATES]).length > 0
 	)
 
-	const actuallyChangedStates = [...(changedStates ?? [])].filter(
-		(s) => s.rawVal !== s._oldVal,
-	)
+	const actuallyChangedStates = [...DIRTY_STATES].filter(hasStateChanged)
 
-	changedStates = undefined
+	DIRTY_STATES.clear()
+	isDomUpdateScheduled = false
 
 	for (const binding of new Set(
 		actuallyChangedStates.flatMap(
-			(s) => (s._bindings = filterDisconnected(s._bindings)),
+			(s) => (s._bindings = filterConnectedBindings(s._bindings)),
 		),
 	)) {
 		// @ts-expect-error Type mismatch for ChildNode and binding._dom
@@ -545,14 +483,102 @@ function updateDoms() {
 		binding._dom = undefined
 	}
 
-	for (const changedState of actuallyChangedStates) {
-		changedState._oldVal = changedState.rawVal
-	}
+	// Update the old values of all changed states
+	actuallyChangedStates.forEach((state) => (state._old = state._val))
 }
 
 /** Creates a proxy object that returns an element creation function for the accessed property for the given element namespace. */
 function tagHandler(namespace?: string) {
 	return {
 		get: (_: any, name: string) => tag.bind(undefined, namespace, name),
+	}
+}
+
+/** Checks if the given state has changed since the last time its bindings were updated. */
+function hasStateChanged(state: State<any>): boolean {
+	return state._val !== state._old
+}
+
+//////// Classes ////////
+
+export class State<T> {
+	/** The current value of the state. */
+	_val: T
+
+	/** The previous value of the state. */
+	_old: T
+
+	/** Links to any derived DOM state. */
+	_bindings: Binding[]
+
+	/** Links to any derived states. */
+	_listeners: Binding[]
+
+	/** The function to call when the state is destroyed. */
+	_onDestroy?: () => void
+
+	constructor(value: T, onDestroy?: () => void) {
+		this._val = value
+		this._old = value
+
+		this._bindings = []
+		this._listeners = []
+
+		this._onDestroy = onDestroy
+	}
+
+	/** Sets the state's value and adds its assigner to the state's reactive dependencies. */
+	set val(v: T) {
+		currentScopedDependencies?._setters?.add(this)
+
+		if (v === this._val) return
+
+		this._val = v
+
+		if (this._bindings.length + this._listeners.length === 0) {
+			this._old = v
+
+			return
+		}
+
+		CURRENT_SCOPED_DERIVED_STATES.add(this)
+
+		if (!isDomUpdateScheduled) {
+			isDomUpdateScheduled = true
+
+			setTimeout(updateDoms)
+		}
+
+		DIRTY_STATES.add(this)
+	}
+
+	/** Gets the state's current value and adds its accessor to the state's reactive effects. */
+	get val(): T {
+		currentScopedDependencies?._getters?.add(this)
+		return this._val
+	}
+
+	/** Sets the state's value without creating or triggering any reactivity. */
+	set raw(v: T) {
+		if (v === this._val) return
+
+		this._val = v
+
+		if (this._bindings.length + this._listeners.length === 0) {
+			this._old = v
+
+			return
+		}
+	}
+
+	/** Gets the state's current value *without* adding any reactive effects to its accessor. */
+	get raw(): T {
+		return this._val
+	}
+
+	/** Gets the state's previous value and adds its accessor to the state's reactive effects. */
+	get old(): T {
+		currentScopedDependencies?._getters?.add(this)
+		return this._old
 	}
 }

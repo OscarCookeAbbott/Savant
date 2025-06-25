@@ -61,6 +61,6 @@ export interface Binding<T = any> {
 	_dom: Optional<{ isConnected: boolean }>
 }
 
-export type ConnectedBinding<T = any> = Binding<T> & {
+export interface ConnectedBinding<T = any> extends Binding<T> {
 	_dom: { isConnected: boolean }
 }

@@ -189,8 +189,7 @@ function setContextOnDom<T>(
 	}
 
 	// DOM element is already a context provider for this key, update the value if it has changed
-	if (existingProviderValue.rawVal !== value)
-		existingProviderValue.val = value
+	if (existingProviderValue.raw !== value) existingProviderValue.val = value
 
 	return existingProviderValue
 }
