@@ -51,7 +51,7 @@ export function setContext<T>(
 }
 
 /** Retrieves context with the given key if it exists.
- * Naively coerces to the given type. Apply type validation if necessary.
+ * @warning Type is coerced. Apply type validation if necessary.
  */
 export function getContext<T>(
 	dom: HTMLElement,
@@ -195,7 +195,7 @@ function setContextOnDom<T>(
 }
 
 /** Retrieves context with the given key at the given DOM element, ensuring that at *least* a root context provider exists.
- * Naively coerces to the given type. Apply type validation if necessary.
+ * @warning Type is coerced. Apply type validation if necessary.
  */
 function getEnsuredContextFromDom(
 	dom: HTMLElement,

@@ -77,7 +77,7 @@ function setContext<T>(
 ): void
 
 /** Retrieves context with the given key if it exists.
- * Naively coerces to the given type. Apply type validation if necessary.
+ * @warning Type is coerced. Apply type validation if necessary.
  */
 function getContext<T>(
 	dom: HTMLElement,

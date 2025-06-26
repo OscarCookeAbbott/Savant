@@ -1,6 +1,6 @@
-import { ChildDom, ElementProps, html, TagFunc } from "@savant/core"
+import { ChildDom, ElementFunction, ElementProps, html } from "@savant/core"
 
-const Icon: TagFunc<HTMLElement> = (
+const Icon: ElementFunction<HTMLElement> = (
 	first?: ElementProps<HTMLElement> | ChildDom,
 	...rest: readonly ChildDom[]
 ): HTMLElement => {

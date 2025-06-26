@@ -31,36 +31,36 @@ export type SpecificProps<ElementType> = Partial<{
  * */
 export type ElementProps<T = Element> = GenericProps & SpecificProps<T>
 
-export type ValidChildDomValue = Optional<Primitive | ChildNode>
+export type NativeChildDom = Optional<Primitive | ChildNode>
 
 export type BindingFunc = (dom?: ChildDom) => ChildDom
 
 export type ChildDom =
-	| ValidChildDomValue
+	| NativeChildDom
 	| Readonly<State<Optional<Primitive>>>
 	| BindingFunc
 	| readonly ChildDom[]
 
-export type TagFunc<Result> = (
+export type ElementFunction<Result> = (
 	propsOrChild?: ElementProps<Result> | ChildDom,
 	...rest: readonly ChildDom[]
 ) => Result
 
-export type Tags<T> = Readonly<Record<string, TagFunc<Element>>> & {
-	[K in keyof T]: TagFunc<T[K]>
+export type Elements<T> = Readonly<Record<string, ElementFunction<Element>>> & {
+	[K in keyof T]: ElementFunction<T[K]>
 }
 
-export interface DependencyBundle {
-	_getters: Set<State<any>>
-	_setters: Set<State<any>>
+export interface ReactiveScope {
+	getters: Set<State<any>>
+	setters: Set<State<any>>
 }
 
-export interface Binding<T = any> {
+export interface DomBinding<T = any> {
 	func: (dom: ChildNode) => Optional<T>
 	state: State<T> | undefined
-	_dom: Optional<{ isConnected: boolean }>
+	dom: Optional<{ isConnected: boolean }>
 }
 
-export interface ConnectedBinding<T = any> extends Binding<T> {
-	_dom: { isConnected: boolean }
+export interface ConnectedDomBinding<T = any> extends DomBinding<T> {
+	dom: { isConnected: true }
 }
