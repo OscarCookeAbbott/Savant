@@ -55,8 +55,13 @@ export interface ReactiveScope {
 	setters: Set<State<any>>
 }
 
-export interface DomBinding<T = any> {
-	func: (dom: T) => Optional<T>
-	state: State<T> | undefined
-	dom: Optional<ChildNode>
+export interface StateListener<T = any> {
+	func: () => T
+	state: State<T>
+	dom?: ChildNode
+}
+
+export interface DomListener {
+	func: (dom: ChildDom) => Optional<ChildDom>
+	dom: ChildNode
 }

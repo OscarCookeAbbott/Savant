@@ -1,10 +1,11 @@
 import { scheduleDomUpdate } from "./dom"
 import type {
 	ChildDom,
-	DomBinding,
+	DomListener,
 	Optional,
 	PropValueOrDerived,
 	ReactiveScope,
+	StateListener,
 	Val,
 } from "./reactivity.types"
 
@@ -23,7 +24,7 @@ let currentReactiveScope: ReactiveScope | undefined = undefined
 /** The current scoped DOM bindings, used to capture which DOM elements are created during a reactive function call.
  * Undefined if not in a reactive (derived or equivalent) scope.
  */
-let currentDomScope: DomBinding[] | undefined = undefined
+let currentDomScope: StateListener[] | undefined = undefined
 
 /** States that are being derived from the current 'reactive scope', used to capture dependencies. */
 export const CURRENT_DERIVED_SCOPE = new Set<State<any>>()
@@ -46,10 +47,33 @@ export function state<T>(value: T, onDispose?: () => void): State<T> {
 
 /** Create a derived state or effect which reacts to changes to any states it depends on. */
 export function derive<T>(func: () => T, onDispose?: () => void): State<T> {
-	// Create state with undefined initial value which will be immediately overwritten
-	const derivedState = state<T>(undefined as T, onDispose)
+	const newReactiveScope: ReactiveScope = {
+		getters: new Set<State<any>>(),
+		setters: new Set<State<any>>(),
+	}
 
-	return deriveInternal(func, derivedState, undefined)
+	const newState = state(
+		captureDependencies(func, newReactiveScope, undefined),
+		onDispose,
+	)
+
+	const newListener: StateListener<T> = {
+		func,
+		state: newState,
+	}
+
+	// If there is no specific DOM for this effect, use the current DOM scope if it exists, otherwise use the persistent DOM
+	if (currentDomScope) currentDomScope.push(newListener)
+	else newListener.dom = document.getRootNode().firstChild!
+
+	for (const getter of newReactiveScope.getters.difference(
+		newReactiveScope.setters,
+	)) {
+		getter._listeners.push(newListener)
+		queueStateForCleaning(getter)
+	}
+
+	return newState
 }
 
 /** Creates a reactive binding function from the given generic prop value.
@@ -78,38 +102,36 @@ export function unwrapVal<T>(value: Val<T>): T {
 
 ///////// Internals ////////
 
-/** Create a functional association which automatically reacts to any stateful data it accesses. */
-export function deriveInternal<T>(
-	func: (dom: T) => T,
-	state: State<T>,
-	dom?: ChildNode,
-): State<T> {
+/** Replaces the given listener with a new one with freshly recaptured dependencies. */
+export function refreshListener<T>(listener: StateListener<T>): void {
 	const newReactiveScope: ReactiveScope = {
 		getters: new Set<State<any>>(),
 		setters: new Set<State<any>>(),
 	}
 
-	state.val = captureDependencies(func, newReactiveScope, state.raw)
+	listener.state.val = captureDependencies(
+		listener.func,
+		newReactiveScope,
+		undefined,
+	)
 
-	const newDomBinding: DomBinding<T> = {
-		func,
-		state,
-		dom,
-	}
+	// The existing listener may be referenced in other states, so create a fresh one in case dependencies changed
+	const newListener: StateListener<T> = { ...listener }
 
-	// If there is no specific DOM for this effect, use the current DOM scope if it exists, otherwise use the persistent DOM
-	if (!newDomBinding.dom)
-		if (currentDomScope) currentDomScope.push(newDomBinding)
-		else newDomBinding.dom = document.getRootNode().firstChild
+	// If there is no specific DOM for this listener, use the current DOM scope if it exists (which will then link this listener to the relevant element), otherwise use a persistent element
+	if (!newListener.dom)
+		if (currentDomScope) currentDomScope.push(newListener)
+		else newListener.dom = document.getRootNode().firstChild!
 
 	for (const getter of newReactiveScope.getters.difference(
 		newReactiveScope.setters,
 	)) {
-		getter._listeners.push(newDomBinding)
+		getter._listeners.push(newListener)
 		queueStateForCleaning(getter)
 	}
 
-	return state
+	// Disconnect the existing listener so it can be disposed later
+	listener.dom = undefined
 }
 
 /** Executes the given function with an optional initial value and captures any accessed states as dependencies. */
@@ -134,9 +156,9 @@ function captureDependencies<T, V>(
 }
 
 /** Checks that the given binding has a DOM element and that the element is connected to the main DOM. */
-export function isConnectedBinding<T>(
-	binding: DomBinding<T>,
-): binding is DomBinding<T> & { dom: ChildNode } {
+export function isConnectedBinding(binding: {
+	dom?: ChildNode
+}): binding is { dom: ChildNode } {
 	return !!binding.dom?.isConnected
 }
 
@@ -179,7 +201,7 @@ function cleanQueuedStates() {
 /** Binds the given element-creation function and any states created within with a given element. */
 export function bind(
 	func: (dom: ChildDom) => Optional<ChildDom>,
-	dom?: ChildDom,
+	dom?: ChildNode,
 ): ChildNode {
 	const newReactiveScope: ReactiveScope = {
 		getters: new Set<State<any>>(),
@@ -198,9 +220,8 @@ export function bind(
 			? (newDomRaw as ChildNode)
 			: new Text(String(newDomRaw))
 
-	const newDomBinding: DomBinding<ChildDom> = {
+	const newDomBinding: DomListener = {
 		func,
-		state: undefined,
 		dom: newDom,
 	}
 
@@ -211,8 +232,8 @@ export function bind(
 		queueStateForCleaning(getter)
 	}
 
-	for (const newScopedBinding of currentDomScope)
-		newScopedBinding.dom = newDomBinding.dom
+	for (const newListener of currentDomScope)
+		newListener.dom = newDomBinding.dom
 
 	// Restore any previous dom binding scope
 	currentDomScope = prevDomScope
@@ -230,10 +251,10 @@ export class State<T> {
 	_old: T
 
 	/** Links to any derived DOM state. */
-	_bindings: DomBinding[]
+	_bindings: DomListener[]
 
 	/** Links to any derived states. */
-	_listeners: DomBinding[]
+	_listeners: StateListener[]
 
 	/** The function to call when the state is disposed. */
 	_onDispose?: () => void

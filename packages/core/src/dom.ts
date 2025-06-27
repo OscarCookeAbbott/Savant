@@ -7,8 +7,8 @@ import {
 	bind,
 	CURRENT_DERIVED_SCOPE,
 	derive,
-	deriveInternal,
 	isConnectedBinding,
+	refreshListener,
 	State,
 } from "./reactivity"
 import {
@@ -118,11 +118,7 @@ function updateDoms() {
 
 		// Update all unique affected listeners by creating new replacements
 		for (const listener of alteredStateListeners) {
-			deriveInternal(listener.func, listener.state, listener.dom)
-
-			// Disconnect the existing listener so it can be disposed later
-			// @ts-ignore ts-2322 because we narrowed the type to ensure the safety of the updating
-			listener.dom = undefined
+			refreshListener(listener)
 		}
 
 		// If any more states were altered in this sweep, loop again to update their listeners too
