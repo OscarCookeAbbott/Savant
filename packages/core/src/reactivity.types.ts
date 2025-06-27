@@ -56,11 +56,7 @@ export interface ReactiveScope {
 }
 
 export interface DomBinding<T = any> {
-	func: (dom: ChildNode) => Optional<T>
+	func: (dom: T) => Optional<T>
 	state: State<T> | undefined
-	dom: Optional<{ isConnected: boolean }>
-}
-
-export interface ConnectedDomBinding<T = any> extends DomBinding<T> {
-	dom: { isConnected: true }
+	dom: Optional<ChildNode>
 }

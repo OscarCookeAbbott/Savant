@@ -7,8 +7,8 @@ import {
 	bind,
 	CURRENT_DERIVED_SCOPE,
 	derive,
-	deriveDom,
-	filterConnectedBindings,
+	deriveInternal,
+	isConnectedBinding,
 	State,
 } from "./reactivity"
 import {
@@ -21,6 +21,11 @@ import {
 	Primitive,
 	PropValueOrDerived,
 } from "./reactivity.types"
+
+//////// Config ////////
+
+/** How many iterations of change propagation to perform before giving up, to prevent infinite loops. */
+const MAX_CHANGE_ITERATIONS = 100
 
 //////// State ////////
 
@@ -97,55 +102,61 @@ export function scheduleDomUpdate() {
 
 /** Updates all DOM elements that are connected to reactive states, derived states, or bindings that are listed as changed. */
 function updateDoms() {
-	const MAX_CHANGE_ITERATIONS = 100
+	// Re-filter altered states in case some have 'un-changed' within the same cycle
+	let alteredStates = [...ALTERED_STATES].filter(hasStateChanged)
 
-	let iter = 0
-
-	// Re-filter changed states in case some have 'un-changed' within the same cycle
-	let stillChangedStates = [...ALTERED_STATES].filter(hasStateChanged)
-
-	do {
+	// Update all listeners, iteratively in case effects cause other effects
+	for (let iter = 0; iter < MAX_CHANGE_ITERATIONS; iter++) {
 		CURRENT_DERIVED_SCOPE.clear()
 
-		const connectedDerivedStates = new Set(
-			stillChangedStates.flatMap(
-				(s) => (s._listeners = filterConnectedBindings(s._listeners)),
+		// Collect all unique affected listeners
+		const alteredStateListeners = new Set(
+			alteredStates.flatMap(
+				(s) => (s._listeners = s._listeners.filter(isConnectedBinding)),
 			),
 		)
 
-		for (const connectedDerivedState of connectedDerivedStates) {
-			deriveDom(
-				connectedDerivedState.func,
-				// @ts-expect-error State<any> | undefined not assignable to State<any>
-				connectedDerivedState.state,
-				connectedDerivedState.dom,
-			)
-			// @ts-expect-error Type 'undefined' is not assignable to type '{ isConnected: boolean; }'
-			connectedDerivedState.dom = undefined
-		}
-	} while (
-		++iter < MAX_CHANGE_ITERATIONS &&
-		(stillChangedStates = [...CURRENT_DERIVED_SCOPE]).length > 0
-	)
+		// Update all unique affected listeners by creating new replacements
+		for (const listener of alteredStateListeners) {
+			deriveInternal(listener.func, listener.state, listener.dom)
 
-	const actuallyChangedStates = [...ALTERED_STATES].filter(hasStateChanged)
+			// Disconnect the existing listener so it can be disposed later
+			// @ts-ignore ts-2322 because we narrowed the type to ensure the safety of the updating
+			listener.dom = undefined
+		}
+
+		// If any more states were altered in this sweep, loop again to update their listeners too
+		alteredStates = [...CURRENT_DERIVED_SCOPE]
+
+		if (alteredStates.length === 0) break
+	}
+
+	// All newly internally updated states have been added to the altered states, so we can now filter them again to get **all** altered states
+	alteredStates = [...ALTERED_STATES].filter(hasStateChanged)
 
 	ALTERED_STATES.clear()
-	isDomUpdateScheduled = false
 
-	for (const binding of new Set(
-		actuallyChangedStates.flatMap(
-			(s) => (s._bindings = filterConnectedBindings(s._bindings)),
+	// Collect all unique affected bindings
+	const alteredStateBindings = new Set(
+		alteredStates.flatMap(
+			(s) => (s._bindings = s._bindings.filter(isConnectedBinding)),
 		),
-	)) {
-		// @ts-expect-error Type mismatch for ChildNode and binding._dom
+	)
+
+	// Update all unique affected bindings by creating new replacements
+	for (const binding of alteredStateBindings) {
+		// The filtering guarantees that the binding DOM exists
 		update(binding.dom, bind(binding.func, binding.dom))
-		// @ts-expect-error Type 'undefined' is not assignable to type '{ isConnected: boolean; }'
+
+		// Disconnect the existing binding so it can be disposed later
+		// @ts-ignore ts-2322 because we narrowed the type to ensure the safety of the updating
 		binding.dom = undefined
 	}
 
 	// Update the old values of all changed states
-	actuallyChangedStates.forEach((state) => (state._old = state._val))
+	alteredStates.forEach((state) => (state._old = state._val))
+
+	isDomUpdateScheduled = false
 }
 
 /** Replaces the given target DOM element with the given replacement if defined, otherwise removes target element from DOM. */

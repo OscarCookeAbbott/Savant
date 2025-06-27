@@ -1,7 +1,6 @@
 import { scheduleDomUpdate } from "./dom"
 import type {
 	ChildDom,
-	ConnectedDomBinding,
 	DomBinding,
 	Optional,
 	PropValueOrDerived,
@@ -13,9 +12,6 @@ import type {
 
 /** How often the deletion cycle runs to clean up disconnected states, in milliseconds. */
 const CLEAN_CYCLE_INTERVAL_MS = 1000
-
-/** A constant DOM object that is always connected, used to identify states with no DOM-dependent lifetime. */
-const PERSISTENT_DOM = { isConnected: true }
 
 //////// Internal State ////////
 
@@ -44,41 +40,16 @@ let isCleanScheduled = false
 ///////// API ////////
 
 /** Creates a piece of reactive data with the given initial value. */
-export function state<T>(value: T, onDestroy?: () => void): State<T> {
-	return new State(value, onDestroy)
+export function state<T>(value: T, onDispose?: () => void): State<T> {
+	return new State(value, onDispose)
 }
 
 /** Create a derived state or effect which reacts to changes to any states it depends on. */
-export function derive<T>(func: () => T, onDestroy?: () => void): State<T> {
-	const newReactiveScope: ReactiveScope = {
-		getters: new Set<State<any>>(),
-		setters: new Set<State<any>>(),
-	}
+export function derive<T>(func: () => T, onDispose?: () => void): State<T> {
+	// Create state with undefined initial value which will be immediately overwritten
+	const derivedState = state<T>(undefined as T, onDispose)
 
-	const resultState = state(
-		captureDependencies(func, newReactiveScope, undefined),
-		onDestroy,
-	)
-
-	const newDomBinding: DomBinding<T> = {
-		func,
-		state: resultState,
-		dom: undefined,
-	}
-
-	if (!newDomBinding.dom)
-		if (!currentDomScope)
-			newDomBinding.dom = document.getRootNode().firstChild
-		else currentDomScope.push(newDomBinding)
-
-	for (const getter of newReactiveScope.getters.difference(
-		newReactiveScope.setters,
-	)) {
-		getter._listeners.push(newDomBinding)
-		queueStateForCleaning(getter)
-	}
-
-	return resultState
+	return deriveInternal(func, derivedState, undefined)
 }
 
 /** Creates a reactive binding function from the given generic prop value.
@@ -107,6 +78,40 @@ export function unwrapVal<T>(value: Val<T>): T {
 
 ///////// Internals ////////
 
+/** Create a functional association which automatically reacts to any stateful data it accesses. */
+export function deriveInternal<T>(
+	func: (dom: T) => T,
+	state: State<T>,
+	dom?: ChildNode,
+): State<T> {
+	const newReactiveScope: ReactiveScope = {
+		getters: new Set<State<any>>(),
+		setters: new Set<State<any>>(),
+	}
+
+	state.val = captureDependencies(func, newReactiveScope, state.raw)
+
+	const newDomBinding: DomBinding<T> = {
+		func,
+		state,
+		dom,
+	}
+
+	// If there is no specific DOM for this effect, use the current DOM scope if it exists, otherwise use the persistent DOM
+	if (!newDomBinding.dom)
+		if (currentDomScope) currentDomScope.push(newDomBinding)
+		else newDomBinding.dom = document.getRootNode().firstChild
+
+	for (const getter of newReactiveScope.getters.difference(
+		newReactiveScope.setters,
+	)) {
+		getter._listeners.push(newDomBinding)
+		queueStateForCleaning(getter)
+	}
+
+	return state
+}
+
 /** Executes the given function with an optional initial value and captures any accessed states as dependencies. */
 function captureDependencies<T, V>(
 	func: (value: V) => T,
@@ -119,7 +124,7 @@ function captureDependencies<T, V>(
 	// Prepare new scoped dependency stack for this function
 	currentReactiveScope = dependencies
 
-	// Execute the function, any accessed states will add themselves to `currentScopedDependencies`
+	// Execute the function, any accessed states will add themselves to `currentReactiveScope`
 	const result = func(value)
 
 	// Reinstate previous scoped dependency stack
@@ -128,14 +133,11 @@ function captureDependencies<T, V>(
 	return result
 }
 
-/** Filters out all bindings that either have no DOM element or are disconnected from the main DOM from the given array. */
-export function filterConnectedBindings<T>(
-	bindings: DomBinding<T>[],
-): ConnectedDomBinding<T>[] {
-	return bindings.filter(
-		(binding): binding is ConnectedDomBinding<T> =>
-			!!binding.dom?.isConnected,
-	)
+/** Checks that the given binding has a DOM element and that the element is connected to the main DOM. */
+export function isConnectedBinding<T>(
+	binding: DomBinding<T>,
+): binding is DomBinding<T> & { dom: ChildNode } {
+	return !!binding.dom?.isConnected
 }
 
 /** Queues the given state for a dependency clean and prepares a deletion sweep if not already running. */
@@ -157,59 +159,21 @@ function queueCleaningCycle(): void {
 }
 
 /** Cleans the bindings and listeners of all queued states so that effects-less states can be GC'd.
- * Calls newly-empty states' destroy functions if defined.
+ * Calls newly-empty states' onDispose functions if defined.
  */
 function cleanQueuedStates() {
 	for (const state of STATE_CLEANING_QUEUE) {
-		state._bindings = filterConnectedBindings(state._bindings)
-		state._listeners = filterConnectedBindings(state._listeners)
+		state._bindings = state._bindings.filter(isConnectedBinding)
+		state._listeners = state._listeners.filter(isConnectedBinding)
 
-		// If state has no bindings or listeners it should be deleted imminently, so call its destroy function
+		// If state has no bindings or listeners it should be deleted imminently, so call its onDispose function
 		if (state._bindings.length + state._listeners.length === 0)
-			state._onDestroy?.()
+			state._onDispose?.()
 	}
 
 	STATE_CLEANING_QUEUE.clear()
 
 	isCleanScheduled = false
-}
-
-/** Create a functional association which automatically reacts to any stateful data it accesses. */
-export function deriveDom<T extends ChildNode>(
-	func: (dom: ChildNode) => T,
-	resultState: State<T>,
-	dom?: ChildNode,
-): State<T> {
-	const newReactiveScope: ReactiveScope = {
-		getters: new Set<State<any>>(),
-		setters: new Set<State<any>>(),
-	}
-
-	resultState.val = captureDependencies(
-		func,
-		newReactiveScope,
-		resultState.raw,
-	)
-
-	const newDomBinding: DomBinding<T> = {
-		func,
-		state: resultState,
-		dom,
-	}
-
-	// If there is no specific DOM for this effect, use the current DOM scope if it exists, otherwise use the persistent DOM
-	if (!newDomBinding.dom)
-		if (currentDomScope) currentDomScope.push(newDomBinding)
-		else newDomBinding.dom = PERSISTENT_DOM
-
-	for (const getter of newReactiveScope.getters.difference(
-		newReactiveScope.setters,
-	)) {
-		getter._listeners.push(newDomBinding)
-		queueStateForCleaning(getter)
-	}
-
-	return resultState
 }
 
 /** Binds the given element-creation function and any states created within with a given element. */
@@ -222,23 +186,23 @@ export function bind(
 		setters: new Set<State<any>>(),
 	}
 
-	const newDomBinding: DomBinding<ChildDom> = {
-		func,
-		state: undefined,
-		dom: undefined,
-	}
-
 	// Cache previous dom binding scope and create a temporary new one
 	const prevDomScope = currentDomScope
 	currentDomScope = []
 
-	const newDomBase = captureDependencies(func, newReactiveScope, dom)
+	const newDomRaw = captureDependencies(func, newReactiveScope, dom)
 
-	// Convert any primitive children to text node
+	// Ensure the new dom is an actual DOM node
 	const newDom =
-		(newDomBase ?? document) instanceof Node
-			? (newDomBase as ChildNode)
-			: new Text(String(newDomBase))
+		(newDomRaw ?? document) instanceof Node
+			? (newDomRaw as ChildNode)
+			: new Text(String(newDomRaw))
+
+	const newDomBinding: DomBinding<ChildDom> = {
+		func,
+		state: undefined,
+		dom: newDom,
+	}
 
 	for (const getter of newReactiveScope.getters.difference(
 		newReactiveScope.setters,
@@ -247,12 +211,11 @@ export function bind(
 		queueStateForCleaning(getter)
 	}
 
-	for (const newDomBinding of currentDomScope) newDomBinding.dom = newDom
+	for (const newScopedBinding of currentDomScope)
+		newScopedBinding.dom = newDomBinding.dom
 
 	// Restore any previous dom binding scope
 	currentDomScope = prevDomScope
-
-	newDomBinding.dom = newDom
 
 	return newDom
 }
@@ -272,17 +235,17 @@ export class State<T> {
 	/** Links to any derived states. */
 	_listeners: DomBinding[]
 
-	/** The function to call when the state is destroyed. */
-	_onDestroy?: () => void
+	/** The function to call when the state is disposed. */
+	_onDispose?: () => void
 
-	constructor(value: T, onDestroy?: () => void) {
+	constructor(value: T, onDispose?: () => void) {
 		this._val = value
 		this._old = value
 
 		this._bindings = []
 		this._listeners = []
 
-		this._onDestroy = onDestroy
+		this._onDispose = onDispose
 	}
 
 	/** Sets the state's value and adds its assigner to the state's reactive dependencies. */
