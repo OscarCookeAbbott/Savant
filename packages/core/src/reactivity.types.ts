@@ -51,7 +51,10 @@ export type Elements<T> = Readonly<Record<string, ElementFunction<Element>>> & {
 }
 
 export interface ReactiveScope {
+	/** Any states which have been read within the current reactive scope. */
 	getters: Set<State<any>>
+
+	/** Any states which have been written within the current reactive scope. */
 	setters: Set<State<any>>
 }
 

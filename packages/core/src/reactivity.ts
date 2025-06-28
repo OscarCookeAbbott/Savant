@@ -1,4 +1,4 @@
-import { scheduleDomUpdate } from "./dom"
+import { update } from "./dom"
 import type {
 	ChildDom,
 	DomListener,
@@ -9,10 +9,16 @@ import type {
 	Val,
 } from "./reactivity.types"
 
-///////// Constants ////////
+//////// Config ////////
+
+/** How many iterations of change propagation to perform before giving up, to prevent infinite loops. */
+const MAX_REACTIVE_DEPTH = 100
 
 /** How often the deletion cycle runs to clean up disconnected states, in milliseconds. */
 const CLEAN_CYCLE_INTERVAL_MS = 1000
+
+/** The persistent DOM element used for derived states and effects that do not have a specific DOM element assigned and thus must exist eternally. */
+const PERSISTENT_DOM: ChildNode = document.getRootNode().firstChild!
 
 //////// Internal State ////////
 
@@ -21,8 +27,8 @@ const CLEAN_CYCLE_INTERVAL_MS = 1000
  */
 let currentReactiveScope: ReactiveScope | undefined = undefined
 
-/** The current scoped DOM bindings, used to capture which DOM elements are created during a reactive function call.
- * Undefined if not in a reactive (derived or equivalent) scope.
+/** Any listeners that are accessed within a captured DOM scope, which are then linked to that DOM once the scope is completed.
+ * Undefined if not in a component (`mount()`) scope.
  */
 let currentDomScope: StateListener[] | undefined = undefined
 
@@ -34,6 +40,9 @@ export const ALTERED_STATES = new Set<State<any>>()
 
 /** States that are queued for deletion during the next deletion cycle. */
 export const STATE_CLEANING_QUEUE = new Set<State<any>>()
+
+/** Whether a reactive dependency propagation cycle is currently scheduled, to prevent multiple instances within the same cycle. */
+let isPropagationScheduled = false
 
 /** Whether a state cleaning cycle is currently scheduled, to prevent multiple sweeps within the same cycle. */
 let isCleanScheduled = false
@@ -64,8 +73,9 @@ export function derive<T>(func: () => T, onDispose?: () => void): State<T> {
 
 	// If there is no specific DOM for this effect, use the current DOM scope if it exists, otherwise use the persistent DOM
 	if (currentDomScope) currentDomScope.push(newListener)
-	else newListener.dom = document.getRootNode().firstChild!
+	else newListener.dom = PERSISTENT_DOM
 
+	// Inform any read but not written states that they have been derived
 	for (const getter of newReactiveScope.getters.difference(
 		newReactiveScope.setters,
 	)) {
@@ -102,6 +112,77 @@ export function unwrapVal<T>(value: Val<T>): T {
 
 ///////// Internals ////////
 
+/** Schedules propagation of reactive DOM changes for the end of this cycle, if not already. */
+export function scheduleReactivityPropagation() {
+	if (isPropagationScheduled) return
+
+	isPropagationScheduled = true
+
+	// Use setTimeout to ensure that the DOM update happens after the current event loop
+	setTimeout(propagateReactivity)
+}
+
+/** Propagates all changed state to their derived states recursively and then updates all derived DOM elements. */
+function propagateReactivity() {
+	// Re-filter altered states in case some have 'un-changed' within the same cycle
+	let alteredStates = [...ALTERED_STATES].filter(hasStateChanged)
+
+	let propagationIterations = 0
+
+	// Update all listeners, iteratively in case effects cause other effects
+	// Run at least once even if there are no altered states so listeners are still cleaned
+	do {
+		CURRENT_DERIVED_SCOPE.clear()
+
+		// Clean and collect all unique affected listeners
+		const alteredStateListeners = new Set(
+			alteredStates.flatMap(
+				(s) => (s._listeners = s._listeners.filter(isConnectedBinding)),
+			),
+		)
+
+		// Update all unique affected listeners by creating new replacements
+		alteredStateListeners.forEach(refreshListener)
+
+		// If any more states were altered in this sweep, loop again to update their listeners too
+		alteredStates = [...CURRENT_DERIVED_SCOPE]
+
+		// Cancel early if reactivity is too deep
+		if (propagationIterations++ > MAX_REACTIVE_DEPTH) {
+			console.error(
+				"Reactive propagation recursion limit exceeded. Further propagation cancelled.",
+			)
+			break
+		}
+	} while (alteredStates.length > 0)
+
+	// All newly internally updated states have been added to the altered states, so we can now filter them again to get **all** altered states this cycle
+	alteredStates = [...ALTERED_STATES].filter(hasStateChanged)
+
+	ALTERED_STATES.clear()
+
+	// Clean and collect all unique affected bindings
+	const alteredStateBindings = new Set(
+		alteredStates.flatMap(
+			(s) => (s._bindings = s._bindings.filter(isConnectedBinding)),
+		),
+	)
+
+	// Update all unique affected bindings by creating new replacements
+	for (const binding of alteredStateBindings) {
+		update(binding.dom, bind(binding.func, binding.dom))
+
+		// Disconnect the existing binding so it can be disposed later
+		// @ts-ignore ts-2322 because we narrowed the type to ensure the safety of the updating
+		binding.dom = undefined
+	}
+
+	// Update the old values of all changed states
+	alteredStates.forEach((state) => (state._old = state._val))
+
+	isPropagationScheduled = false
+}
+
 /** Replaces the given listener with a new one with freshly recaptured dependencies. */
 export function refreshListener<T>(listener: StateListener<T>): void {
 	const newReactiveScope: ReactiveScope = {
@@ -121,8 +202,9 @@ export function refreshListener<T>(listener: StateListener<T>): void {
 	// If there is no specific DOM for this listener, use the current DOM scope if it exists (which will then link this listener to the relevant element), otherwise use a persistent element
 	if (!newListener.dom)
 		if (currentDomScope) currentDomScope.push(newListener)
-		else newListener.dom = document.getRootNode().firstChild!
+		else newListener.dom = PERSISTENT_DOM
 
+	// Inform any read but not written states that they have been derived
 	for (const getter of newReactiveScope.getters.difference(
 		newReactiveScope.setters,
 	)) {
@@ -185,11 +267,11 @@ function queueCleaningCycle(): void {
  */
 function cleanQueuedStates() {
 	for (const state of STATE_CLEANING_QUEUE) {
-		state._bindings = state._bindings.filter(isConnectedBinding)
 		state._listeners = state._listeners.filter(isConnectedBinding)
+		state._bindings = state._bindings.filter(isConnectedBinding)
 
 		// If state has no bindings or listeners it should be deleted imminently, so call its onDispose function
-		if (state._bindings.length + state._listeners.length === 0)
+		if (state._listeners.length + state._bindings.length === 0)
 			state._onDispose?.()
 	}
 
@@ -216,7 +298,7 @@ export function bind(
 
 	// Ensure the new dom is an actual DOM node
 	const newDom =
-		(newDomRaw ?? document) instanceof Node
+		(newDomRaw ?? PERSISTENT_DOM) instanceof Node
 			? (newDomRaw as ChildNode)
 			: new Text(String(newDomRaw))
 
@@ -225,6 +307,7 @@ export function bind(
 		dom: newDom,
 	}
 
+	// Inform any read but not written states that they have been derived
 	for (const getter of newReactiveScope.getters.difference(
 		newReactiveScope.setters,
 	)) {
@@ -241,6 +324,11 @@ export function bind(
 	return newDom
 }
 
+/** Checks if the given state has changed since the last time its bindings were updated. */
+function hasStateChanged(state: State<any>): boolean {
+	return state._val !== state._old
+}
+
 //////// Classes ////////
 
 export class State<T> {
@@ -250,11 +338,11 @@ export class State<T> {
 	/** The previous value of the state. */
 	_old: T
 
-	/** Links to any derived DOM state. */
-	_bindings: DomListener[]
-
-	/** Links to any derived states. */
+	/** Any derived state. */
 	_listeners: StateListener[]
+
+	/** Any derived DOM assignment. */
+	_bindings: DomListener[]
 
 	/** The function to call when the state is disposed. */
 	_onDispose?: () => void
@@ -289,7 +377,7 @@ export class State<T> {
 
 		ALTERED_STATES.add(this)
 
-		scheduleDomUpdate()
+		scheduleReactivityPropagation()
 	}
 
 	/** Gets the state's current value and adds its accessor to the state's reactive effects. */
