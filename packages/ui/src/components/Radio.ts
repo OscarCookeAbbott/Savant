@@ -63,9 +63,8 @@ export default function Radio<T>({
 				Button(
 					{
 						disabled: option.disabled,
-						tabIndex: 0,
 						class: () =>
-							`button size-5 rounded-full focus-visible:mood-accent ${reactiveClass.val
+							`size-5 rounded-full focus-visible:mood-accent ${reactiveClass.val
 								?.split(" ")
 								.filter((className) =>
 									className.includes("variant"),

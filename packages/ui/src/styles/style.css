@@ -66,18 +66,18 @@
 	--color-success-900: var(--color-green-900);
 	--color-success-950: var(--color-green-950);
 
-	--color-warning: var(--color-orange-500);
-	--color-warning-50: var(--color-orange-50);
-	--color-warning-100: var(--color-orange-100);
-	--color-warning-200: var(--color-orange-200);
-	--color-warning-300: var(--color-orange-300);
-	--color-warning-400: var(--color-orange-400);
-	--color-warning-500: var(--color-orange-500);
-	--color-warning-600: var(--color-orange-600);
-	--color-warning-700: var(--color-orange-700);
-	--color-warning-800: var(--color-orange-800);
-	--color-warning-900: var(--color-orange-900);
-	--color-warning-950: var(--color-orange-950);
+	--color-caution: var(--color-orange-500);
+	--color-caution-50: var(--color-orange-50);
+	--color-caution-100: var(--color-orange-100);
+	--color-caution-200: var(--color-orange-200);
+	--color-caution-300: var(--color-orange-300);
+	--color-caution-400: var(--color-orange-400);
+	--color-caution-500: var(--color-orange-500);
+	--color-caution-600: var(--color-orange-600);
+	--color-caution-700: var(--color-orange-700);
+	--color-caution-800: var(--color-orange-800);
+	--color-caution-900: var(--color-orange-900);
+	--color-caution-950: var(--color-orange-950);
 
 	--color-critical: var(--color-red-500);
 	--color-critical-50: var(--color-red-50);

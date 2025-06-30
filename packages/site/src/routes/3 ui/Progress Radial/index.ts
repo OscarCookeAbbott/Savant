@@ -1,20 +1,21 @@
 import { html, state } from "@savant/core"
 import {
 	Checkbox,
-	CircularProgressBar,
 	Code,
 	Input,
 	Label,
+	ProgressRadial,
 	Select,
 } from "@savant/ui"
 
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-	const exampleVariant = state("variant-outline")
-	const exampleMood = state("mood-accent")
-	const exampleIndefinite = state(true)
+	const exampleVariant = state("variant-soft-outline")
+	const exampleMood = state("mood-none")
 	const exampleProgress = state(50)
+	const exampleIndefinite = state(true)
+	const exampleThickness = state(2)
 
 	return DocPage(
 		html.h1("Circular Progress Bar"),
@@ -44,14 +45,29 @@ export default function Page() {
 			},
 
 			html.div(
-				{ class: "p-8 h-48 flex items-center" },
+				{ class: "p-8 h-48 flex gap-4 items-center" },
 
-				CircularProgressBar(
+				ProgressRadial(
 					{
 						progress: exampleProgress,
 						indefinite: exampleIndefinite,
-						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+						thickness: exampleThickness,
+						class: () =>
+							`p-2 ${exampleVariant.val} ${exampleMood.val}`,
 					},
+					"Loading...",
+				),
+
+				html.span(
+					{ class: "flex gap-2 items-center" },
+
+					ProgressRadial({
+						progress: exampleProgress,
+						indefinite: exampleIndefinite,
+						thickness: exampleThickness,
+						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+					}),
+
 					"Loading...",
 				),
 			),
@@ -83,7 +99,7 @@ export default function Page() {
 							{ value: "mood-accent" },
 							{ value: "mood-info" },
 							{ value: "mood-success" },
-							{ value: "mood-warning" },
+							{ value: "mood-caution" },
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,
@@ -113,6 +129,16 @@ export default function Page() {
 						"Enabled",
 					),
 				),
+
+				Label(
+					{ content: "Thickness", class: "items-center" },
+
+					Input({
+						type: "number",
+						value: exampleThickness,
+						class: "variant-outline w-48",
+					}),
+				),
 			),
 		),
 
@@ -121,16 +147,30 @@ export default function Page() {
 				{ language: "ts" },
 
 				`\
-import { CircularProgressBar } from "savant/ui"
+import { ProgressRadial } from "savant/ui"
 
-CircularProgressBar(
+ProgressRadial(
     {
         progress: ${exampleProgress.val},
         indefinite: ${exampleIndefinite.val},
-        class: "${exampleVariant.val} ${exampleMood.val}"
+		thickness: ${exampleThickness.val},
+        class: "p-2 ${exampleVariant.val} ${exampleMood.val}"
     },
     "Loading...",
-)`,
+),
+
+html.span(
+	{ class: "flex gap-2 items-center" },
+
+	ProgressRadial({
+		progress: ${exampleProgress.val},
+		indefinite: ${exampleIndefinite.val},
+		thickness: ${exampleThickness.val},
+		class: "${exampleVariant.val} ${exampleMood.val}",
+	}),
+
+	"Loading...",
+),`,
 			),
 
 		html.h2("Signature"),
@@ -139,13 +179,13 @@ CircularProgressBar(
 			{ language: "ts" },
 
 			`\
-function CircularProgressBar(
+function ProgressRadial(
     {
         progress?: number = 50,
         indefinite?: boolean = false,
 
         ...restProps
-    }: CircularProgressBarProps,
+    }: ProgressRadialProps,
     ...children: ChildDom[]
 ): HTMLElement`,
 		),

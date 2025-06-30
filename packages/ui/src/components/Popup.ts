@@ -97,6 +97,7 @@ export default function Popup(
 
 		const targetRect = target.parentElement.getBoundingClientRect()
 
+		// Immediately update basic coordinates for smooth scrolling
 		targetCoords.val = {
 			top: targetRect.top,
 			left: targetRect.left,
@@ -108,8 +109,11 @@ export default function Popup(
 			yOffset: 0,
 		}
 
-		// Wait for DOM to apply base position
+		// Wait for DOM to apply base position before calculating collision detection
 		await delay()
+
+		// Only proceed with collision detection if popup still exists and is connected
+		if (!dom || !target.isConnected) return
 
 		const containerRect = container.getBoundingClientRect()
 		const popupRect = dom.popup.getBoundingClientRect()
@@ -130,6 +134,7 @@ export default function Popup(
 			),
 		}
 
+		// Update with collision detection offsets
 		targetCoords.val = {
 			...targetCoords.val,
 
@@ -241,6 +246,7 @@ export default function Popup(
 
 	// Update coords based on DOM events
 	window.addEventListener("resize", updateCoords)
+	window.addEventListener("scroll", updateCoords)
 
 	// Update when marker changes size
 	const resizeObserver = new ResizeObserver(updateCoords)

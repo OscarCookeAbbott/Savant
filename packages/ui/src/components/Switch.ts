@@ -5,18 +5,17 @@ import {
 	html,
 	State,
 	state,
-	svg,
 } from "@savant/core"
 
 import Button from "./Button"
 
-type CheckboxProps = ElementProps & {
+type Switch = ElementProps & {
 	value?: State<boolean>
 
 	required?: boolean
 }
 
-export default function Checkbox(
+export default function Switch(
 	{
 		value = state(false),
 
@@ -24,14 +23,14 @@ export default function Checkbox(
 
 		class: propClass,
 		...restProps
-	}: CheckboxProps,
+	}: Switch,
 	...children: ChildDom[]
 ): HTMLElement {
 	const reactiveClass = forceReactive(propClass)
 
 	return html.div(
 		{
-			name: "Checkbox",
+			name: "Switch",
 			onclick: () => (value.val = !value.val),
 			"$data-selected": value,
 			class: () =>
@@ -46,26 +45,25 @@ export default function Checkbox(
 
 		Button(
 			{
+				name: "Toggle",
 				role: "checkbox",
 				class: () =>
-					`button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-critical ${reactiveClass.val
+					`rounded-full !gap-0 justify-start !p-1 w-12 ${reactiveClass.val
 						?.split(" ")
 						.filter((className) => className.includes("variant"))
 						.join(" ")}`,
+				...restProps,
 			},
 
-			svg.svg(
-				{
-					viewBox: "0 0 100 100",
-					class: "size-4 not-group-data-selected:hidden",
-					style: "stroke-linecap:round; stroke-linejoin:round;",
-				},
+			html.span({
+				name: "Spacer",
+				class: "transition-[flex] group-data-selected:grow",
+			}),
 
-				svg.path({
-					d: "M20,60L40,80L80,20",
-					class: "stroke-current stroke-[10] fill-none",
-				}),
-			),
+			html.span({
+				name: "Thumb",
+				class: "bg-current rounded-full w-6 h-4 transition-opacity not-group-data-selected:opacity-75",
+			}),
 		),
 
 		// Hidden checkbox input for form interaction

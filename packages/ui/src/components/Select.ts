@@ -79,10 +79,9 @@ export default function Select<T>({
 	const container = Button(
 		{
 			name: "Select",
+			onclick: () => (isOpen.val = !isOpen.val),
 			class: () =>
 				`flex rounded-lg button gap-2 justify-between focus-visible:mood-accent ${reactiveClass.val}`,
-			tabIndex: 0,
-			onclick: () => (isOpen.val = !isOpen.val),
 			...restProps,
 		},
 
@@ -215,15 +214,15 @@ function SelectOptionItem<T>(
 
 		html.button(
 			{
-				class: "flex gap-2 not-disabled:hover:bg-surface-500/20 not-disabled:focus-visible:bg-surface-500/20 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed items-center group-data-selected:mood-accent group-data-selected:!bg-mood-500/25",
-				$disabled: () => option.disabled,
 				tabIndex: 0,
 				onclick: () => onClick?.(option.value),
+				$disabled: () => option.disabled,
+				class: "flex gap-2 not-disabled:hover:bg-surface-500/20 not-disabled:focus-visible:bg-surface-500/20 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed items-center group-data-selected:mood-accent group-data-selected:!bg-mood-500/25",
 			},
 
 			html.span(
 				{ class: "text-nowrap" },
-				option.name ?? String(option.value),
+				option.name ?? String(option.value ?? "None"),
 			),
 
 			svg.svg(

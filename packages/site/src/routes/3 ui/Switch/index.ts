@@ -1,5 +1,5 @@
 import { html, state } from "@savant/core"
-import { Badge, Code, Label, Select } from "@savant/ui"
+import { Code, Label, Select, Switch } from "@savant/ui"
 
 import DocPage from "../../../components/DocPage"
 
@@ -8,23 +8,9 @@ export default function Page() {
 	const exampleMood = state("mood-none")
 
 	return DocPage(
-		html.h1("Badge"),
+		html.h1("Switch"),
 
-		html.blockquote("Delivers small but important pieces of information."),
-
-		html.h2("Design"),
-
-		html.p(
-			"Badges are designed to be a small, unobtrusive elements that convey important information concisely. It is typically used to highlight new or unread items, notifications, or status updates.",
-		),
-
-		html.p(
-			"Badges use a smaller font size and padding to make them the same height as standard text, ensuring it fits seamlessly into layouts.",
-		),
-
-		html.p(
-			"Badges color the text slightly based on mood to indicate they are not interactive, differentiating them from small buttons which instead use the standard foreground text color.",
-		),
+		html.blockquote("Offers clear binary choices."),
 
 		html.h2("Demo"),
 
@@ -37,12 +23,13 @@ export default function Page() {
 			html.div(
 				{ class: "p-8 h-48 flex items-center" },
 
-				Badge(
+				Switch(
 					{
-						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+						class: () =>
+							`w-48 ${exampleVariant.val} ${exampleMood.val}`,
 					},
 
-					"Demo Badge",
+					"Demo Switch",
 				),
 			),
 
@@ -88,11 +75,11 @@ export default function Page() {
 				{ language: "ts" },
 
 				`\
-import { Badge } from "savant/ui"
+import { Switch } from "savant/ui"
 
-Badge(
-    { class: "${exampleVariant.val} ${exampleMood.val}" },
-    "Demo Badge",
+Switch(
+    { class: \`${exampleVariant.val} ${exampleMood.val}\` },
+    "Demo Switch",
 )`,
 			),
 
@@ -102,8 +89,12 @@ Badge(
 			{ language: "ts" },
 
 			`\
-function Badge(
-    props: HTMLElementProps,
+function Switch(
+    props: {
+        value: State<boolean> = state(false),
+        required: boolean = false,
+        ...HTMLElementProps
+    },
     ...children: ChildDom[]
 ): HTMLElement`,
 		),

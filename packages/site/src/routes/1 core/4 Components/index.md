@@ -1,3 +1,3 @@
 # Components
 
-> Create your own composable pieces.
+> Create composable functionality.

@@ -4,8 +4,8 @@ import { Button, Code, Label, Select } from "@savant/ui"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-	const exampleVariant = state("variant-filled")
-	const exampleMood = state("mood-accent")
+	const exampleVariant = state("variant-soft-outline")
+	const exampleMood = state("mood-none")
 	const extraClasses = state([])
 
 	return DocPage(
@@ -67,7 +67,7 @@ export default function Page() {
 							{ value: "mood-accent" },
 							{ value: "mood-info" },
 							{ value: "mood-success" },
-							{ value: "mood-warning" },
+							{ value: "mood-caution" },
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,

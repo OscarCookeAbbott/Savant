@@ -17,8 +17,11 @@ export default function Link(
 	{
 		replace = false,
 		disabled = false,
+
 		onclick,
 		href,
+		tabIndex = 0,
+
 		class: propClass,
 		...restProps
 	}: LinkProps,
@@ -29,6 +32,7 @@ export default function Link(
 	return html.a(
 		{
 			href,
+			tabIndex,
 			onclick(this: GlobalEventHandlers, e: MouseEvent) {
 				e.preventDefault()
 
@@ -40,7 +44,6 @@ export default function Link(
 
 				if (typeof onclick === "function") onclick.call(this, e)
 			},
-			tabIndex: 0,
 			class: () =>
 				`not-disabled:focus-visible:focus-ring ${reactiveClass.val}`,
 			...restProps,

@@ -70,7 +70,7 @@ export default function Page() {
 							{ value: "mood-accent" },
 							{ value: "mood-info" },
 							{ value: "mood-success" },
-							{ value: "mood-warning" },
+							{ value: "mood-caution" },
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,

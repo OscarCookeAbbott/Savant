@@ -44,7 +44,6 @@ export default function SignIn(): HTMLElement {
 
 					Button(
 						{
-							type: "button",
 							class: "mood-accent text-mood-500",
 						},
 
@@ -106,7 +105,6 @@ export default function SignIn(): HTMLElement {
 
 			Button(
 				{
-					type: "button",
 					class: "hover:variant-soft",
 				},
 				"Cancel",
@@ -114,7 +112,6 @@ export default function SignIn(): HTMLElement {
 
 			Button(
 				{
-					type: "button",
 					class: "variant-filled mood-accent",
 				},
 				"Sign In",
