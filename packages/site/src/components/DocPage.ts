@@ -3,7 +3,9 @@ import { TableOfContents } from "@savant/ui"
 
 export default function DocPage(...children: ChildDom[]): HTMLElement {
 	const content = html.div(
-		{ class: "language-typescript w-2xl *:scroll-m-21" },
+		{
+			class: "*:language-typescript w-2xl not-md:max-w-full *:scroll-m-21",
+		},
 		...children,
 	)
 
@@ -12,5 +14,9 @@ export default function DocPage(...children: ChildDom[]): HTMLElement {
 		content,
 	)
 
-	return html.div({ class: "flex gap-8 items-start" }, content, toc)
+	return html.div(
+		{ class: "flex gap-8 justify-center items-start" },
+		content,
+		toc,
+	)
 }

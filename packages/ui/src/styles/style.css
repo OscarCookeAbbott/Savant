@@ -108,7 +108,7 @@
 
 @layer base {
 	* {
-		@apply selection:!bg-surface-500/50 appearance-none outline-transparent;
+		@apply selection:!bg-surface-500/25 appearance-none outline-transparent;
 	}
 
 	:root {
@@ -494,7 +494,7 @@
 
 @utility bg-background-* {
 	background: white;
-	background: color-mix(in oklab, white --value(integer) %, transparent);
+	background: color-mix(in oklab, white --value(integer)%, transparent);
 
 	@variant dark {
 		background: var(--color-surface-950);

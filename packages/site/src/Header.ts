@@ -1,25 +1,39 @@
-import { html, svg } from "@savant/core"
+import { html, State, svg } from "@savant/core"
 import { Route } from "@savant/routing"
-import { Badge, Tooltip } from "@savant/ui"
+import { Badge, Button, Tooltip } from "@savant/ui"
 
 import logo from "../../../logo.svg"
 import SiteSearch from "./SiteSearch"
 
 interface HeaderProps {
 	searchLinks: (Route & { name: string })[]
+	navbarOpen: State<boolean>
 }
 
-export default function Header({ searchLinks }: HeaderProps): HTMLElement {
-	const headerSectionClasses = "flex gap-4 items-center"
+export default function Header({
+	searchLinks,
+	navbarOpen,
+}: HeaderProps): HTMLElement {
+	const headerSectionClasses = "flex gap-2 items-center"
 
 	return html.header(
 		{
 			name: "Header",
-			class: "bg-background-50 fixed top-0 flex w-full justify-between gap-4 px-6 py-2 glass border-b border-surface-500/50 z-10",
+			class: "bg-background-50 fixed top-0 flex w-screen justify-between gap-4 not-lg:px-2 px-6 py-2 glass border-b border-surface-500/50 z-10",
 		},
 
 		html["left-content"](
 			{ class: headerSectionClasses },
+
+			Button(
+				{
+					name: "Navbar Toggle",
+					onclick: () => (navbarOpen.val = !navbarOpen.val),
+					class: "rounded-full text-xl lg:hidden hover:variant-soft active:variant-soft",
+				},
+
+				html.i("menu"),
+			),
 
 			html.img({
 				src: logo,
@@ -27,20 +41,6 @@ export default function Header({ searchLinks }: HeaderProps): HTMLElement {
 			}),
 
 			html.span({ class: "text-xl font-bold" }, "Savant"),
-
-			Badge(
-				{
-					class: "cursor-help variant-filled mood-info rounded-full control-sm",
-				},
-
-				html.i("construction"),
-
-				Tooltip(
-					{ class: "mood-info" },
-
-					"Savant is still under construction",
-				),
-			),
 		),
 
 		html["right-content"](

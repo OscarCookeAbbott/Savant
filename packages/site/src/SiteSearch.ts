@@ -27,17 +27,26 @@ export default function SiteSearch(searchLinks: (Route & { name: string })[]) {
 			type: "search",
 			placeholder: "Search...",
 			value: searchText,
-			lead: html.i("search"),
+			lead: html.i({ class: "text-xl" }, "search"),
 			"$data-open": searchOpen,
-			class: "variant-outline transition-all min-w-32 w-32 rounded-full focus-within:w-xs focus-within:variant-soft-outline data-open:w-xs data-open:variant-soft-outline",
+			class: "group md:variant-outline not-md:hover:variant-soft cursor-pointer transition-all not-md:min-w-9 min-w-32 w-0 rounded-2xl focus-within:w-xs focus-within:variant-soft-outline data-open:w-xs data-open:variant-soft-outline not-md:*:placeholder:opacity-0 *:placeholder:transition-opacity not-md:data-open:fixed not-md:data-open:top-21 left-4 right-4 not-md:data-open:w-auto z-20",
 			onfocus: () => (searchOpen.val = true),
 		},
+		() =>
+			Popup(
+				{
+					visible: searchOpen,
+				},
+				html.div({
+					class: "pointer-events-none md:hidden not-group-data-open:hidden fixed left-0 top-0 w-screen h-screen bg-background-50 glass",
+				}),
+			),
 
 		() =>
 			Popup(
 				{
 					visible: searchOpen,
-					class: "card shadow-xl vessel glass rounded-2xl w-xs max-w-full transition-opacity starting:opacity-0 overflow-hidden",
+					class: "card shadow-xl vessel glass rounded-2xl w-full max-w-full transition-opacity starting:opacity-0 overflow-hidden",
 				},
 
 				() =>

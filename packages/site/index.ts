@@ -1,6 +1,6 @@
 import "./style.css"
 
-import { html, mount } from "@savant/core"
+import { html, mount, state } from "@savant/core"
 import { Router } from "@savant/routing"
 
 import Header from "./src/Header"
@@ -86,27 +86,33 @@ const routes = pages.flatMap((page) => [
 ])
 
 function App() {
+	const navbarOpen = state(true)
+
 	return html.div(
 		{
 			name: "App",
-			class: "flex flex-col relative size-full",
+			class: "flex flex-col relative size-screen",
 		},
 
-		Header({ searchLinks: routes }),
+		Header({ searchLinks: routes, navbarOpen }),
 
 		html.div(
 			{ class: "flex flex-1" },
 
-			Navbar({ options: pages, class: "min-w-64 not-lg:hidden" }),
+			Navbar({
+				options: pages,
+				"$data-hidden": navbarOpen,
+				class: "min-w-64 not-md:w-screen not-lg:data-hidden:hidden",
+			}),
 
 			html.div(
 				{
-					class: "lg:ml-64 overflow-clip flex flex-1 justify-center",
+					class: "lg:ml-64 overflow-clip w-full flex flex-1 justify-center",
 				},
 
 				html.div(
 					{
-						class: "flex flex-col px-8 pt-24 pb-16 gap-4",
+						class: "flex flex-col w-full px-8 pt-24 pb-16 gap-4 not-lg:px-4 not-lg:pt-16 not-lg:pb-8",
 					},
 
 					Router({
