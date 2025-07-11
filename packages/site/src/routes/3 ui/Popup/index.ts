@@ -60,7 +60,7 @@ export default function Page() {
 							{ value: PopupTrigger.FOCUS_OUT },
 						],
 						value: exampleTriggers,
-						class: "variant-outline w-48",
+						class: "variant-outline hover:variant-soft w-48",
 					}),
 				),
 			),

@@ -85,15 +85,17 @@ otherNum++
 > 43 25
 ```
 
+However this can occasionally lead to unexpected behaviour, so keep this in mind when writing dependent reactivity intended _within_ the standard 'tick'.
+
 ### Derived states are states
 
 The `derive()` function itself creates a new `State` which reacts to any dependency changes, it is just a state that should not be manually assigned to.
 
 ### Why arrow functions are necessary
 
-Arrow functions `() => ...` are used for _all_ reactive dependence in Savant because it is the only way to defer and/or repeat execution of a clause beyond the scope of its definition.
+Arrow functions `() => ...` are used for _all_ reactive dependence in Savant because it is the only way to defer and/or repeat execution of an _expression_ beyond the scope of its definition.
 
-Other reactive frameworks that allow derived state without arrow function syntax (eg. `derive(num * 2)`) use a _compiler_ to allow this shorthand.
+Other reactive frameworks that allow derived state without arrow function syntax (eg. `derive(num * 2)`) use a _compiler_ to allow this shorthand, but ultimately work via the exact same mechanism.
 
 ### How it works
 

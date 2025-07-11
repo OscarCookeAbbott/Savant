@@ -4,7 +4,7 @@ import { TableOfContents } from "@savant/ui"
 export default function DocPage(...children: ChildDom[]): HTMLElement {
 	const content = html.div(
 		{
-			class: "*:language-typescript w-2xl not-md:max-w-full *:scroll-m-21",
+			class: "**:language-typescript w-2xl not-md:max-w-full *:scroll-m-21",
 		},
 		...children,
 	)

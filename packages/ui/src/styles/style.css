@@ -195,7 +195,7 @@
 	}
 
 	.button {
-		@apply control focus-visible:focus-ring disabled:text-swatch-700-foreground not-disabled:hover:brightness-110 not-disabled:active:brightness-95 flex cursor-pointer items-center justify-center gap-1 outline-0 disabled:cursor-not-allowed;
+		@apply control disabled:text-swatch-700-foreground not-disabled:hover:brightness-110 not-disabled:active:brightness-95 flex cursor-pointer items-center justify-center gap-1 outline-0 disabled:cursor-not-allowed;
 
 		&.icon {
 			@apply aspect-square;
@@ -248,7 +248,7 @@
 
 /* VARIANTS */
 @utility control {
-	@apply rounded-lg px-2 py-1 ring-inset;
+	@apply focus-visible:focus-ring rounded-lg px-2 py-1 ring-inset;
 }
 
 @utility control-sm {

@@ -80,8 +80,9 @@ export default function Select<T>({
 		{
 			name: "Select",
 			onclick: () => (isOpen.val = !isOpen.val),
+			"$data-open": isOpen,
 			class: () =>
-				`flex rounded-lg button gap-2 justify-between focus-visible:mood-accent ${reactiveClass.val}`,
+				`flex rounded-lg button gap-2 justify-between focus-visible:mood-accent data-open:invisible ${reactiveClass.val}`,
 			...restProps,
 		},
 

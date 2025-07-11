@@ -101,13 +101,14 @@ function App() {
 
 			Navbar({
 				options: pages,
-				"$data-hidden": navbarOpen,
-				class: "min-w-64 not-md:w-screen not-lg:data-hidden:hidden",
+				"$data-hidden": () => !navbarOpen.val,
+				class: "min-w-64 not-md:w-screen data-hidden:hidden",
 			}),
 
 			html.div(
 				{
-					class: "lg:ml-64 overflow-clip w-full flex flex-1 justify-center",
+					"$data-navbar": navbarOpen,
+					class: "data-navbar:lg:ml-64 overflow-clip w-full flex flex-1 justify-center",
 				},
 
 				html.div(

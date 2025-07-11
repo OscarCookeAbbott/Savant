@@ -53,29 +53,7 @@ const container = html.div(usernameInput, usernameDisplay)
 mount(document, container)
 ```
 
-## Optional props
-
-Any props prefixed with `$` will be automatically added and removed (with the prefix removed) whenever the given value/state-value becomes truthy/falsy.
-
-For example, the following element will hide whenever the state is odd, and reappear when it is even.
-
-```typescript
-const num = state(0)
-
-const dom = html.span({ $hidden: () => num.val % 2 == 0 }, num)
-```
-
-## Context props
-
-Any props prefixed with `context-` will set [context]("/#!/core/context") of that name (with the prefix removed) on the element instead of setting a DOM attribute.
-
-This can be combine with optional props if desired.
-
-## Context-out props
-
-Any props prefixed with `context-out-` will retrieve context of that name (with the)
-
-### Scoping Reactions
+## Scoping Reactions
 
 It is important to consider the scoping of your reactivity when creating components, because reactivity is bound to the lowest enclosing reactive scope (including element definitions), thus in the following example the first button is efficient because only its content will update when `username` is changed, while the second button will be entirely destroyed and recreated instead.
 
@@ -96,6 +74,30 @@ Similarly, if you encounter random inexplicable behaviour with elements disappea
 This may sound like a hassle, but most of the time you won't even need to consider it! Once you do encounter a scoping issue you will very quickly learn to intuit when you do need to consider your scoping and how easy it is to do.
 
 Generally reactivity should be scoped at the lowest level possible, which typically involves placing a preceding arrow function `() =>`.
+
+## Element Properties
+
+### Optional props
+
+Any props prefixed with `$` will be automatically added and removed (with the prefix removed) whenever the given value/state-value becomes truthy/falsy.
+
+For example, the following element will hide whenever the state is odd, and reappear when it is even.
+
+```typescript
+const num = state(0)
+
+const dom = html.span({ $hidden: () => num.val % 2 == 0 }, num)
+```
+
+### Context props
+
+Any props prefixed with `context-` will set [context]("/#!/core/context") of that name (with the prefix removed) on the element instead of setting a DOM attribute.
+
+This can be combine with optional props if desired.
+
+### Context-out props
+
+Any props prefixed with `context-out-` will retrieve context of that name (with the)
 
 ## Signature
 

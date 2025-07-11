@@ -55,8 +55,10 @@ export default function Input<T extends string | number>(
 		onValidityChanged?.(inputElement.checkValidity())
 	}
 
+	const uuid = `input-${crypto.randomUUID().slice(0, 8)}`
+
 	const inputElement = html.input({
-		id: "input",
+		id: uuid,
 		class: "input flex-1 min-w-0",
 		type: type,
 		value: () => value.val ?? "",
@@ -77,9 +79,9 @@ export default function Input<T extends string | number>(
 		// Ensure elements to enable flex
 		() =>
 			["boolean", "string", "number", "bigint"].includes(typeof lead)
-				? html.label({ for: "input" }, html.span(lead))
+				? html.label({ for: uuid }, html.span(lead))
 				: lead != undefined
-					? html.label({ for: "input" }, lead)
+					? html.label({ for: uuid }, lead)
 					: undefined,
 
 		inputElement,
@@ -89,9 +91,9 @@ export default function Input<T extends string | number>(
 		// Ensure elements to enable flex
 		() =>
 			["boolean", "string", "number", "bigint"].includes(typeof trail)
-				? html.label({ for: "input" }, html.span(trail))
+				? html.label({ for: uuid }, html.span(trail))
 				: trail != undefined
-					? html.label({ for: "input" }, trail)
+					? html.label({ for: uuid }, trail)
 					: undefined,
 	)
 }

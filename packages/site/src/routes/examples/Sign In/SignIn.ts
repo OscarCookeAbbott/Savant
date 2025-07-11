@@ -63,6 +63,7 @@ export default function SignIn(): HTMLElement {
 					{
 						onclick: () =>
 							(passwordVisible.val = !passwordVisible.val),
+						class: "p-0",
 					},
 
 					Icon(

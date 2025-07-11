@@ -54,7 +54,7 @@ export default function Page() {
 							{ value: "variant-filled" },
 						],
 						value: exampleVariant,
-						class: "variant-outline w-48",
+						class: "variant-outline hover:variant-soft w-48",
 					}),
 				),
 
@@ -71,7 +71,7 @@ export default function Page() {
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,
-						class: "variant-outline w-48",
+						class: "variant-outline hover:variant-soft w-48",
 					}),
 				),
 
@@ -85,7 +85,7 @@ export default function Page() {
 							{ value: "active:lowered" },
 						],
 						value: extraClasses,
-						class: "variant-outline w-48",
+						class: "variant-outline hover:variant-soft w-48",
 					}),
 				),
 			),

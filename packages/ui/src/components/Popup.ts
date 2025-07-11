@@ -97,10 +97,16 @@ export default function Popup(
 
 		const targetRect = target.parentElement.getBoundingClientRect()
 
+		// Take into account visual viewport offset (in case of zoom etc)
+		const viewportOffset = {
+			top: visualViewport?.offsetTop ?? 0,
+			left: visualViewport?.offsetLeft ?? 0,
+		}
+
 		// Immediately update basic coordinates for smooth scrolling
 		targetCoords.val = {
-			top: targetRect.top,
-			left: targetRect.left,
+			top: targetRect.top + viewportOffset.top,
+			left: targetRect.left + viewportOffset.left,
 
 			width: targetRect.width,
 			height: targetRect.height,

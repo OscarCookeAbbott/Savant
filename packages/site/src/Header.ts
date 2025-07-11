@@ -1,6 +1,6 @@
 import { html, State, svg } from "@savant/core"
 import { Route } from "@savant/routing"
-import { Badge, Button, Tooltip } from "@savant/ui"
+import { Button, Tooltip } from "@savant/ui"
 
 import logo from "../../../logo.svg"
 import SiteSearch from "./SiteSearch"
@@ -29,10 +29,12 @@ export default function Header({
 				{
 					name: "Navbar Toggle",
 					onclick: () => (navbarOpen.val = !navbarOpen.val),
-					class: "rounded-full text-xl lg:hidden hover:variant-soft active:variant-soft",
+					class: "group text-xl hover:variant-soft active:variant-soft",
 				},
 
-				html.i("menu"),
+				html.i(() =>
+					navbarOpen.val ? "left_panel_close" : "left_panel_open",
+				),
 			),
 
 			html.img({
@@ -51,9 +53,10 @@ export default function Header({
 			html.a(
 				{
 					name: "GitHub",
-					class: "control !rounded-full **:fill-current hover:variant-soft text-lg !p-2",
+					class: "control **:fill-current hover:variant-soft active:variant-soft text-xl !p-2",
 					href: "https://github.com/OscarCookeAbbott/Savant",
 					target: "_blank",
+					tabIndex: 0,
 				},
 
 				svg.svg(
