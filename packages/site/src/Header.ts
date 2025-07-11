@@ -39,7 +39,7 @@ export default function Header({
 
 			html.img({
 				src: logo,
-				class: "size-12 -m-2 not-dark:brightness-0",
+				class: "size-8 not-dark:brightness-0",
 			}),
 
 			html.span({ class: "text-xl font-bold" }, "Savant"),

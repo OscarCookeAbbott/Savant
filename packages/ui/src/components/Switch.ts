@@ -32,7 +32,7 @@ export default function Switch(
 		{
 			name: "Switch",
 			onclick: () => (value.val = !value.val),
-			"$data-selected": value,
+			"$data-checked": value,
 			class: () =>
 				`flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
 					?.split(" ")
@@ -57,12 +57,12 @@ export default function Switch(
 
 			html.span({
 				name: "Spacer",
-				class: "transition-[flex] group-data-selected:grow",
+				class: "transition-[flex] group-data-checked:grow",
 			}),
 
 			html.span({
 				name: "Thumb",
-				class: "bg-current rounded-full w-6 h-4 transition-opacity not-group-data-selected:opacity-75",
+				class: "bg-current rounded-full w-6 h-4 transition-opacity not-group-data-checked:opacity-75",
 			}),
 		),
 

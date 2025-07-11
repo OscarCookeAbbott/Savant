@@ -33,7 +33,7 @@ export default function Checkbox(
 		{
 			name: "Checkbox",
 			onclick: () => (value.val = !value.val),
-			"$data-selected": value,
+			"$data-checked": value,
 			class: () =>
 				`flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
 					?.split(" ")
@@ -57,7 +57,7 @@ export default function Checkbox(
 			svg.svg(
 				{
 					viewBox: "0 0 100 100",
-					class: "size-4 not-group-data-selected:hidden",
+					class: "size-4 not-group-data-checked:hidden",
 					style: "stroke-linecap:round; stroke-linejoin:round;",
 				},
 

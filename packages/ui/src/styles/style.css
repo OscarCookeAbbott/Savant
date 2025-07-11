@@ -696,7 +696,7 @@
 
 	background-image: var(--zebra);
 
-	background-attachment: fixed;
+	background-attachment: var(--zebra-attachment);
 }
 
 @utility zebra {
@@ -713,7 +713,9 @@
 	--zebra-angle: -45deg;
 	--zebra-opacity: 100%;
 
-	--zebra-speed: 0;
+	--zebra-animation: unset;
+	--zebra-attachment: initial;
+	--zebra-speed: 1;
 
 	--zebra: repeating-linear-gradient(
 		var(--zebra-angle),
@@ -724,7 +726,7 @@
 			calc(var(--zebra-width-from) + var(--zebra-width-to))
 	);
 
-	animation: ZebraSlide calc(1s / var(--zebra-speed)) linear infinite;
+	animation: var(--zebra-animation);
 }
 
 @keyframes ZebraSlide {
@@ -738,6 +740,11 @@
 					sin(calc(var(--zebra-angle) + 90deg))
 			);
 	}
+}
+
+@utility zebra-animate {
+	--zebra-animation: ZebraSlide calc(1s / var(--zebra-speed)) linear infinite;
+	--zebra-attachment: fixed;
 }
 
 @utility zebra-from-* {
