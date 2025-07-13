@@ -333,185 +333,106 @@
 
 @utility text-swatch-50-* {
 	color: --value(--color-* -50);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -50) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -50) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -950);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -950) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -950) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-100-* {
 	color: --value(--color-* -100);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -100) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -100) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -900);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -900) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -900) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-200-* {
 	color: --value(--color-* -200);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -200) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -200) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -800);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -800) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -800) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-300-* {
 	color: --value(--color-* -300);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -300) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -300) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -700);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -700) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -700) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-400-* {
 	color: --value(--color-* -400);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -400) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -400) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -600);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -600) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -600) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-500-* {
-	@apply text-[--value(--color-*-500)];
+	color: --value(--color-*-500);
+	color: --alpha(--value(--color-*-500) / --modifier(integer)%);
 }
 
 @utility text-swatch-600-* {
 	color: --value(--color-* -600);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -600) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -600) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -400);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -400) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -400) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-700-* {
 	color: --value(--color-* -700);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -700) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -700) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -300);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -300) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -300) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-800-* {
 	color: --value(--color-* -800);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -800) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -800) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -200);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -200) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -200) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-900-* {
 	color: --value(--color-* -900);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -900) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -900) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -100);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -100) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -100) / --modifier(integer)%);
 	}
 }
 
 @utility text-swatch-950-* {
 	color: --value(--color-* -950);
-	color: color-mix(
-		in oklab,
-		--value(--color-* -950) --modifier(integer) %,
-		transparent
-	);
+	color: --alpha(--value(--color-* -950) / --modifier(integer)%);
 
 	@variant dark {
 		color: --value(--color- * -50);
-		color: color-mix(
-			in oklab,
-			--value(--color- * -50) --modifier(integer) %,
-			transparent
-		);
+		color: --alpha(--value(--color- * -50) / --modifier(integer)%);
 	}
 }
 
@@ -526,199 +447,116 @@
 
 @utility bg-background-* {
 	background: white;
-	background: color-mix(in oklab, white --value(integer) %, transparent);
+	background: --alpha(white / --value(integer));
 
 	@variant dark {
 		background: var(--color-surface-950);
-		background: color-mix(
-			in oklab,
-			var(--color-surface-950) --value(integer) %,
-			transparent
-		);
+		background: --alpha(var(--color-surface-950) / --value(integer)%);
 	}
 }
 
 @utility bg-swatch-50-* {
 	background: --value(--color-* -50);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -50) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -50) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -950);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -950) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -950) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-100-* {
 	background: --value(--color-* -100);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -100) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -100) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -900);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -900) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -900) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-200-* {
 	background: --value(--color-* -200);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -200) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -200) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -800);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -800) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -800) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-300-* {
 	background: --value(--color-* -300);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -300) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -300) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -700);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -700) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -700) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-400-* {
 	background: --value(--color-* -400);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -400) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -400) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -600);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -600) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -600) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-500-* {
-	@apply bg-[color-mix(in_oklab,_--value(--color-*-500)_--modifier(integer)%,_transparent)];
+	background: --value(--color-*-500);
+	background: --alpha(--value(--color-*-500) / --modifier(integer)%);
 }
 
 @utility bg-swatch-600-* {
 	background: --value(--color-* -600);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -600) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -600) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -400);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -400) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -400) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-700-* {
 	background: --value(--color-* -700);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -700) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -700) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -300);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -300) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -300) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-800-* {
 	background: --value(--color-* -800);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -800) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -800) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -200);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -200) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -200) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-900-* {
 	background: --value(--color-* -900);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -900) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -900) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -100);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -100) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -100) / --modifier(integer)%);
 	}
 }
 
 @utility bg-swatch-950-* {
 	background: --value(--color-* -950);
-	background: color-mix(
-		in oklab,
-		--value(--color-* -950) --modifier(integer) %,
-		transparent
-	);
+	background: --alpha(--value(--color-* -950) / --modifier(integer)%);
 
 	@variant dark {
 		background: --value(--color- * -50);
-		background: color-mix(
-			in oklab,
-			--value(--color- * -50) --modifier(integer) %,
-			transparent
-		);
+		background: --alpha(--value(--color- * -50) / --modifier(integer)%);
 	}
 }
 
@@ -732,11 +570,7 @@
 }
 
 @utility zebra {
-	--zebra-color-from: color-mix(
-		in oklab,
-		var(--color-surface-500) var(--zebra-opacity),
-		transparent
-	);
+	--zebra-color-from: --alpha(var(--color-surface-500) / var(--zebra-opacity));
 	--zebra-color-to: transparent;
 
 	--zebra-width-from: 0.5rem;
@@ -780,19 +614,11 @@
 }
 
 @utility zebra-from-* {
-	--zebra-color-from: color-mix(
-		in oklab,
-		--value(--color-*) var(--zebra-opacity),
-		transparent
-	);
+	--zebra-color-from: --alpha(--value(--color-*) / var(--zebra-opacity));
 }
 
 @utility zebra-to-* {
-	--zebra-color-to: color-mix(
-		in oklab,
-		--value(--color-*) var(--zebra-opacity),
-		transparent
-	);
+	--zebra-color-to: --alpha(--value(--color-*) / var(--zebra-opacity));
 }
 
 @utility zebra-width-* {
