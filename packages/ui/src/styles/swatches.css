@@ -1,0 +1,236 @@
+@import "tailwindcss";
+
+/******** Foreground ********/
+
+/* Tailwind can't ingest two arguments in one class so we must make individual utilities for each swatch shade. */
+/* Tailwind doesn't support arguments being anywhere but the end of the class name, so we need to order the shade number weirdly. */
+
+@utility text-swatch-50-* {
+	color: --value(--color-* -50);
+	color: --alpha(--value(--color-* -50) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -950);
+		color: --alpha(--value(--color- * -950) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-100-* {
+	color: --value(--color-* -100);
+	color: --alpha(--value(--color-* -100) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -900);
+		color: --alpha(--value(--color- * -900) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-200-* {
+	color: --value(--color-* -200);
+	color: --alpha(--value(--color-* -200) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -800);
+		color: --alpha(--value(--color- * -800) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-300-* {
+	color: --value(--color-* -300);
+	color: --alpha(--value(--color-* -300) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -700);
+		color: --alpha(--value(--color- * -700) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-400-* {
+	color: --value(--color-* -400);
+	color: --alpha(--value(--color-* -400) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -600);
+		color: --alpha(--value(--color- * -600) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-500-* {
+	color: --value(--color-*-500);
+	color: --alpha(--value(--color-*-500) / --modifier(integer)%);
+}
+
+@utility text-swatch-600-* {
+	color: --value(--color-* -600);
+	color: --alpha(--value(--color-* -600) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -400);
+		color: --alpha(--value(--color- * -400) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-700-* {
+	color: --value(--color-* -700);
+	color: --alpha(--value(--color-* -700) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -300);
+		color: --alpha(--value(--color- * -300) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-800-* {
+	color: --value(--color-* -800);
+	color: --alpha(--value(--color-* -800) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -200);
+		color: --alpha(--value(--color- * -200) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-900-* {
+	color: --value(--color-* -900);
+	color: --alpha(--value(--color-* -900) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -100);
+		color: --alpha(--value(--color- * -100) / --modifier(integer)%);
+	}
+}
+
+@utility text-swatch-950-* {
+	color: --value(--color-* -950);
+	color: --alpha(--value(--color-* -950) / --modifier(integer)%);
+
+	@variant dark {
+		color: --value(--color- * -50);
+		color: --alpha(--value(--color- * -50) / --modifier(integer)%);
+	}
+}
+
+/******** Background ********/
+
+@utility bg-background {
+	background: white;
+
+	@variant dark {
+		background: var(--color-surface-950);
+	}
+}
+
+@utility bg-background-* {
+	background: white;
+	background: --alpha(white / --value(integer));
+
+	@variant dark {
+		background: var(--color-surface-950);
+		background: --alpha(var(--color-surface-950) / --value(integer)%);
+	}
+}
+
+@utility bg-swatch-50-* {
+	background: --value(--color-* -50);
+	background: --alpha(--value(--color-* -50) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -950);
+		background: --alpha(--value(--color- * -950) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-100-* {
+	background: --value(--color-* -100);
+	background: --alpha(--value(--color-* -100) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -900);
+		background: --alpha(--value(--color- * -900) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-200-* {
+	background: --value(--color-* -200);
+	background: --alpha(--value(--color-* -200) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -800);
+		background: --alpha(--value(--color- * -800) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-300-* {
+	background: --value(--color-* -300);
+	background: --alpha(--value(--color-* -300) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -700);
+		background: --alpha(--value(--color- * -700) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-400-* {
+	background: --value(--color-* -400);
+	background: --alpha(--value(--color-* -400) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -600);
+		background: --alpha(--value(--color- * -600) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-500-* {
+	background: --value(--color-*-500);
+	background: --alpha(--value(--color-*-500) / --modifier(integer)%);
+}
+
+@utility bg-swatch-600-* {
+	background: --value(--color-* -600);
+	background: --alpha(--value(--color-* -600) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -400);
+		background: --alpha(--value(--color- * -400) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-700-* {
+	background: --value(--color-* -700);
+	background: --alpha(--value(--color-* -700) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -300);
+		background: --alpha(--value(--color- * -300) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-800-* {
+	background: --value(--color-* -800);
+	background: --alpha(--value(--color-* -800) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -200);
+		background: --alpha(--value(--color- * -200) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-900-* {
+	background: --value(--color-* -900);
+	background: --alpha(--value(--color-* -900) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -100);
+		background: --alpha(--value(--color- * -100) / --modifier(integer)%);
+	}
+}
+
+@utility bg-swatch-950-* {
+	background: --value(--color-* -950);
+	background: --alpha(--value(--color-* -950) / --modifier(integer)%);
+
+	@variant dark {
+		background: --value(--color- * -50);
+		background: --alpha(--value(--color- * -50) / --modifier(integer)%);
+	}
+}

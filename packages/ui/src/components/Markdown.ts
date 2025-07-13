@@ -13,7 +13,7 @@ export default function Markdown(
 	const mdHtml = mdConverter.makeHtml(markdown)
 
 	const mdDom = html.div({
-		class: `style-markup ${reactiveClass.val}`,
+		class: `markup ${reactiveClass.val}`,
 		innerHTML: mdHtml,
 		...restProps,
 	})

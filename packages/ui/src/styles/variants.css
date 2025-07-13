@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@utility variant-outline {
+	@apply ring-mood-500/50 ring;
+}
+
+@utility variant-outline-strong {
+	@apply ring-mood-500 ring;
+}
+
+@utility variant-soft {
+	@apply bg-mood-500/15;
+}
+
+@utility variant-soft-strong {
+	@apply bg-mood-500/30;
+}
+
+@utility variant-soft-outline {
+	@apply variant-soft variant-outline;
+}
+
+@utility variant-soft-outline-strong {
+	@apply variant-soft-strong variant-outline-strong;
+}
+
+@utility variant-filled {
+	@apply bg-mood-500 text-swatch-100-foreground;
+}
+
+@utility variant-pack-minimal {
+	@apply not-disabled:hover:variant-soft data-selected:variant-filled;
+}
+
+@utility variant-pack-outline {
+	@apply variant-outline not-disabled:hover:variant-soft-outline data-selected:variant-filled;
+}
+
+@utility variant-pack-soft {
+	@apply variant-soft not-disabled:hover:variant-soft-strong data-selected:variant-filled;
+}
+
+@utility variant-pack-soft-outline {
+	@apply variant-soft-outline not-disabled:hover:variant-soft-outline-strong data-selected:variant-filled;
+}
+
+@utility variant-pack-filled {
+	@apply variant-filled;
+}

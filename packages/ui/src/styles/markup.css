@@ -1,13 +1,55 @@
 @import "./style.css";
 
 @layer components {
-	.style-markup {
-		a {
+	.markup {
+		a,
+		.a {
 			@apply text-accent-500 not-disabled:hover:brightness-110 not-disabled:active:brightness-95 visited:text-purple-500 hover:underline;
 		}
 
-		hr {
+		hr,
+		.hr {
 			@apply mt-4 border-current;
+		}
+
+		h1,
+		.h1 {
+			@apply mb-4 mt-12 text-3xl font-bold first:mt-0;
+		}
+
+		h2,
+		.h2 {
+			@apply mb-2 mt-8 text-xl font-semibold first:mt-0 [h2_+_&]:mt-4;
+		}
+
+		h3,
+		.h3 {
+			@apply mt-8 text-lg font-semibold first:mt-0 [h2_+_&]:mt-4;
+		}
+
+		h4,
+		.h4 {
+			@apply mt-8 first:mt-0 [h2_+_&]:mt-4;
+		}
+
+		h5,
+		.h5 {
+			@apply mt-8 text-sm uppercase first:mt-0 [h2_+_&]:mt-4;
+		}
+
+		p,
+		.p {
+			@apply not-first:mt-4 text-swatch-700-mood;
+		}
+
+		blockquote,
+		.blockquote {
+			@apply border-mood-500 bg-mood-500/15 text-swatch-700-mood not-first:mt-4 border-l pl-2 italic;
+		}
+
+		pre,
+		.pre {
+			@apply not-first:mt-4;
 		}
 	}
 }

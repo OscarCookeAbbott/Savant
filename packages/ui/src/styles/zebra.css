@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@utility bg-zebra {
+	@apply zebra;
+
+	background-image: var(--zebra);
+
+	background-attachment: var(--zebra-attachment);
+}
+
+@utility zebra {
+	--zebra-color-from: --alpha(var(--color-surface-500) / var(--zebra-opacity));
+	--zebra-color-to: transparent;
+
+	--zebra-width-from: 0.5rem;
+	--zebra-width-to: 0.5rem;
+
+	--zebra-angle: -45deg;
+	--zebra-opacity: 100%;
+
+	--zebra-animation: unset;
+	--zebra-attachment: initial;
+	--zebra-speed: 1;
+
+	--zebra: repeating-linear-gradient(
+		var(--zebra-angle),
+		var(--zebra-color-from),
+		var(--zebra-color-from) var(--zebra-width-from),
+		var(--zebra-color-to) var(--zebra-width-from),
+		var(--zebra-color-to)
+			calc(var(--zebra-width-from) + var(--zebra-width-to))
+	);
+
+	animation: var(--zebra-animation);
+}
+
+@keyframes ZebraSlide {
+	100% {
+		background-position: calc(
+				(var(--zebra-width-from) + var(--zebra-width-from)) *
+					cos(calc(var(--zebra-angle) + 90deg))
+			)
+			calc(
+				(var(--zebra-width-from) + var(--zebra-width-from)) *
+					sin(calc(var(--zebra-angle) + 90deg))
+			);
+	}
+}
+
+@utility zebra-animate {
+	--zebra-animation: ZebraSlide calc(1s / var(--zebra-speed)) linear infinite;
+	--zebra-attachment: fixed;
+}
+
+@utility zebra-from-* {
+	--zebra-color-from: --alpha(--value(--color-*) / var(--zebra-opacity));
+}
+
+@utility zebra-to-* {
+	--zebra-color-to: --alpha(--value(--color-*) / var(--zebra-opacity));
+}
+
+@utility zebra-width-* {
+	--zebra-width-from: --value([*]);
+	--zebra-width-to: --value([*]);
+
+	--zebra-width-from: calc(var(--spacing) * --value(integer));
+	--zebra-width-to: calc(var(--spacing) * --value(integer));
+}
+
+@utility zebra-from-width-* {
+	--zebra-width-from: --value([*]);
+
+	--zebra-width-from: calc(var(--spacing) * --value(integer));
+}
+
+@utility zebra-to-width-* {
+	--zebra-width-to: --value([*]);
+
+	--zebra-width-to: calc(var(--spacing) * --value(integer));
+}
+
+@utility zebra-angle-* {
+	--zebra-angle: --value([*]);
+}
+
+@utility zebra-opacity-* {
+	/* prettier-ignore */
+	--zebra-opacity: --value(integer)%;
+}
+
+@utility zebra-speed-* {
+	--zebra-speed: --value(number);
+}
