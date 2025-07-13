@@ -79,18 +79,18 @@
 	--color-caution-900: var(--color-orange-900);
 	--color-caution-950: var(--color-orange-950);
 
-	--color-critical: var(--color-red-500);
-	--color-critical-50: var(--color-red-50);
-	--color-critical-100: var(--color-red-100);
-	--color-critical-200: var(--color-red-200);
-	--color-critical-300: var(--color-red-300);
-	--color-critical-400: var(--color-red-400);
-	--color-critical-500: var(--color-red-500);
-	--color-critical-600: var(--color-red-600);
-	--color-critical-700: var(--color-red-700);
-	--color-critical-800: var(--color-red-800);
-	--color-critical-900: var(--color-red-900);
-	--color-critical-950: var(--color-red-950);
+	--color-danger: var(--color-red-500);
+	--color-danger-50: var(--color-red-50);
+	--color-danger-100: var(--color-red-100);
+	--color-danger-200: var(--color-red-200);
+	--color-danger-300: var(--color-red-300);
+	--color-danger-400: var(--color-red-400);
+	--color-danger-500: var(--color-red-500);
+	--color-danger-600: var(--color-red-600);
+	--color-danger-700: var(--color-red-700);
+	--color-danger-800: var(--color-red-800);
+	--color-danger-900: var(--color-red-900);
+	--color-danger-950: var(--color-red-950);
 
 	--color-mood: var(--color-surface);
 	--color-mood-50: var(--color-surface-50);
@@ -104,4 +104,8 @@
 	--color-mood-800: var(--color-surface-800);
 	--color-mood-900: var(--color-surface-900);
 	--color-mood-950: var(--color-surface-950);
+
+	--radius-container: 0.5rem;
+	--radius-control: 0.5rem;
+	--radius-sub-control: 0.25rem;
 }

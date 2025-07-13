@@ -73,11 +73,7 @@ export default function SiteSearch(searchLinks: (Route & { name: string })[]) {
 							"Pages",
 						),
 
-						() =>
-							Results(
-								displayedLinks,
-								() => (searchOpen.val = false),
-							),
+						Results(displayedLinks, () => (searchOpen.val = false)),
 
 						() =>
 							ResultsCount(
@@ -96,10 +92,11 @@ function Results(
 	displayedLinks: State<(Route & { name: string })[]>,
 	onNavigate?: () => void,
 ) {
-	return html.div(
-		{ class: "contents" },
-		displayedLinks.val.map((link) => PageLink(link, onNavigate)),
-	)
+	return () =>
+		html.div(
+			{ class: "contents" },
+			displayedLinks.val.map((link) => PageLink(link, onNavigate)),
+		)
 }
 
 function PageLink(link: Route & { name: string }, onclick?: () => void) {

@@ -20,7 +20,7 @@
 	}
 
 	.badge {
-		@apply control text-swatch-700-mood rounded text-xs;
+		@apply control text-swatch-700-mood rounded-sub-control text-xs;
 	}
 
 	.button {
@@ -36,7 +36,7 @@
 	}
 
 	.control-container {
-		@apply *:not-first:!rounded-l-none *:not-last:!rounded-r-none flex overflow-hidden rounded-lg !p-0 *:px-2 *:py-1;
+		@apply *:not-first:!rounded-l-none *:not-last:!rounded-r-none flex overflow-hidden rounded-control !p-0 *:px-2 *:py-1;
 	}
 
 	.container-separator {
@@ -52,7 +52,7 @@
 	}
 
 	.vessel {
-		@apply rounded-lg p-4;
+		@apply rounded-container p-4;
 	}
 
 	.control-container {
@@ -78,11 +78,11 @@
 }
 
 @utility control {
-	@apply focus-visible:focus-ring rounded-lg px-2 py-1 ring-inset;
+	@apply focus-visible:focus-ring rounded-control px-2 py-1 ring-inset;
 }
 
 @utility control-sm {
-	@apply rounded px-1 py-0.5 ring-inset;
+	@apply rounded-sub-control px-1 py-0.5 ring-inset;
 }
 
 @utility glass {

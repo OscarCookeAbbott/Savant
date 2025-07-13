@@ -49,7 +49,7 @@ export default function Radio<T>({
 							: option.value),
 					"$data-selected": isOptionSelected,
 					class: () =>
-						`group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-critical ${reactiveClass.val
+						`group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-danger ${reactiveClass.val
 							?.split(" ")
 							.filter(
 								(className) => !className.includes("form"),

@@ -82,7 +82,7 @@ export default function Select<T>({
 			onclick: () => (isOpen.val = !isOpen.val),
 			"$data-open": isOpen,
 			class: () =>
-				`flex rounded-lg button gap-2 justify-between focus-visible:mood-accent data-open:invisible ${reactiveClass.val}`,
+				`justify-between focus-visible:mood-accent data-open:invisible ${reactiveClass.val}`,
 			...restProps,
 		},
 
@@ -107,7 +107,7 @@ export default function Select<T>({
 					return value.val.map((item) =>
 						Button(
 							{
-								class: "group mood-accent text-xs form-soft rounded relative",
+								class: "group mood-accent text-xs form-soft rounded-sub-control relative",
 								onclick: (e: MouseEvent) => {
 									e.stopPropagation()
 
@@ -167,7 +167,7 @@ export default function Select<T>({
 				visible: isOpen,
 				direction: "none",
 				class: () =>
-					`left-1/2 -translate-x-1/2 min-w-full max-h-40 overflow-y-auto card vessel shadow-lg p-1 rounded-lg card glass select-none ${mood.val}`,
+					`left-1/2 -translate-x-1/2 min-w-full max-h-40 overflow-y-auto card vessel shadow-lg p-1 rounded-container card glass select-none ${mood.val}`,
 			},
 
 			() =>
@@ -218,7 +218,7 @@ function SelectOptionItem<T>(
 				tabIndex: 0,
 				onclick: () => onClick?.(option.value),
 				$disabled: () => option.disabled,
-				class: "flex gap-2 not-disabled:hover:bg-surface-500/20 not-disabled:focus-visible:bg-surface-500/20 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed items-center group-data-selected:mood-accent group-data-selected:!bg-mood-500/25",
+				class: "flex gap-2 not-disabled:hover:bg-surface-500/20 not-disabled:focus-visible:bg-surface-500/20 not-disabled:focus-visible:focus-ring disabled:bg-transparent px-1 rounded-sub-control cursor-pointer justify-between disabled:opacity-50 disabled:cursor-not-allowed items-center group-data-selected:mood-accent group-data-selected:!bg-mood-500/25",
 			},
 
 			html.span(

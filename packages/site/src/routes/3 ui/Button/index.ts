@@ -68,7 +68,7 @@ export default function Page() {
 							{ value: "mood-info" },
 							{ value: "mood-success" },
 							{ value: "mood-caution" },
-							{ value: "mood-critical" },
+							{ value: "mood-danger" },
 						],
 						value: exampleMood,
 						class: "form-pack-outline w-48",
