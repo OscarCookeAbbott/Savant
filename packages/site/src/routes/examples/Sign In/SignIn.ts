@@ -31,7 +31,7 @@ export default function SignIn(): HTMLElement {
 
 				lead: Icon("person"),
 
-				class: "variant-outline",
+				class: "form-outline",
 			}),
 		),
 
@@ -85,14 +85,14 @@ export default function SignIn(): HTMLElement {
 
 				onValidityChanged: (valid) => (passwordValid.val = valid),
 
-				class: "variant-outline",
+				class: "form-outline",
 			}),
 		),
 
 		Checkbox(
 			{
 				value: savePassword,
-				class: "variant-outline",
+				class: "form-outline",
 			},
 
 			html.span(
@@ -106,14 +106,14 @@ export default function SignIn(): HTMLElement {
 
 			Button(
 				{
-					class: "hover:variant-soft",
+					class: "hover:form-soft",
 				},
 				"Cancel",
 			),
 
 			Button(
 				{
-					class: "variant-filled mood-accent",
+					class: "form-filled mood-accent",
 				},
 				"Sign In",
 			),

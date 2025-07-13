@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@utility form-outline {
+	@apply ring-mood-500/50 ring;
+}
+
+@utility form-outline-strong {
+	@apply ring-mood-500 ring;
+}
+
+@utility form-soft {
+	@apply bg-mood-500/15;
+}
+
+@utility form-soft-strong {
+	@apply bg-mood-500/30;
+}
+
+@utility form-soft-outline {
+	@apply form-soft form-outline;
+}
+
+@utility form-soft-outline-strong {
+	@apply form-soft-strong form-outline-strong;
+}
+
+@utility form-filled {
+	@apply bg-mood-500 text-swatch-100-foreground;
+}
+
+@utility form-pack-minimal {
+	@apply not-disabled:hover:form-soft data-selected:form-filled;
+}
+
+@utility form-pack-outline {
+	@apply form-outline not-disabled:hover:form-soft-outline data-selected:form-filled;
+}
+
+@utility form-pack-soft {
+	@apply form-soft not-disabled:hover:form-soft-strong data-selected:form-filled;
+}
+
+@utility form-pack-soft-outline {
+	@apply form-soft-outline not-disabled:hover:form-soft-outline-strong data-selected:form-filled;
+}
+
+@utility form-pack-filled {
+	@apply form-filled;
+}

@@ -11,7 +11,7 @@ export default function ControlGroup(
 	return html.div(
 		{
 			class: () =>
-				`group control !p-0 flex justify-between *:flex-[1_0_0] *:rounded-lg *:not-first:rounded-l-none *:not-last:rounded-r-none *:[.button]:hover:variant-soft ${reactiveClass.val}`,
+				`group control !p-0 flex justify-between *:flex-[1_0_0] *:rounded-lg *:not-first:rounded-l-none *:not-last:rounded-r-none *:[.button]:hover:form-soft ${reactiveClass.val}`,
 			...restProps,
 		},
 

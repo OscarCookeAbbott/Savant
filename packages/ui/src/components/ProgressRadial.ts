@@ -42,7 +42,7 @@ export default function ProgressRadial(
 			style: () =>
 				`--progress-bar-value: ${reactiveProgress.val}; --progress-bar-stroke-width: ${reactiveThickness.val}px`,
 			class: () =>
-				`group inline-block relative min-w-[1em] min-h-[1em] ring-inset rounded-full [.variant-outline]:ring-[length:var(--progress-bar-stroke-width)] [.variant-soft-outline]:ring-[length:var(--progress-bar-stroke-width)] ${reactiveClass.val}`,
+				`group inline-block relative min-w-[1em] min-h-[1em] ring-inset rounded-full [.form-outline]:ring-[length:var(--progress-bar-stroke-width)] [.form-soft-outline]:ring-[length:var(--progress-bar-stroke-width)] ${reactiveClass.val}`,
 			...restProps,
 		},
 
@@ -55,7 +55,7 @@ export default function ProgressRadial(
 			svg.circle({
 				style: "cx: 50%; cy: 50%; r: 50%; stroke-dasharray: calc(1% * pi * var(--progress-bar-value)) calc(2% * pi * (100 - var(--progress-bar-value)));",
 				class: () =>
-					"origin-center fill-none stroke-current stroke-[length:var(--progress-bar-stroke-width)] not-group-[.variant-filled]:text-mood-500 group-data-indefinite:animate-spin",
+					"origin-center fill-none stroke-current stroke-[length:var(--progress-bar-stroke-width)] not-group-[.form-filled]:text-mood-500 group-data-indefinite:animate-spin",
 				"stroke-linecap": "round",
 			}),
 		),

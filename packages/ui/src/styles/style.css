@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "./theme.css";
 @import "./swatches.css";
-@import "./variants.css";
+@import "./forms.css";
 @import "./zebra.css";
 
 @layer base {
@@ -44,7 +44,7 @@
 	}
 
 	.card {
-		@apply bg-background-50 variant-outline;
+		@apply bg-background-50 form-outline;
 	}
 
 	.anchor {

@@ -4,7 +4,7 @@ import { Badge, Code, Label, Select } from "@savant/ui"
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-	const exampleVariant = state("variant-soft-outline")
+	const exampleForm = state("form-soft-outline")
 	const exampleMood = state("mood-none")
 
 	return DocPage(
@@ -39,7 +39,7 @@ export default function Page() {
 
 				Badge(
 					{
-						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+						class: () => `${exampleForm.val} ${exampleMood.val}`,
 					},
 
 					"Demo Badge",
@@ -50,17 +50,17 @@ export default function Page() {
 				{ class: "flex flex-wrap gap-4 justify-center" },
 
 				Label(
-					{ content: "Variant", class: "items-center" },
+					{ content: "Form", class: "items-center" },
 
 					Select({
 						options: [
-							{ value: "variant-outline" },
-							{ value: "variant-soft" },
-							{ value: "variant-soft-outline" },
-							{ value: "variant-filled" },
+							{ value: "form-outline" },
+							{ value: "form-soft" },
+							{ value: "form-soft-outline" },
+							{ value: "form-filled" },
 						],
-						value: exampleVariant,
-						class: "variant-pack-outline w-48",
+						value: exampleForm,
+						class: "form-pack-outline w-48",
 					}),
 				),
 
@@ -77,7 +77,7 @@ export default function Page() {
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 			),
@@ -91,7 +91,7 @@ export default function Page() {
 import { Badge } from "savant/ui"
 
 Badge(
-    { class: "${exampleVariant.val} ${exampleMood.val}" },
+    { class: "${exampleForm.val} ${exampleMood.val}" },
     "Demo Badge",
 )`,
 			),

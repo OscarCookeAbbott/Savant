@@ -29,7 +29,7 @@ export default function Page() {
 		value: inputHtml,
 		oninput: (e: Event) =>
 			(inputHtml.val = (e.target as HTMLTextAreaElement).value),
-		class: "control variant-soft-outline w-full h-64",
+		class: "control form-soft-outline w-full h-64",
 	})
 
 	// const conversionResult = derive(

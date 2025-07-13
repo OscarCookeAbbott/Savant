@@ -5,7 +5,7 @@ import DocPage from "../../../components/DocPage"
 
 export default function Page() {
 	const exampleType: State<"text" | "number"> = state("text")
-	const exampleVariant = state("variant-soft-outline")
+	const exampleForm = state("form-soft-outline")
 	const exampleMood = state("mood-none")
 
 	return DocPage(
@@ -29,7 +29,7 @@ export default function Page() {
 						value: state(
 							exampleType.val === "text" ? "Example text" : 42,
 						),
-						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+						class: () => `${exampleForm.val} ${exampleMood.val}`,
 					}),
 			),
 
@@ -42,22 +42,22 @@ export default function Page() {
 					Select({
 						options: [{ value: "text" }, { value: "number" }],
 						value: exampleType,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 
 				Label(
-					{ content: "Variant", class: "items-center" },
+					{ content: "Form", class: "items-center" },
 
 					Select({
 						options: [
-							{ value: "variant-outline" },
-							{ value: "variant-soft" },
-							{ value: "variant-soft-outline" },
-							{ value: "variant-filled" },
+							{ value: "form-outline" },
+							{ value: "form-soft" },
+							{ value: "form-soft-outline" },
+							{ value: "form-filled" },
 						],
-						value: exampleVariant,
-						class: "variant-pack-outline w-48",
+						value: exampleForm,
+						class: "form-pack-outline w-48",
 					}),
 				),
 
@@ -74,7 +74,7 @@ export default function Page() {
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 			),
@@ -89,7 +89,7 @@ import { Input } from "savant/ui"
 
 Input({
     value: state(${exampleType.val === "text" ? '"Example text"' : 42}),
-    class: "${exampleVariant.val} ${exampleMood.val}"
+    class: "${exampleForm.val} ${exampleMood.val}"
 })`,
 			),
 

@@ -107,7 +107,7 @@ export default function Select<T>({
 					return value.val.map((item) =>
 						Button(
 							{
-								class: "group mood-accent text-xs variant-soft rounded relative",
+								class: "group mood-accent text-xs form-soft rounded relative",
 								onclick: (e: MouseEvent) => {
 									e.stopPropagation()
 

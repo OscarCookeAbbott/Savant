@@ -11,7 +11,7 @@ import {
 import DocPage from "../../../components/DocPage"
 
 export default function Page() {
-	const exampleVariant = state("variant-soft-outline")
+	const exampleForm = state("form-soft-outline")
 	const exampleMood = state("mood-none")
 	const exampleProgress = state(50)
 	const exampleIndefinite = state(true)
@@ -53,7 +53,7 @@ export default function Page() {
 						indefinite: exampleIndefinite,
 						thickness: exampleThickness,
 						class: () =>
-							`p-2 ${exampleVariant.val} ${exampleMood.val}`,
+							`p-2 ${exampleForm.val} ${exampleMood.val}`,
 					},
 					"Loading...",
 				),
@@ -65,7 +65,7 @@ export default function Page() {
 						progress: exampleProgress,
 						indefinite: exampleIndefinite,
 						thickness: exampleThickness,
-						class: () => `${exampleVariant.val} ${exampleMood.val}`,
+						class: () => `${exampleForm.val} ${exampleMood.val}`,
 					}),
 
 					"Loading...",
@@ -76,17 +76,17 @@ export default function Page() {
 				{ class: "flex flex-wrap gap-4 justify-center" },
 
 				Label(
-					{ content: "Variant", class: "items-center" },
+					{ content: "Form", class: "items-center" },
 
 					Select({
 						options: [
-							{ value: "variant-outline" },
-							{ value: "variant-soft" },
-							{ value: "variant-soft-outline" },
-							{ value: "variant-filled" },
+							{ value: "form-outline" },
+							{ value: "form-soft" },
+							{ value: "form-soft-outline" },
+							{ value: "form-filled" },
 						],
-						value: exampleVariant,
-						class: "variant-pack-outline w-48",
+						value: exampleForm,
+						class: "form-pack-outline w-48",
 					}),
 				),
 
@@ -103,7 +103,7 @@ export default function Page() {
 							{ value: "mood-critical" },
 						],
 						value: exampleMood,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 
@@ -114,7 +114,7 @@ export default function Page() {
 						value: exampleProgress,
 						min: 0,
 						max: 100,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 
@@ -124,7 +124,7 @@ export default function Page() {
 					Checkbox(
 						{
 							value: exampleIndefinite,
-							class: "variant-pack-outline w-48",
+							class: "form-pack-outline w-48",
 						},
 						"Enabled",
 					),
@@ -136,7 +136,7 @@ export default function Page() {
 					Input({
 						type: "number",
 						value: exampleThickness,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 			),
@@ -154,7 +154,7 @@ ProgressRadial(
         progress: ${exampleProgress.val},
         indefinite: ${exampleIndefinite.val},
 		thickness: ${exampleThickness.val},
-        class: "p-2 ${exampleVariant.val} ${exampleMood.val}"
+        class: "p-2 ${exampleForm.val} ${exampleMood.val}"
     },
     "Loading...",
 ),
@@ -166,7 +166,7 @@ html.span(
 		progress: ${exampleProgress.val},
 		indefinite: ${exampleIndefinite.val},
 		thickness: ${exampleThickness.val},
-		class: "${exampleVariant.val} ${exampleMood.val}",
+		class: "${exampleForm.val} ${exampleMood.val}",
 	}),
 
 	"Loading...",

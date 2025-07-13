@@ -13,7 +13,7 @@ export default function Callout(
 	return html.div(
 		{
 			class: () =>
-				`flex items-center control variant-soft-outline text-swatch-700-mood gap-2 ${reactiveClass.val}`,
+				`flex items-center control form-soft-outline text-swatch-700-mood gap-2 ${reactiveClass.val}`,
 			...restProps,
 		},
 

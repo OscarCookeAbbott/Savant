@@ -52,7 +52,7 @@ export default function Radio<T>({
 						`group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-critical ${reactiveClass.val
 							?.split(" ")
 							.filter(
-								(className) => !className.includes("variant"),
+								(className) => !className.includes("form"),
 							)
 							.join(" ")}`,
 					...restProps,
@@ -67,7 +67,7 @@ export default function Radio<T>({
 							`size-5 rounded-full focus-visible:mood-accent ${reactiveClass.val
 								?.split(" ")
 								.filter((className) =>
-									className.includes("variant"),
+									className.includes("form"),
 								)
 								.join(" ")}`,
 					},

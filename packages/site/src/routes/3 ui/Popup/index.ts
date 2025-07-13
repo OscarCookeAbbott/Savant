@@ -26,7 +26,7 @@ export default function Page() {
 
 				Button(
 					{
-						class: "variant-filled",
+						class: "form-filled",
 					},
 
 					"Popup Trigger",
@@ -60,7 +60,7 @@ export default function Page() {
 							{ value: PopupTrigger.FOCUS_OUT },
 						],
 						value: exampleTriggers,
-						class: "variant-pack-outline w-48",
+						class: "form-pack-outline w-48",
 					}),
 				),
 			),
@@ -75,7 +75,7 @@ import { Button, Popup } from "savant/ui"
 
 Button(
     {
-        class: "variant-filled",
+        class: "form-filled",
     },
 
     "Popup Trigger",

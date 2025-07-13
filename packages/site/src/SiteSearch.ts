@@ -26,7 +26,7 @@ export default function SiteSearch(searchLinks: (Route & { name: string })[]) {
 
 	return Button(
 		{
-			class: "badge variant-pack-soft-outline",
+			class: "badge form-pack-soft-outline",
 		},
 
 		html.i("search"),
@@ -47,7 +47,7 @@ export default function SiteSearch(searchLinks: (Route & { name: string })[]) {
 					placeholder: "Search",
 					value: searchText,
 					lead: html.i({ class: "text-xl" }, "search"),
-					class: "variant-pack-outline has-focus-visible:variant-soft",
+					class: "form-pack-outline has-focus-visible:form-soft",
 				})
 
 				input = searchInput.children[1] as HTMLInputElement
@@ -113,7 +113,7 @@ function PageLink(link: Route & { name: string }, onclick?: () => void) {
 		{
 			href: link.path,
 			onclick,
-			class: "button gap-2 justify-start variant-pack-soft active:mood-accent",
+			class: "button gap-2 justify-start form-pack-soft active:mood-accent",
 		},
 
 		html.i(

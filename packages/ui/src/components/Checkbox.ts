@@ -37,7 +37,7 @@ export default function Checkbox(
 			class: () =>
 				`flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
 					?.split(" ")
-					.filter((className) => !className.includes("variant"))
+					.filter((className) => !className.includes("form"))
 					.join(" ")}`,
 			...restProps,
 		},
@@ -50,7 +50,7 @@ export default function Checkbox(
 				class: () =>
 					`button size-5 !rounded-md aspect-square focus-visible:mood-accent !p-0.5 group-has-invalid:mood-critical ${reactiveClass.val
 						?.split(" ")
-						.filter((className) => className.includes("variant"))
+						.filter((className) => className.includes("form"))
 						.join(" ")}`,
 			},
 

@@ -29,7 +29,7 @@ export default function Header({
 				{
 					name: "Navbar Toggle",
 					onclick: () => (navbarClosed.val = !navbarClosed.val),
-					class: "text-xl variant-pack-minimal lg:hidden",
+					class: "text-xl form-pack-minimal lg:hidden",
 				},
 
 				html.i(() =>
@@ -44,7 +44,7 @@ export default function Header({
 			Link(
 				{
 					href: "/",
-					class: "control flex gap-2 items-center variant-pack-minimal",
+					class: "control flex gap-2 items-center form-pack-minimal",
 				},
 
 				html.img({
@@ -64,7 +64,7 @@ export default function Header({
 			html.a(
 				{
 					name: "GitHub",
-					class: "control **:fill-current variant-pack-minimal text-xl !p-2",
+					class: "control **:fill-current form-pack-minimal text-xl !p-2",
 					href: "https://github.com/OscarCookeAbbott/Savant",
 					target: "_blank",
 					tabIndex: 0,

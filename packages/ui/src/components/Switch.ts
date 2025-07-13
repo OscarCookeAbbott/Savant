@@ -36,7 +36,7 @@ export default function Switch(
 			class: () =>
 				`flex cursor-pointer justify-between items-center gap-2 select-none group ${reactiveClass.val
 					?.split(" ")
-					.filter((className) => !className.includes("variant"))
+					.filter((className) => !className.includes("form"))
 					.join(" ")}`,
 			...restProps,
 		},
@@ -50,7 +50,7 @@ export default function Switch(
 				class: () =>
 					`rounded-full !gap-0 justify-start !p-1 w-12 ${reactiveClass.val
 						?.split(" ")
-						.filter((className) => className.includes("variant"))
+						.filter((className) => className.includes("form"))
 						.join(" ")}`,
 				...restProps,
 			},
