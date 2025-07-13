@@ -18,6 +18,7 @@ type PopupProps = ElementProps & {
 	direction?: PopupDirection
 	trigger?: PopupTrigger | PopupTrigger[]
 
+	onShow?: () => void
 	onHide?: () => void
 }
 
@@ -59,6 +60,7 @@ export default function Popup(
 		direction = PopupDirection.BOTTOM,
 		trigger = PopupTrigger.CLICK,
 
+		onShow,
 		onHide,
 
 		name,
@@ -188,6 +190,8 @@ export default function Popup(
 		mount(container, anchor)
 
 		dom = { anchor, popup, abortController }
+
+		onShow?.()
 	}
 
 	const clearPopup = () => {

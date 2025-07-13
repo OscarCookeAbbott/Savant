@@ -97,7 +97,7 @@ This can be combine with optional props if desired.
 
 ### Context-out props
 
-Any props prefixed with `context-out-` will retrieve context of that name (with the)
+Any props prefixed with `context-out-` will retrieve context of that name (with the prefix removed) into the given output state.
 
 ## Signature
 

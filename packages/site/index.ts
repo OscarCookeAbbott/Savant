@@ -86,7 +86,7 @@ const routes = pages.flatMap((page) => [
 ])
 
 function App() {
-	const navbarOpen = state(true)
+	const navbarClosedWhenCompact = state(true)
 
 	return html.div(
 		{
@@ -94,26 +94,28 @@ function App() {
 			class: "flex flex-col relative size-screen",
 		},
 
-		Header({ searchLinks: routes, navbarOpen }),
+		Header({ searchLinks: routes, navbarClosed: navbarClosedWhenCompact }),
 
 		html.div(
-			{ class: "flex flex-1" },
+			{
+				"$data-navbar-closed": navbarClosedWhenCompact,
+				class: "group/page flex flex-1",
+			},
 
 			Navbar({
 				options: pages,
-				"$data-hidden": () => !navbarOpen.val,
-				class: "min-w-64 not-md:w-screen data-hidden:hidden",
+				onNavigated: () => (navbarClosedWhenCompact.val = true),
+				class: "min-w-64 not-sm:w-screen not-lg:group-data-navbar-closed/page:hidden",
 			}),
 
 			html.div(
 				{
-					"$data-navbar": navbarOpen,
-					class: "data-navbar:lg:ml-64 overflow-clip w-full flex flex-1 justify-center",
+					class: "lg:ml-64 overflow-clip w-full flex flex-1 justify-center",
 				},
 
 				html.div(
 					{
-						class: "flex flex-col w-full px-8 pt-24 pb-16 gap-4 not-lg:px-4 not-lg:pt-16 not-lg:pb-8",
+						class: "flex flex-col w-full px-8 pt-24 pb-16 gap-4 not-md:px-4 not-md:pt-16 not-md:pb-8",
 					},
 
 					Router({

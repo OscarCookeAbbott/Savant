@@ -1,6 +1,12 @@
 import { ChildDom, derive, ElementProps, html, State } from "@savant/core"
 import { getRouterPath, Link } from "@savant/routing"
 
+interface NavbarProps extends ElementProps<HTMLElement> {
+	options: NavOption[]
+
+	onNavigated?: () => void
+}
+
 interface NavOption {
 	name: ChildDom
 	path?: string
@@ -10,11 +16,11 @@ interface NavOption {
 
 export default function Navbar({
 	options,
+	onNavigated,
+
 	class: propClass,
 	...restProps
-}: ElementProps<HTMLElement> & {
-	options: NavOption[]
-}): HTMLElement {
+}: NavbarProps): HTMLElement {
 	const path = derive(() => decodeURI(getRouterPath()))
 
 	return html.div(
@@ -24,7 +30,12 @@ export default function Navbar({
 			...restProps,
 		},
 
-		options.map((option) => NavOption(option, 0, path)),
+		options.map((option) =>
+			NavOption(option, 0, path, () => {
+				window.scrollTo({ top: 0, left: 0 })
+				onNavigated?.()
+			}),
+		),
 	)
 }
 
@@ -32,15 +43,15 @@ function NavOption(
 	option: NavOption,
 	depth: number,
 	currentPath: State<string>,
+
+	onclick?: () => void,
 ): ChildDom {
 	return [
 		Link(
 			{
 				href: option.path,
 				disabled: option.path === undefined,
-				onclick: () => {
-					window.scrollTo({ top: 0, left: 0 })
-				},
+				onclick,
 				"$data-selected": () =>
 					currentPath.val ===
 					`${import.meta.env.BASE_URL.slice(0, -1)}${option.path}`,
@@ -66,7 +77,7 @@ function NavOption(
 		),
 
 		option.children?.map((childOption) =>
-			NavOption(childOption, depth + 1, currentPath),
+			NavOption(childOption, depth + 1, currentPath, onclick),
 		),
 	]
 }

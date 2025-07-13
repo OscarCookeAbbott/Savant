@@ -41,7 +41,7 @@ export function detectExternalClick(
 			if (whitelist.some((element) => element.contains(targetNode)))
 				return
 
-			// Ignore DOM-detached targets (due to coincidental Svelte reactivity)
+			// Ignore DOM-detached targets (due to coincidental reactivity)
 			if (!document.contains(targetNode)) return
 
 			callback(event)

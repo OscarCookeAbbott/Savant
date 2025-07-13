@@ -1,5 +1,5 @@
 import { html, State, svg } from "@savant/core"
-import { Route } from "@savant/routing"
+import { Link, Route } from "@savant/routing"
 import { Button, Tooltip } from "@savant/ui"
 
 import logo from "../../../logo.svg"
@@ -7,19 +7,19 @@ import SiteSearch from "./SiteSearch"
 
 interface HeaderProps {
 	searchLinks: (Route & { name: string })[]
-	navbarOpen: State<boolean>
+	navbarClosed: State<boolean>
 }
 
 export default function Header({
 	searchLinks,
-	navbarOpen,
+	navbarClosed,
 }: HeaderProps): HTMLElement {
 	const headerSectionClasses = "flex gap-2 items-center"
 
 	return html.header(
 		{
 			name: "Header",
-			class: "bg-background-50 fixed top-0 flex w-screen justify-between gap-4 not-lg:px-2 px-6 py-2 glass border-b border-surface-500/50 z-10",
+			class: "bg-background-50 fixed top-0 flex w-screen justify-between gap-4 not-md:px-2 px-6 py-2 glass border-b border-surface-500/50 z-10",
 		},
 
 		html["left-content"](
@@ -28,21 +28,32 @@ export default function Header({
 			Button(
 				{
 					name: "Navbar Toggle",
-					onclick: () => (navbarOpen.val = !navbarOpen.val),
-					class: "group text-xl hover:variant-soft active:variant-soft",
+					onclick: () => (navbarClosed.val = !navbarClosed.val),
+					class: "text-xl variant-pack-minimal lg:hidden",
 				},
 
 				html.i(() =>
-					navbarOpen.val ? "left_panel_close" : "left_panel_open",
+					navbarClosed.val ? "left_panel_open" : "left_panel_close",
+				),
+
+				Tooltip({}, () =>
+					navbarClosed.val ? "Show Navigation" : "Hide Navigation",
 				),
 			),
 
-			html.img({
-				src: logo,
-				class: "size-8 not-dark:brightness-0",
-			}),
+			Link(
+				{
+					href: "/",
+					class: "control flex gap-2 items-center variant-pack-minimal",
+				},
 
-			html.span({ class: "text-xl font-bold" }, "Savant"),
+				html.img({
+					src: logo,
+					class: "size-8 -m-2 not-dark:brightness-0",
+				}),
+
+				html.span({ class: "text-xl font-semibold" }, "Savant"),
+			),
 		),
 
 		html["right-content"](
@@ -53,7 +64,7 @@ export default function Header({
 			html.a(
 				{
 					name: "GitHub",
-					class: "control **:fill-current hover:variant-soft active:variant-soft text-xl !p-2",
+					class: "control **:fill-current variant-pack-minimal text-xl !p-2",
 					href: "https://github.com/OscarCookeAbbott/Savant",
 					target: "_blank",
 					tabIndex: 0,
