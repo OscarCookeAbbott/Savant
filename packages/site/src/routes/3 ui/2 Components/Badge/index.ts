@@ -1,7 +1,7 @@
 import { html, state } from "@savant/core"
 import { Badge, Code, Label, Select } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	const exampleForm = state("form-soft-outline")

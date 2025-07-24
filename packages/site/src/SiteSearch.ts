@@ -1,6 +1,6 @@
 import { derive, html, State, state } from "@savant/core"
 import { Link, Route } from "@savant/routing"
-import { Button, Input, Popup } from "@savant/ui"
+import { Button, Input, Markdown, Popup } from "@savant/ui"
 import { search } from "fast-fuzzy"
 
 const MAX_DISPLAYED_SEARCH_LINKS = 5
@@ -8,12 +8,29 @@ const MAX_DISPLAYED_SEARCH_LINKS = 5
 export default function SiteSearch(searchLinks: (Route & { name: string })[]) {
 	const searchOpen = state(false)
 
+	return Button(
+		{
+			class: "badge form-pack-outline",
+		},
+
+		html.i("search"),
+
+		"Search",
+
+		SearchPopup(searchOpen, searchLinks),
+	)
+}
+
+function SearchPopup(
+	searchOpen: State<boolean>,
+	searchLinks: (Route & { name: string })[],
+) {
 	const searchText = state("")
 
 	const filteredLinks = derive(() =>
 		searchText.val
 			? search(searchText.val, searchLinks, {
-					keySelector: (link) => link.name + " " + link.path,
+					keySelector: (link) => `${link.name} ${link.path}`,
 				})
 			: searchLinks,
 	)
@@ -24,67 +41,51 @@ export default function SiteSearch(searchLinks: (Route & { name: string })[]) {
 
 	let input: HTMLInputElement | undefined = undefined
 
-	return Button(
+	const searchInput = Input({
+		type: "search",
+		placeholder: "Search",
+		value: searchText,
+		lead: html.i({ class: "text-xl" }, "search"),
+		class: "form-pack-outline has-focus-visible:form-soft",
+	})
+
+	input = searchInput.children[1] as HTMLInputElement
+
+	return Popup(
 		{
-			class: "badge form-pack-soft-outline",
+			visible: searchOpen,
+			onShow: () => input?.focus(),
+			onclick: () => (searchOpen.val = false),
+			class: "fixed !top-0 inset-0 bg-surface-500/25 glass overflow-hidden starting:opacity-0 transition",
 		},
 
-		html.i("search"),
+		() =>
+			html.popupContent(
+				{
+					onclick: (e: MouseEvent) => e.stopPropagation(),
+					class: "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-64 flex flex-col gap-4 card not-dark:ring-0 vessel bg-background w-md max-w-full shadow-lg not-sm:top-0 not-sm:translate-y-0",
+				},
 
-		"Search",
+				searchInput,
 
-		Popup(
-			{
-				visible: searchOpen,
-				onShow: () => input?.focus(),
-				onclick: () => (searchOpen.val = false),
-				class: "fixed !top-0 inset-0 bg-background-50 glass overflow-hidden starting:opacity-0 transition",
-			},
-
-			() => {
-				const searchInput = Input({
-					type: "search",
-					placeholder: "Search",
-					value: searchText,
-					lead: html.i({ class: "text-xl" }, "search"),
-					class: "form-pack-outline has-focus-visible:form-soft",
-				})
-
-				input = searchInput.children[1] as HTMLInputElement
-
-				return html.div(
+				html.ul(
 					{
-						onclick: (e: MouseEvent) => e.stopPropagation(),
-						class: "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-64 flex flex-col gap-4 card vessel bg-background w-md max-w-full shadow-xl not-sm:top-0 not-sm:translate-y-0",
+						class: "flex flex-col gap-2",
 					},
 
-					searchInput,
-
-					html.ul(
+					html.li(
 						{
-							class: "flex flex-col gap-2",
+							class: "font-semibold",
 						},
 
-						html.li(
-							{
-								class: "text-mini uppercase",
-							},
-
-							"Pages",
-						),
-
-						Results(displayedLinks, () => (searchOpen.val = false)),
-
-						() =>
-							ResultsCount(
-								searchText,
-								displayedLinks.val.length,
-								filteredLinks.val.length,
-							),
+						"Pages",
 					),
-				)
-			},
-		),
+
+					Results(displayedLinks, () => (searchOpen.val = false)),
+
+					ResultsCount(searchText, displayedLinks, filteredLinks),
+				),
+			),
 	)
 }
 
@@ -100,11 +101,7 @@ function Results(
 }
 
 function PageLink(link: Route & { name: string }, onclick?: () => void) {
-	const displayPath = link.path
-		.split("/")
-		.slice(2, -1)
-		.map((part) => part[0].toUpperCase() + part.slice(1))
-		.join(" → ")
+	const displayPath = link.path.split("/").slice(2, -1).join(" → ")
 
 	return Link(
 		{
@@ -115,7 +112,7 @@ function PageLink(link: Route & { name: string }, onclick?: () => void) {
 
 		html.i(
 			{
-				class: "opacity-75",
+				class: "text-swatch-700-mood",
 			},
 			"article",
 		),
@@ -126,7 +123,7 @@ function PageLink(link: Route & { name: string }, onclick?: () => void) {
 			},
 
 			html.span(
-				{ class: "opacity-75" },
+				{ class: "text-swatch-700-mood" },
 
 				displayPath ? `${displayPath} → ` : undefined,
 			),
@@ -140,71 +137,22 @@ function PageLink(link: Route & { name: string }, onclick?: () => void) {
 
 function ResultsCount(
 	searchText: State<string>,
-	displayCount: number,
-	totalCount: number,
+	displayedItems: State<unknown[]>,
+	totalItems: State<unknown[]>,
 ) {
-	if (displayCount === 0 && searchText.val.length > 0)
-		return html.span(
-			{
-				class: "text-sm text-center break-all",
-			},
-
-			html.span(
-				{
-					class: "text-swatch-600-surface",
-				},
-				"No results for ",
-			),
-
-			html.span(
-				{
-					class: "font-semibold",
-				},
-				searchText,
-			),
-		)
-
-	return html.span(
-		{
-			class: "text-xs w-fit self-center mt-1",
-		},
-
-		html.span(
-			{
-				class: "text-swatch-600-surface",
-			},
-			"Displaying ",
-		),
-
-		html.span(
-			{
-				class: "font-semibold",
-			},
-			displayCount,
-		),
-
-		html.span(
-			{
-				$hidden: () => totalCount === displayCount,
-				class: "text-swatch-600-surface",
-			},
-			" of ",
-		),
-
-		html.span(
-			{
-				$hidden: () => totalCount === displayCount,
-				class: "font-semibold",
-			},
-			totalCount,
-		),
-
-		html.span(
-			{
-				class: "text-swatch-600-surface",
-			},
-			" result",
-			totalCount !== 1 ? "s" : "",
-		),
+	const isEmpty = derive(
+		() => displayedItems.val.length === 0 && searchText.val.length > 0,
 	)
+
+	return () =>
+		Markdown(
+			{
+				name: "Search results info",
+				class: "text-sm text-center break-all mt-1 [&_strong]:text-swatch-900-mood",
+			},
+
+			isEmpty.val
+				? `No results for **${searchText.val}**`
+				: `Displaying **${displayedItems.val.length}** of **${totalItems.val.length}** results`,
+		)
 }

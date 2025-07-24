@@ -1,7 +1,7 @@
 import { html, State, state } from "@savant/core"
 import { Code, Input, Label, Select } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	const exampleType: State<"text" | "number"> = state("text")

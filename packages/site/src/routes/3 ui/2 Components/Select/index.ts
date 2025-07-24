@@ -1,7 +1,7 @@
 import { html, State, state } from "@savant/core"
 import { Code, Label, Select } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 const DemoSelectType = {
 	SINGLE: "single",

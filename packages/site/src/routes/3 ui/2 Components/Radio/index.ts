@@ -1,16 +1,16 @@
 import { html, state } from "@savant/core"
-import { Code, Label, Select, Switch } from "@savant/ui"
+import { Code, Label, Radio, Select } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	const exampleForm = state("form-soft-outline")
 	const exampleMood = state("mood-none")
 
 	return DocPage(
-		html.h1("Switch"),
+		html.h1("Radio"),
 
-		html.blockquote("Offers clear binary choices."),
+		html.blockquote("Offers a clear and direct set of exclusive options."),
 
 		html.h2("Demo"),
 
@@ -23,14 +23,16 @@ export default function Page() {
 			html.div(
 				{ class: "p-8 h-48 flex items-center" },
 
-				Switch(
-					{
-						class: () =>
-							`w-48 ${exampleForm.val} ${exampleMood.val}`,
-					},
-
-					"Demo Switch",
-				),
+				Radio({
+					value: state("Option 1"),
+					options: [
+						{ value: "Option 1" },
+						{ value: "Option 2" },
+						{ value: "Option 3" },
+					],
+					class: () =>
+						`w-48 ${exampleForm.val} ${exampleMood.val}`,
+				}),
 			),
 
 			html.div(
@@ -75,12 +77,17 @@ export default function Page() {
 				{ language: "ts" },
 
 				`\
-import { Switch } from "savant/ui"
+import { Radio } from "savant/ui"
 
-Switch(
-    { class: \`${exampleForm.val} ${exampleMood.val}\` },
-    "Demo Switch",
-)`,
+Radio({
+    value: state("Option 1"),
+    options: [
+        { value: "Option 1" },
+        { value: "Option 2" },
+        { value: "Option 3" },
+    ],
+    class: "${exampleForm.val} ${exampleMood.val}",
+})`,
 			),
 
 		html.h2("Signature"),
@@ -89,14 +96,19 @@ Switch(
 			{ language: "ts" },
 
 			`\
-function Switch(
+function Radio<T>(
     props: {
-        value: State<boolean> = state(false),
+        options: RadioOption<T>[],
+        value: State<RadioOption<T> | undefined> = state(undefined),
         required: boolean = false,
         ...HTMLElementProps
-    },
-    ...children: ChildDom[]
-): HTMLElement`,
+}): HTMLElement
+
+type RadioOption<T> = {
+    value: T
+    name?: string
+    disabled?: boolean
+}`,
 		),
 	)
 }

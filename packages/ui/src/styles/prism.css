@@ -22,7 +22,7 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
 	code[class*="language-"]::-moz-selection,
 	pre[class*="language-"] ::-moz-selection,
 	pre[class*="language-"]::-moz-selection {
-		@apply bg-surface-500/10;
+		@apply form-soft;
 	}
 	code[class*="language-"] ::selection,
 	code[class*="language-"]::selection,
@@ -35,10 +35,10 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
 	}
 	:not(pre) > code[class*="language-"],
 	pre[class*="language-"] {
-		@apply control form-outline bg-surface-500/10 p-2;
+		@apply control form-soft-outline p-2 block;
 	}
 	:not(pre) > code[class*="language-"] {
-		@apply whitespace-normal rounded px-1 py-0.5;
+		@apply whitespace-normal control-sm inline;
 	}
 	.token.cdata,
 	.token.comment,

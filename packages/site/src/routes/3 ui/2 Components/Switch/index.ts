@@ -1,23 +1,16 @@
 import { html, state } from "@savant/core"
-import { Button, Code, Label, Select } from "@savant/ui"
+import { Code, Label, Select, Switch } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	const exampleForm = state("form-soft-outline")
 	const exampleMood = state("mood-none")
-	const extraClasses = state([])
 
 	return DocPage(
-		html.h1("Button"),
+		html.h1("Switch"),
 
-		html.blockquote("Performs some action on user click."),
-
-		html.h2("Design"),
-
-		html.p(
-			"Button components are used when a specific, clear and manual action needs to be performed by the user..",
-		),
+		html.blockquote("Offers clear binary choices."),
 
 		html.h2("Demo"),
 
@@ -30,13 +23,13 @@ export default function Page() {
 			html.div(
 				{ class: "p-8 h-48 flex items-center" },
 
-				Button(
+				Switch(
 					{
 						class: () =>
-							`${[exampleForm.val, exampleMood.val, ...extraClasses.val].join(" ")}`,
+							`w-48 ${exampleForm.val} ${exampleMood.val}`,
 					},
 
-					"Demo Button",
+					"Demo Switch",
 				),
 			),
 
@@ -74,20 +67,6 @@ export default function Page() {
 						class: "form-pack-outline w-48",
 					}),
 				),
-
-				Label(
-					{ content: "Extras", class: "items-center" },
-
-					Select({
-						options: [
-							{ value: "transition" },
-							{ value: "hover:raised" },
-							{ value: "active:lowered" },
-						],
-						value: extraClasses,
-						class: "form-pack-outline w-48",
-					}),
-				),
 			),
 		),
 
@@ -96,11 +75,11 @@ export default function Page() {
 				{ language: "ts" },
 
 				`\
-import { Button } from "savant/ui"
+import { Switch } from "savant/ui"
 
-Button(
-    { class: "${[exampleForm.val, exampleMood.val, ...extraClasses.val].join(" ")}" },
-    "Demo Button",
+Switch(
+    { class: \`${exampleForm.val} ${exampleMood.val}\` },
+    "Demo Switch",
 )`,
 			),
 
@@ -110,10 +89,14 @@ Button(
 			{ language: "ts" },
 
 			`\
-function Button(
-    props: HTMLButtonProps,
+function Switch(
+    props: {
+        value: State<boolean> = state(false),
+        required: boolean = false,
+        ...HTMLElementProps
+    },
     ...children: ChildDom[]
-): HTMLButtonElement`,
+): HTMLElement`,
 		),
 	)
 }

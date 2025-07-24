@@ -1,16 +1,16 @@
 import { html, state } from "@savant/core"
-import { Code, Label, Radio, Select } from "@savant/ui"
+import { Checkbox, Code, Label, Select } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	const exampleForm = state("form-soft-outline")
 	const exampleMood = state("mood-none")
 
 	return DocPage(
-		html.h1("Radio"),
+		html.h1("Checkbox"),
 
-		html.blockquote("Offers a clear and direct set of exclusive options."),
+		html.blockquote("Offers clear binary choices."),
 
 		html.h2("Demo"),
 
@@ -23,16 +23,14 @@ export default function Page() {
 			html.div(
 				{ class: "p-8 h-48 flex items-center" },
 
-				Radio({
-					value: state("Option 1"),
-					options: [
-						{ value: "Option 1" },
-						{ value: "Option 2" },
-						{ value: "Option 3" },
-					],
-					class: () =>
-						`w-48 ${exampleForm.val} ${exampleMood.val}`,
-				}),
+				Checkbox(
+					{
+						class: () =>
+							`w-48 ${exampleForm.val} ${exampleMood.val}`,
+					},
+
+					"Demo Checkbox",
+				),
 			),
 
 			html.div(
@@ -77,17 +75,12 @@ export default function Page() {
 				{ language: "ts" },
 
 				`\
-import { Radio } from "savant/ui"
+import { Checkbox } from "savant/ui"
 
-Radio({
-    value: state("Option 1"),
-    options: [
-        { value: "Option 1" },
-        { value: "Option 2" },
-        { value: "Option 3" },
-    ],
-    class: "${exampleForm.val} ${exampleMood.val}",
-})`,
+Checkbox(
+    { class: \`${exampleForm.val} ${exampleMood.val}\` },
+    "Demo Checkbox",
+)`,
 			),
 
 		html.h2("Signature"),
@@ -96,19 +89,14 @@ Radio({
 			{ language: "ts" },
 
 			`\
-function Radio<T>(
+function Checkbox(
     props: {
-        options: RadioOption<T>[],
-        value: State<RadioOption<T> | undefined> = state(undefined),
+        value: State<boolean> = state(false),
         required: boolean = false,
         ...HTMLElementProps
-}): HTMLElement
-
-type RadioOption<T> = {
-    value: T
-    name?: string
-    disabled?: boolean
-}`,
+    },
+    ...children: ChildDom[]
+): HTMLElement`,
 		),
 	)
 }

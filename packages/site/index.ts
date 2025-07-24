@@ -4,54 +4,114 @@ import { html, mount, state } from "@savant/core"
 import { Router } from "@savant/routing"
 
 import Header from "./src/Header"
-import Navbar from "./src/Navbar"
-import coreRoute from "./src/routes/1 core/index"
-import routingRoute from "./src/routes/2 routing/index"
-import uiRoute from "./src/routes/3 ui/index"
+import Navbar, { NavOption } from "./src/Navbar"
 import rootRoute from "./src/routes/index"
 
 interface RouteFile {
 	default: () => HTMLElement
 }
 
-const coreRoutes = import.meta.glob("./src/routes/1 core/*/**/index.ts", {
+const coreRoutes = import.meta.glob("./src/routes/1 Core/*/**/index.ts", {
 	eager: true,
 }) as Record<string, RouteFile>
 
-const routingRoutes = import.meta.glob("./src/routes/2 routing/*/**/index.ts", {
+const routingRoutes = import.meta.glob("./src/routes/2 Routing/*/**/index.ts", {
 	eager: true,
 }) as Record<string, RouteFile>
 
-const uiRoutes = import.meta.glob("./src/routes/3 ui/*/**/index.ts", {
+const uiRoutes = import.meta.glob("./src/routes/3 UI/*/**/index.ts", {
 	eager: true,
 }) as Record<string, RouteFile>
 
-const examplesRoutes = import.meta.glob("./src/routes/examples/*/**/index.ts", {
+const examplesRoutes = import.meta.glob("./src/routes/Examples/*/**/index.ts", {
 	eager: true,
 }) as Record<string, RouteFile>
 
-const routeMaker = (dirRoutes: Record<string, RouteFile>) =>
-	Object.entries(dirRoutes).map(([path, route]) => {
+const routeMaker = (dirRoutes: Record<string, RouteFile>) => {
+	// First, process all routes and build path segments
+	const processedRoutes = Object.entries(dirRoutes).map(([path, route]) => {
 		const localPath = path
 			.replace("./src/routes/", "")
 			.replace("/index.ts", "")
 
-		const pageName = localPath
-			.split("/")
-			.slice(-1)[0]
-			.replace(/^\d+\s/, "")
-		const pagePath = localPath
-			.split("/")
+		const pathSegments = localPath.split("/")
+		const pageName = pathSegments.slice(-1)[0].replace(/^\d+\s/, "")
+
+		const cleanSegments = pathSegments.map((part) =>
+			part.replace(/^\d+\s/, ""),
+		)
+		const routePath = cleanSegments
 			.slice(0, -1)
-			.map((part) => part.replace(/^\d+\s/, "").replace(" ", "-"))
+			.map((part) => part.replace(" ", "-"))
 			.join("/")
 
 		return {
 			name: pageName,
-			path: `/#!/${pagePath}/${pageName}`,
+			path: `/#!/${routePath}/${pageName}`,
 			dom: route.default,
+			segments: cleanSegments,
 		}
 	})
+
+	// Build nested structure
+	const buildNestedStructure = (
+		routes: typeof processedRoutes,
+		depth = 1,
+	) => {
+		const groups: Record<string, typeof processedRoutes> = {}
+		const directRoutes: typeof processedRoutes = []
+
+		// Group routes by their segment at current depth
+		routes.forEach((route) => {
+			if (route.segments.length > depth + 1) {
+				// This route belongs to a subdirectory
+				const groupName = route.segments[depth]
+				if (!groups[groupName]) {
+					groups[groupName] = []
+				}
+				groups[groupName].push(route)
+			} else if (route.segments.length === depth + 1) {
+				// This is a direct route at current level
+				directRoutes.push(route)
+			}
+		})
+
+		const result: NavOption[] = []
+
+		// Add direct routes
+		directRoutes.forEach((route) => {
+			result.push({
+				name: route.name,
+				path: route.path,
+				dom: route.dom,
+			} satisfies NavOption)
+		})
+
+		// Add grouped routes
+		Object.entries(groups).forEach(([groupName, groupRoutes]) => {
+			result.push({
+				name: groupName,
+				children: buildNestedStructure(groupRoutes, depth + 1),
+			} satisfies NavOption)
+		})
+
+		return result
+	}
+
+	return {
+		nested: buildNestedStructure(processedRoutes),
+		flat: processedRoutes.map((route) => ({
+			name: route.name,
+			path: route.path,
+			dom: route.dom,
+		})),
+	}
+}
+
+const coreRouteMaker = routeMaker(coreRoutes)
+const routingRouteMaker = routeMaker(routingRoutes)
+const uiRouteMaker = routeMaker(uiRoutes)
+const examplesRouteMaker = routeMaker(examplesRoutes)
 
 const pages = [
 	{
@@ -61,29 +121,30 @@ const pages = [
 	},
 	{
 		name: "Core",
-		path: "/#!/core",
-		dom: coreRoute,
-		children: routeMaker(coreRoutes),
+		children: coreRouteMaker.nested,
 	},
 	{
 		name: "Routing",
-		path: "/#!/routing",
-		dom: routingRoute,
-		children: routeMaker(routingRoutes),
+		children: routingRouteMaker.nested,
 	},
 	{
 		name: "Savant UI",
-		path: "/#!/ui",
-		dom: uiRoute,
-		children: routeMaker(uiRoutes),
+		children: uiRouteMaker.nested,
 	},
-	{ name: "Examples", children: routeMaker(examplesRoutes) },
+	{ name: "Examples", children: examplesRouteMaker.nested },
 ]
 
-const routes = pages.flatMap((page) => [
-	...(page.path ? [page] : []),
-	...(page.children ?? []),
-])
+const routes = [
+	{
+		name: "Introduction",
+		path: "/",
+		dom: rootRoute,
+	},
+	...coreRouteMaker.flat,
+	...routingRouteMaker.flat,
+	...uiRouteMaker.flat,
+	...examplesRouteMaker.flat,
+]
 
 function App() {
 	const navbarClosedWhenCompact = state(true)
@@ -105,7 +166,7 @@ function App() {
 			Navbar({
 				options: pages,
 				onNavigated: () => (navbarClosedWhenCompact.val = true),
-				class: "min-w-64 not-sm:w-screen not-lg:group-data-navbar-closed/page:hidden",
+				class: "min-w-64 not-sm:w-screen not-lg:shadow-lg not-lg:group-data-navbar-closed/page:hidden",
 			}),
 
 			html.div(

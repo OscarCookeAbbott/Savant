@@ -17,8 +17,7 @@ export default function Button(
 		{
 			type,
 			tabIndex,
-			class: () =>
-				`button flex items-center gap-2 select-none ${reactiveClass.val}`,
+			class: () => `button select-none ${reactiveClass.val}`,
 			...restProps,
 		},
 

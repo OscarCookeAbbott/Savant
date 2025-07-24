@@ -20,7 +20,6 @@ function Counter() {
 	return html.div(
 		"Count: ",
 		count,
-		" ",
 		html.button({ onclick: () => ++value.val }, "+"),
 		html.button({ onclick: () => --value.val }, "-"),
 	)

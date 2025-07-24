@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @utility form-outline {
-	@apply ring-mood-500/50 ring ring-inset;
+	@apply ring-swatch-400-mood ring ring-inset;
 }
 
 @utility form-outline-strong {
@@ -9,11 +9,11 @@
 }
 
 @utility form-soft {
-	@apply bg-mood-500/15;
+	@apply bg-mood-500/10 dark:bg-mood-500/20;
 }
 
 @utility form-soft-strong {
-	@apply bg-mood-500/30;
+	@apply bg-mood-500/20 dark:bg-mood-500/40;
 }
 
 @utility form-soft-outline {

@@ -2,7 +2,7 @@ import { html } from "@savant/core"
 import { Callout, Code } from "@savant/ui"
 import { Markdown } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	return DocPage(

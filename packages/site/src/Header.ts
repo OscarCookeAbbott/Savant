@@ -19,7 +19,7 @@ export default function Header({
 	return html.header(
 		{
 			name: "Header",
-			class: "bg-background-50 fixed top-0 flex w-screen justify-between gap-4 not-md:px-2 px-6 py-2 glass border-b border-surface-500/50 z-10",
+			class: "bg-background-50 fixed top-0 flex w-screen justify-between gap-4 not-md:px-2 px-6 py-2 glass border-b border-swatch-300-surface z-10",
 		},
 
 		html["left-content"](
@@ -44,7 +44,7 @@ export default function Header({
 			Link(
 				{
 					href: "/",
-					class: "control flex gap-2 items-center form-pack-minimal",
+					class: "control flex gap-2 items-center form-pack-minimal lg:-ml-2",
 				},
 
 				html.img({

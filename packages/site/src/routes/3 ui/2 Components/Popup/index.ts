@@ -1,7 +1,7 @@
 import { html, state } from "@savant/core"
 import { Button, Code, Label, Popup, PopupTrigger, Select } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	const exampleTriggers = state<PopupTrigger[]>([PopupTrigger.CLICK])

@@ -41,13 +41,13 @@ export default function TableOfContents(
 
 				html.span({
 					name: "Divider",
-					class: "absolute h-full w-px left-0 bg-current/50 group-data-selected:bg-current not-group-data-indented:hidden group-hover:w-[4px] group-data-selected:w-[4px] transition-all",
+					class: "absolute left-0 h-full w-px bg-swatch-400-mood transition-all group-hover:w-1 group-data-selected:w-1 group-data-selected:bg-swatch-500-mood not-group-data-indented:hidden",
 				}),
 
 				html.span(
 					{
 						name: "Title",
-						class: "group-data-indented:ml-(--indent) justify-start group-data-selected:font-semibold flex-1 py-0.5 z-1 transition-all",
+						class: "flex-1 py-0.5 transition-all group-data-indented:ml-(--indent) group-data-selected:font-semibold",
 					},
 
 					heading.textContent,

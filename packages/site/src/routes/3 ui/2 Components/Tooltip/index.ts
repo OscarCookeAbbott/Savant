@@ -1,7 +1,7 @@
 import { html } from "@savant/core"
 import { Button, Code, Tooltip } from "@savant/ui"
 
-import DocPage from "../../../components/DocPage"
+import DocPage from "../../../../components/DocPage"
 
 export default function Page() {
 	return DocPage(
