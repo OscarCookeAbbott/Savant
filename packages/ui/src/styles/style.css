@@ -20,7 +20,7 @@
 	}
 
 	.badge {
-		@apply control text-swatch-700-mood rounded-sub-control text-xs gap-1;
+		@apply control text-swatch-700-mood rounded-sub-control gap-1 text-xs;
 	}
 
 	.button {
@@ -78,7 +78,7 @@
 }
 
 @utility control {
-	@apply base-control rounded-control px-2 py-1 ring-inset focus-visible:focus-ring;
+	@apply base-control rounded-control focus-visible:focus-ring px-2 py-1 ring-inset;
 }
 
 @utility control-sm {

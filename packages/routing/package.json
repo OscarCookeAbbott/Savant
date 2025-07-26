@@ -16,11 +16,16 @@
 	],
 	"license": "MIT",
 	"scripts": {
-		"build": "vite build && tsc"
+		"build": "vite build && tsc",
+		"test": "vitest",
+		"test:run": "vitest run"
 	},
 	"devDependencies": {
+		"@vitest/ui": "^3.2.4",
+		"jsdom": "^25.0.1",
 		"typescript": "^5.0.0",
-		"vite": "^6.3.5"
+		"vite": "^6.3.5",
+		"vitest": "^3.2.4"
 	},
 	"dependencies": {
 		"@savant/core": "workspace:*"

@@ -86,6 +86,16 @@ export function derive<T>(func: () => T, onDispose?: () => void): State<T> {
 	return newState
 }
 
+/** Creates a reactive effect that executes the given function whenever any of its dependencies change.
+ * @note Is just syntactic sugar over `derive()`.
+ */
+export function effect<T = void>(
+	func: () => T,
+	onDispose?: () => void,
+): State<T> {
+	return derive(func, onDispose)
+}
+
 /** Creates a reactive binding function from the given generic prop value.
  * @warning Type is coerced. Apply type validation if necessary.
  */
@@ -94,7 +104,7 @@ export function forceReactive<T>(
 ): State<T | undefined> {
 	if (typeof value === "function") return derive(value as () => T)
 
-	if (value instanceof State) return derive(() => value.val as T)
+	if (value instanceof State) return value
 
 	return derive(() => value as T)
 }

@@ -51,9 +51,7 @@ export default function Radio<T>({
 					class: () =>
 						`group flex cursor-pointer justify-between items-center gap-2 select-none group-has-invalid:mood-danger ${reactiveClass.val
 							?.split(" ")
-							.filter(
-								(className) => !className.includes("form"),
-							)
+							.filter((className) => !className.includes("form"))
 							.join(" ")}`,
 					...restProps,
 				},

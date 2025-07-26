@@ -96,7 +96,9 @@ function tag<T>(
 	...restChildren: readonly ChildDom[]
 ): globalThis.Element {
 	// Of all potential `propsOrChild` values, only a props object will *directly* inherit Object
-	const hasProps = Object.getPrototypeOf(propsOrChild) === Object.prototype
+	const hasProps =
+		propsOrChild !== undefined &&
+		Object.getPrototypeOf(propsOrChild) === Object.prototype
 
 	// Figure out if any props were given
 	const [{ is, ...props }, ...children] = hasProps

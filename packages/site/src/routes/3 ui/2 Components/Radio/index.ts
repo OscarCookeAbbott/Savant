@@ -30,8 +30,7 @@ export default function Page() {
 						{ value: "Option 2" },
 						{ value: "Option 3" },
 					],
-					class: () =>
-						`w-48 ${exampleForm.val} ${exampleMood.val}`,
+					class: () => `w-48 ${exampleForm.val} ${exampleMood.val}`,
 				}),
 			),
 

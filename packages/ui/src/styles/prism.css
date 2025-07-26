@@ -35,10 +35,10 @@ https://prismjs.com/download#themes=prism&languages=markup+css+clike+javascript+
 	}
 	:not(pre) > code[class*="language-"],
 	pre[class*="language-"] {
-		@apply control form-soft-outline p-2 block;
+		@apply control form-soft-outline block p-2;
 	}
 	:not(pre) > code[class*="language-"] {
-		@apply whitespace-normal control-sm inline;
+		@apply control-sm inline whitespace-normal;
 	}
 	.token.cdata,
 	.token.comment,
